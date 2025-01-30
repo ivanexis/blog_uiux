@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UIUX Design - Ivan's Portfolio</title>
+    <link rel="stylesheet" href="../scss/custom.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* 時間軸樣式 */
+        .timeline-container {
+            padding-left: 0;
+            position: relative;
+        }
+
+        .timeline-line {
+            width: 3px;
+            background-color: #4f85a6;
+            height: 100%;
+            left: 140px;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            padding-left: 0;
+            position: relative;
+        }
+
+        .timeline-date {
+            width: 100px;
+            margin-right: 40px;
+            flex-shrink: 0;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background-color: #4f85a6;
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px #4f85a6;
+            position: absolute;
+            left: 131px;
+            top: 5px;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            margin-left: 80px;
+            width: calc(100% - 170px);
+        }
+
+        /* 卡片懸停效果 */
+        .timeline-item:hover .card {
+            transform: translateX(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item .card {
+            transition: transform 0.3s ease;
+        }
+
+        /* 時間軸卡片圖片樣式 */
+        .timeline-content .card .col-md-4 {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;  /* 添加內邊距 */
+        }
+        
+        .timeline-content .card .col-md-4 img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;  /* 改為 contain 以顯示完整圖片 */
+        }
+        
+        /* 頂部展示卡片的圖片樣式 */
+        .card-img-top {
+            max-height: 300px;
+            width: auto;
+            object-fit: contain;
+            margin: 0 auto;  /* 水平居中 */
+            padding: 10px;   /* 添加內邊距 */
+        }
+
+        /* 添加卡片容器樣式 */
+        .card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card .row {
+            flex: 1;
+        }
+
+        /* 確保圖片容器和內容區域等高 */
+        .card .row .col-md-4,
+        .card .row .col-md-8 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 卡片連結樣式 */
+        a.card {
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        a.card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        a.card .card-title {
+            color: #4f85a6;  /* 保持標題顏色 */
+        }
+
+        a.card .card-text {
+            color: #6c757d;  /* 保持文字顏色 */
+        }
+    </style>
+</head>
+<body style="background-color: #d8dbd9">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-sm d-flex flex-column container-fluid bg-white shadow sticky-top g-0 mt-0 mb-0 w-100" id="navbar">
+        <!-- Search Form Section -->
+        <div class="container-fluid" style="background-color: #4f85a6">
+            <form class="navbar g-0 d-flex justify-content-start" role="search">
+                <div>
+                    <button class="m-2 btn text-white" type="submit">
+                        <img src="../Search.png" alt="Search" style="width: 24px; height: 24px;">
+                    </button>
+                </div>
+                <div>
+                    <input class="form-control" type="search" placeholder="Search..." aria-label="Search">
+                </div>
+            </form>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarCollapse">
+                <ul class="navbar-nav nav-pills">
+                    <a href="https://www.facebook.com/apple.hi.77?mibextid=kFxxJD" target="_blank" class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px; display: inline-block;">
+                        <img src="../FB.png" alt="Facebook" class="object-fit-cover w-100 h-100" />
+                    </a>
+                    <div class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px">
+                        <img src="../IG.png" alt="" class="object-fit-cover w-100 h-100" />
+                    </div>
+                    <div class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px">
+                        <img src="../LINE.PNG" alt="" class="object-fit-cover w-100 h-100" />
+                    </div>
+                    <div class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px">
+                        <img src="../ME.png" alt="" class="object-fit-cover w-100 h-100" />
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navbar Brand and Toggler -->
+        <div class="d-flex container-fluid">
+            <div class="d-flex justify-content-start p-1">
+                <div class="rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 60px">
+                    <img src="../logo-01.jpg" alt="" class="object-fit-cover w-100 h-100" />
+                </div>
+                <a class="align-self-center navbar-brand p-2 h1" href="../index.html">Ivan's Blog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarCollapse">
+                <ul class="navbar-nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#top">Top</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./uiux.html">UIUX</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#content">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#content">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">其他</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../index.html#tab">頁籤</a></li>
+                            <li><a class="dropdown-item" href="../index.html#card">卡片</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="../index.html#form">留言</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="bg-white p-4 rounded-4 shadow">
+                    <h1 class="text-primary mb-4">UI/UX Design Projects</h1>
+                    
+                    <!-- 專案展示卡片 -->
+                    <div class="row g-4">
+                        <!-- 專案 1 -->
+                        <div class="col-md-6">
+                            <a href="https://blog-test-8z6.pages.dev/" class="card h-100 text-decoration-none" target="_blank">
+                                <img src="../12.jpg" class="card-img-top" alt="UI/UX Project 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">個人部落格設計</h5>
+                                    <p class="card-text">使用 Bootstrap 框架設計，專注於展示個人資料、專業技能與經歷。</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <!-- 專案 2 -->
+                        <div class="col-md-6">
+                            <a href="https://drive.google.com/drive/folders/1frJGr9TPntkQ-dpn6t4OERCmXUj2ktzq" class="card h-100 text-decoration-none" target="_blank">
+                                <img src="../JFSWING.png" class="card-img-top" alt="UI/UX Project 2">
+                                <div class="card-body">
+                                    <h5 class="card-title">JFSWING跳舞課程網站</h5>
+                                    <p class="card-text">為專業的跳舞機構設計的課程管理平台，旨在提升課程預約的便利性、強化用戶體驗，並支持學員高效學習和參與。</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+
+                    <!-- 在設計流程說明後添加時間軸部分 -->
+                    <div class="mt-5 timeline-container">
+                        <h2 class="text-primary mb-4">設計歷程</h2>
+                        
+                        <div class="position-relative">
+                            <!-- 垂直線 -->
+                            <div class="position-absolute timeline-line"></div>
+                            
+                            <!-- 時間軸項目 -->
+                            <div class="d-flex timeline-item">
+                                <!-- 左側時間 -->
+                                <div class="timeline-date text-end">
+                                    <div class="fw-bold text-primary fs-4">2024</div>
+                                    <div class="text-muted">1月</div>
+                                </div>
+                                
+                                <!-- 時間點 -->
+                                <div class="position-relative">
+                                    <div class="position-absolute top-0 start-50 translate-middle-x rounded-circle timeline-dot"></div>
+                                </div>
+                                
+                                <!-- 右側內容 -->
+                                <div class="timeline-content flex-grow-1">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="../02.jpg" class="img-fluid rounded-start" alt="Project 1">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">品牌 Logo 設計</h5>
+                                                    <p class="card-text">設計並創建了 Swing Dance 品牌的專屬 Logo，突顯舞蹈的活力與文化內涵。</p>
+                                                    <ul class="list-unstyled">
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 1920年代風格</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 活力與文化結合</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 品牌識別提升</li>
+                                                    </ul>
+                                                    <a href="https://drive.google.com/drive/folders/1frJGr9TPntkQ-dpn6t4OERCmXUj2ktzq" 
+                                                       target="_blank" 
+                                                       class="btn btn-primary mt-3">
+                                                        <i class="bi bi-bezier2 me-2"></i>查看詳情
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 第二個時間軸項目 -->
+                            <div class="d-flex timeline-item">
+                                <div class="timeline-date text-end">
+                                    <div class="fw-bold text-primary fs-4">2024</div>
+                                    <div class="text-muted">2月</div>
+                                </div>
+                                <div class="position-relative" style="width: 20px;">
+                                    <!-- 這裡移除了 timeline-dot div -->
+                                </div>
+                                <div class="timeline-content flex-grow-1">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="../JFSWING.png" class="img-fluid rounded-start" alt="Project 2">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">主視覺設計</h5>
+                                                    <p class="card-text">主視覺頁面，展示品牌特色並提升用戶的第一印象。</p>
+                                                    <ul class="list-unstyled">
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 吸引目標受眾</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 主色調統一</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 品牌形象強化</li>
+                                                    </ul>
+                                                    <a href="https://docs.google.com/presentation/d/1uF8bf7DXUPESgRny3ngdo5y9EJESSUrP/edit#slide=id.p1" 
+                                                       target="_blank" 
+                                                       class="btn btn-primary mt-3">
+                                                        <i class="bi bi-bezier2 me-2"></i>查看詳情
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 第三個時間軸項目 -->
+                            <div class="d-flex timeline-item">
+                                <div class="timeline-date text-end">
+                                    <div class="fw-bold text-primary fs-4">2024</div>
+                                    <div class="text-muted">4月</div>
+                                </div>
+                                <div class="position-relative" style="width: 20px;">
+                                    <!-- 移除圓點 -->
+                                </div>
+                                <div class="timeline-content flex-grow-1">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="../07.jpg" class="img-fluid rounded-start" alt="Project 3">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">細部網頁排版設計</h5>
+                                                    <p class="card-text">專注於每個細節，確保頁面結構清晰且功能易於使用。</p>
+                                                    <ul class="list-unstyled">
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 清晰的結構設計</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 使用者體驗優化</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 簡潔與功能性結合</li>
+                                                    </ul>
+                                                    <a href="https://www.figma.com/design/TlDLRDzcYJYtJqqcKMzzsG/Untitled?node-id=0-1" 
+                                                       target="_blank" 
+                                                       class="btn btn-primary mt-3">
+                                                        <i class="bi bi-bezier2 me-2"></i>查看 Figma
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 第四個時間軸項目 -->
+                            <div class="d-flex timeline-item">
+                                <div class="timeline-date text-end">
+                                    <div class="fw-bold text-primary fs-4">2024</div>
+                                    <div class="text-muted">5月</div>
+                                </div>
+                                <div class="position-relative" style="width: 20px;">
+                                    <!-- 移除圓點 -->
+                                </div>
+                                <div class="timeline-content flex-grow-1">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="../11.jpg" class="img-fluid rounded-start" alt="Project 4">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">全面網頁排版</h5>
+                                                    <p class="card-text">展示完整的網頁設計，呈現品牌文化與用戶友好的結合。</p>
+                                                    <ul class="list-unstyled">
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 整體設計一致性</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 用戶友好介面</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 品牌故事呈現</li>
+                                                    </ul>
+                                                    <a href="https://www.figma.com/design/TlDLRDzcYJYtJqqcKMzzsG/Untitled?node-id=0-1" 
+                                                       target="_blank" 
+                                                       class="btn btn-primary mt-3">
+                                                        <i class="bi bi-bezier2 me-2"></i>查看 Figma
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 第五個時間軸項目 -->
+                            <div class="d-flex timeline-item">
+                                <div class="timeline-date text-end">
+                                    <div class="fw-bold text-primary fs-4">2024</div>
+                                    <div class="text-muted">6月</div>
+                                </div>
+                                <div class="position-relative" style="width: 20px;">
+                                    <!-- 移除圓點 -->
+                                </div>
+                                <div class="timeline-content flex-grow-1">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="../github.jpg" class="img-fluid rounded-start" alt="Project 5">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">GitHub 程式碼管理</h5>
+                                                    <p class="card-text">將程式碼托管至 GitHub，確保版本控制和團隊協作的效率。</p>
+                                                    <ul class="list-unstyled">
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 版本控制</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 團隊協作</li>
+                                                        <li><i class="bi bi-check-circle-fill text-primary"></i> 開放的程式碼管理</li>
+                                                    </ul>
+                                                    <a href="https://github.com/ivanexis?tab=repositories" 
+                                                       target="_blank" 
+                                                       class="btn btn-primary mt-3">
+                                                        <i class="bi bi-github me-2"></i>查看 GitHub
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer 從 index.html 複製 -->
+    <div class="container-fluid" data-bs-spy="scroll" data-bs-target="#navbar" style="background-color: #d8dbd9">
+        <!-- 這裡放入原始的 footer 內容 -->
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

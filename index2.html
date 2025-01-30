@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>现代网站布局</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .hero-section {
+      min-height: 100vh;
+      background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* 新增样式 */
+    .gradient-text {
+      background: linear-gradient(45deg, #3498db, #2ecc71);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stats-section {
+      background: #1a1a1a;
+      color: white;
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stats-card {
+      text-align: center;
+      padding: 30px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .footer {
+      background: #1a1a1a;
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #3498db;
+    }
+
+    /* 新增视差滚动相关样式 */
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      background-color: #fff;
+      margin-top: 100vh;
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 优化其他区域样式 */
+    #features {
+      background-color: #fff;
+    }
+  </style>
+  <!-- 新增 Font Awesome 图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Logo</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#features">UIUX</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">Frontend</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Backend</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主视觉区域 -->
+  <section class="hero-section d-flex align-items-center">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="display-3 fw-bold mb-4">创新科技解决方案</h1>
+          <p class="lead mb-4">打造下一代数字化体验，引领技术创新浪潮</p>
+          <button class="btn btn-primary btn-lg">了解更多</button>
+        </div>
+        <div class="col-lg-6">
+          <!-- 这里可以放置主视觉图片 -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 內容包裝器 -->
+  <div class="content-wrapper">
+    <!-- 簡介區 -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">關於我</h2>
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="p-4">
+              <h3 class="mb-4">嗨！我是 Ivan_Zhao</h3>
+              <p class="lead">一名專注於 UIUX 設計、前端與後端開發的創作者，致力於打造高效、美觀且易用的數位體驗。</p>
+              <div class="row g-4 mt-4">
+                <div class="col-md-4 text-center">
+                  <i class="fas fa-paint-brush fa-2x mb-3 text-primary"></i>
+                  <h5>UI/UX 設計</h5>
+                  <p class="small">Figma、Adobe XD</p>
+                </div>
+                <div class="col-md-4 text-center">
+                  <i class="fas fa-code fa-2x mb-3 text-primary"></i>
+                  <h5>前端開發</h5>
+                  <p class="small">React、Bootstrap</p>
+                </div>
+                <div class="col-md-4 text-center">
+                  <i class="fas fa-server fa-2x mb-3 text-primary"></i>
+                  <h5>後端開發</h5>
+                  <p class="small">Java、Spring Boot</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <img src="profile-image.jpg" alt="Ivan's Profile" class="img-fluid rounded-4 shadow">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 作品精選區 -->
+    <section id="works" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">作品精選</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+              <img src="project1.jpg" class="card-img-top" alt="Project 1">
+              <div class="card-body">
+                <h5 class="card-title">JF Swing 課程管理系統</h5>
+                <p class="card-text">整合前後端技術的完整課程管理解決方案，提供直覺的操作介面。</p>
+                <a href="#" class="btn btn-outline-primary">查看詳情</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+              <img src="project2.jpg" class="card-img-top" alt="Project 2">
+              <div class="card-body">
+                <h5 class="card-title">部落規劃設計</h5>
+                <p class="card-text">結合在地文化特色的空間規劃，創造共融的社區環境。</p>
+                <a href="#" class="btn btn-outline-primary">查看詳情</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+              <img src="project3.jpg" class="card-img-top" alt="Project 3">
+              <div class="card-body">
+                <h5 class="card-title">農村活化計畫</h5>
+                <p class="card-text">透過數位轉型協助傳統農村發展，建立永續經營模式。</p>
+                <a href="#" class="btn btn-outline-primary">查看詳情</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 專案技能區 -->
+    <section id="skills" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">技術能力</h2>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <h4 class="mb-3">前端開發</h4>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span>HTML/CSS</span>
+                <span>90%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span>JavaScript/React</span>
+                <span>85%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h4 class="mb-3">後端開發</h4>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span>Java/Spring Boot</span>
+                <span>88%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 88%" aria-valuenow="88" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span>MySQL/RESTful API</span>
+                <span>82%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-5">
+          <div class="d-flex flex-wrap justify-content-center gap-2">
+            <span class="badge bg-primary p-2 px-3">HTML5</span>
+            <span class="badge bg-primary p-2 px-3">CSS3</span>
+            <span class="badge bg-primary p-2 px-3">JavaScript</span>
+            <span class="badge bg-primary p-2 px-3">React</span>
+            <span class="badge bg-primary p-2 px-3">Bootstrap</span>
+            <span class="badge bg-primary p-2 px-3">Java</span>
+            <span class="badge bg-primary p-2 px-3">Spring Boot</span>
+            <span class="badge bg-primary p-2 px-3">MySQL</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 近期文章區 -->
+    <section id="blog" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">技術分享</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">從零開始的前端之旅</h5>
+                <p class="card-text">分享我是如何學習前端開發，以及一路上遇到的挑戰與解決方案。</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">2024/03/15</small>
+                  <a href="#" class="btn btn-sm btn-outline-primary">閱讀更多</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 可以繼續添加更多文章卡片 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯絡表單區 -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">聯絡我</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="text-center mb-4">
+              <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-github fa-2x text-dark"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-linkedin fa-2x text-primary"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="far fa-envelope fa-2x text-danger"></i>
+                </a>
+              </div>
+              <a href="resume.pdf" class="btn btn-outline-primary mb-4">
+                <i class="fas fa-download me-2"></i>下載履歷
+              </a>
+            </div>
+            <form class="p-4 border rounded-4 shadow-sm">
+              <div class="mb-3">
+                <label for="name" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">留言內容</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">發送訊息</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <h5 class="mb-3">關於我</h5>
+            <p>致力於提供創新的技術解決方案，專注於網頁開發與使用者體驗設計。</p>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">快速連結</h5>
+            <ul class="list-unstyled">
+              <li><a href="#about" class="text-white text-decoration-none">關於我</a></li>
+              <li><a href="#works" class="text-white text-decoration-none">作品集</a></li>
+              <li><a href="#contact" class="text-white text-decoration-none">聯絡方式</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">追蹤我</h5>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center">
+          <p class="mb-0">&copy; 2024 Ivan Zhao. 保留所有權利。</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
