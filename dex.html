@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous" /> -->
+    <link rel="stylesheet" href="./scss/custom.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+      html {
+        scroll-padding-top: 56px;
+      }
+      .paragraph {
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body style="background-color: #d8dbd9">
+    <!-- 集中定義 svg icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+      <symbol id="sunIcon" viewBox="0 0 16 16">
+        <path
+          d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708" />
+      </symbol>
+    </svg>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-sm d-flex flex-column container-fluid bg-white shadow sticky-top g-0 mt-0 mb-0 w-100" id="navbar">
+        
+      <!-- Search Form Section -->
+      <div class="container-fluid" style="background-color: #4f85a6">
+          <form class="navbar g-0 d-flex justify-content-start" role="search">
+            <div>
+              <button class="m-2 btn text-white" type="submit">
+                <img src="./Search.png" alt="Search" style="width: 24px; height: 24px;">
+            </button>
+            </div>
+              <div>
+                <input class="form-control" type="search" placeholder="Search..." aria-label="Search">
+              </div>
+
+          
+            </form>
+          <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarCollapse">
+            <ul class="navbar-nav nav-pills">
+              
+              <a href="https://www.facebook.com/apple.hi.77?mibextid=kFxxJD" target="_blank" class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px; display: inline-block;">
+                <img src="./FB.png" alt="Facebook" class="object-fit-cover w-100 h-100" />
+              </a>
+              <div class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px">
+                <img src="./IG.png" alt="" class="object-fit-cover w-100 h-100" />
+              </div>
+              <div class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px">
+                <img src="./LINE.PNG" alt="" class="object-fit-cover w-100 h-100" />
+              </div>
+              <div class="m-2 rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 30px">
+                <img src="./ME.png" alt="" class="object-fit-cover w-100 h-100" />
+              </div>
+              
+
+            </ul>
+        </div>
+      </div>
+
+      <!-- Navbar Brand and Toggler -->
+      <div class="d-flex container-fluid">
+          <div class="d-flex justify-content-start p-1">
+              <div class="rounded-circle border border-dark overflow-hidden align-self-center ratio ratio-1x1" style="width: 60px">
+                <img src="./logo-01.jpg" alt="" class="object-fit-cover w-100 h-100" />
+              </div>
+
+              
+                <a class="align-self-center navbar-brand p-2 h1" href="#">Ivan's Blog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+          </div>
+
+          <!-- Navbar Links -->
+          <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarCollapse">
+              <ul class="navbar-nav nav-pills">
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#top">Top</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="./pages/uiux.html">UIUX</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#content">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#content">Contact</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">其他</a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#tab">頁籤</a></li>
+                          <li><a class="dropdown-item" href="#card">卡片</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#form">留言</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <!-- 視覺 -->
+
+  <div class="h-100 position-relative" style="min-height: 100vh;">
+    <span>
+    <img src="./mememe.png" alt="" class="z-n1 position-absolute rounded-3 object-fit-cover w-100" style="height: calc(100% + 30px);"/>
+    </span>
+
+
+    <div class="row py-lg-5 text-center vstack"  style="height: 700px">
+      <div class="col-lg-6 col-md-8 mx-auto d-flex flex-column justify-content-end h-100">
+        <h1 class="fw-bold custom-font-size mb-0" style="font-size: 128px; color: #4f85a6;">Ivan Zhno</h1>
+        <h1 class="fw-bold custom-font-size" style="font-size: 20px; color: #4f85a6;">Full-stack Developer</h1>
+
+      </div>
+    </div>
+
+    <div class="container mb-5">
+      <div class="row g-0 justify-content-center">
+
+        <div class="col-3" > <!-- w.270 x h.200 -->
+          <div style="height: 390px;">
+          <img src="./01.png" alt="" class="vstack overflow-hidden object-fit-cover w-100 h-100" />
+          </div>
+        </div>
+
+        <div class="col-3"> <!-- w.190 x h.200 -->
+          <div style="height: 390px;">
+          <img src="./02.png" alt="" class="vstack overflow-hidden object-fit-cover w-100 h-100" />
+          </div>
+        </div>
+
+        <div class="col-4" > <!-- w.400 x h.390 -->
+          <div style="height: 390px;">
+          <img src="./04.png" alt="" class="vstack overflow-hidden object-fit-cover w-100 h-100" />
+          </div>
+        </div>
+
+      </div>
+      <div class="row g-0 justify-content-center">
+        <div class="col-lg-6"> <!-- w.460 x h.450 -->
+          <div style="height: 460px;">
+            <img src="./05.png" alt="" class="vstack overflow-hidden object-fit-cover w-100 h-100" />
+          </div>
+        </div>
+        <div class="col-lg-4 bg-white border border-black"> <!-- w.400 x h.260 -->
+          <div style="height: 460px;">
+            <img src="./06.png" alt="" class="vstack overflow-hidden object-fit-cover w-100 h-100" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+    <div class="container-fluid" data-bs-spy="scroll" data-bs-target="#navbar" style="background-color: #d8dbd9">
+      <div class="pt-3">
+        <div class="row g-3">
+          <!-- 內容 -->
+          <div class="col-12 col-sm-8">
+            <div class="p-3 bg-white rounded-4" id="top">
+              <!-- carousel -->
+              <div id="carousel" class="carousel slide rounded overflow-hidden">
+                <div class="carousel-inner">
+                  <div class="carousel-item active ratio ratio-4x3">
+                    <img src="./UIUX.png" class="d-block w-100 h-100 object-fit-cover" alt="..." />
+                  </div>
+                  <div class="carousel-item ratio ratio-4x3">
+                    <img src="./1234.png" class="d-block w-100 h-100 object-fit-cover" alt="..." />
+                  </div>
+                  <div class="carousel-item ratio ratio-4x3">
+                    <img src="./JFSWING.png" class="d-block w-100 h-100 object-fit-cover" alt="..." />
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+              <!-- breadcrumb -->
+              <nav aria-label="breadcrumb" class="mt-3">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#" >Top</a></li>
+                  <li class="breadcrumb-item"><a href="#" >About me</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Designer</li>
+                </ol>
+              </nav>
+              <!-- dropdown -->
+              <div class="dropdown mb-3">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #4f85a6">文章分類</button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">介面設計</a></li>
+                  <li><a class="dropdown-item" href="#">前端設計</a></li>
+                  <li><a class="dropdown-item" href="#">後端設計</a></li>
+                </ul>
+              </div>
+              <h1 class="text-bg-primary p-2 rounded-4" style="background-color: #4f85a6">Ivan 的全端工程師之路：從前端到後端的技術探索</h1>
+              <!-- 內文 -->
+              <div class="paragraph mb-3" id="content">
+                大家好，我是Ivan。作為一名從平面設計起步，逐步踏入全端開發領域的工程師，我深知轉變職業軌跡所帶來的挑戰與滿足。我將與您分享從前端到後端的探索旅程，包括我如何克服技術難題和在這一路上獲得的洞見。
+              
+                <img src="./0123.jpg" alt="Ivan working" class="float-end img-thumbnail" style="height: 300px;" />
+              
+                <p class="paragraph mb-3">
+                  ◎ <strong>關於我</strong><br>
+                  我是趙冠柏，家庭成員有爸爸、媽媽、姊姊和我。父母對我們是恩威並施的教養方式，時常與我們溝通也十分尊重我們的選擇，家庭氛圍充滿溫暖及熱情。
+                </p>
+              
+                <p class="paragraph mb-3">
+                  ◎ <strong>求學及工作歷程</strong><br>
+                  在景觀設計系就讀期間，我自行參與了社區營造計畫，參與了農村洄游計畫和部落規劃設計。經常與團隊成員、居民及地方政府進行溝通，從各個角度做規劃設計、實作和成果報告。這讓我學習了溝通及協調的能力，也提升了團隊合作的經驗和技巧。<br>
+                  在大學期間，我也經常面對突發狀況，從設計困難到材料不足等挑戰，這些經驗訓練了我的隨機應變能力及在壓力下解決問題的技巧。
+                </p>
+              
+                <p class="paragraph mb-3">
+                  ◎ <strong>跨域契機</strong><br>
+                  在參與農村地區的社區營造過程中，我發現這些社區在基礎設施上投入較多，但在資訊化建設方面相對落後。這種觀察激勵我進一步學習軟體開發，並轉職成為後端工程師，開發能夠支持強大數據管理和應用邏輯的系統，旨在為這些社區創建功能豐富且易於使用的資訊化解決方案。
+                </p>
+              
+                <p class="paragraph mb-3">
+                  ◎ <strong>資策會的專業訓練歷程</strong><br>
+                  在資策會的學習經歷讓我感到非常幸運。班上的同學們對程式開發充滿熱情，我們經常在課後互相激勵與學習。課程循序漸進地幫助我提高了程式開發技能。<br>
+                  在專題專案中，我參與了主題選定、網頁風格設計、分工規劃及專題進度維持等過程。這段經歷與我在大學和社區實習的經驗相似，學到了如何與團隊為共同目標協作及實現創意。
+                </p>
+              </div>
+              
+              <!-- 頁碼 -->
+              <nav>
+                <ul class="pagination">
+                  <li class="page-item"><span class="page-link disabled">上一頁</span></li>
+                  <li class="page-item"><span class="page-link active">1</span></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">下一頁</a></li>
+                </ul>
+              </nav>
+              <!-- 頁籤 -->
+              <ul class="nav nav-tabs" id="tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="tableTab" data-bs-toggle="tab" data-bs-target="#tableTabPane" type="button" role="tab" aria-controls="tableTabPane" aria-selected="true">
+                    項目經歷
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="accordionTab" data-bs-toggle="tab" data-bs-target="#accordionTabPane" type="button" role="tab" aria-controls="accordionTabPane" aria-selected="false">
+                    技術棧
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content" id="tabContent">
+                <div class="tab-pane fade show active" id="tableTabPane" role="tabpanel" aria-labelledby="tableTab" tabindex="0">
+                  <!-- 表格 -->
+                  <div class="table-responsive mb-3">
+                    <table class="table table-striped table-hover caption-top table-primary">
+                      <caption>
+                        這個表格提供了一個簡單的概覽，介紹了一些常見的 Bootstrap 元件及其功能：
+                      </caption>
+                      <thead>
+                        <tr class="text-nowrap">
+                          <th scope="col">編號</th>
+                          <th scope="col">名稱</th>
+                          <th scope="col">內容</th>
+                          <th scope="col">描述</th>
+                          <th scope="col">連結</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-group-divider">
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>JF網站設計</td>
+                          <td>課程管理系統</td>
+                          <td>包含前台介面設計與後台基本功能的實作。</td>
+                          <td><a href="https://drive.google.com/drive/folders/1frJGr9TPntkQ-dpn6t4OERCmXUj2ktzq?usp=drive_link" target="_blank">網站介紹連結</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2</th>
+                          <td>部落規劃設計</td>
+                          <td>專案撰寫</td>
+                          <td>負責企劃發想、撰寫提案，盤點部落資源，提供可行性分析，並設計適合部落與遊客聚會遊玩的活動場所。</td>
+                          <td><a href="https://drive.google.com/file/d/1cbUgpBfDuF4G2W5jsnR-VeH6Pr9KWZzZ/view?usp=sharing" target="_blank">規劃報告書</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">3</th>
+                          <td>共夏-龍潭大北坑農村洄游計畫</td>
+                          <td>專案撰寫</td>
+                          <td>負責地景藝術規劃、活動籌備及居民專訪，深入了解社區需求並推動項目實施。</td>
+                          <td><a href="https://drive.google.com/file/d/147B9i0X6bFfE7ngl-Drz8_C5aokR7S8G/view">規劃報告書</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="accordionTabPane" role="tabpanel" aria-labelledby="accordionTab" tabindex="0">
+                  <!-- accordion -->
+                  <div class="accordion mb-3" id="accordion">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gridAccordion" aria-expanded="false" aria-controls="gridAccordion">
+                          電商平台開發
+                        </button>
+                      </h2>
+                      <div id="gridAccordion" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                          開發一個完整的電商應用，整合React前端互動及Node.js和MongoDB後端，實現即時資料處理，提升用戶體驗。
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#buttonAccordion" aria-expanded="false" aria-controls="buttonAccordion">
+                          響應式網頁設計
+                        </button>
+                      </h2>
+                      <div id="buttonAccordion" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                          實作一系列針對行動裝置最佳化的響應式網站，使用先進的CSS技術和JavaScript實現動態內容更新和互動性。
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#modalAccordion" aria-expanded="false" aria-controls="modalAccordion">
+                          雲端整合與部署
+                        </button>
+                      </h2>
+                      <div id="modalAccordion" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                          領導將現有應用遷移到AWS的項目，使用Docker容器和Kubernetes進行架構優化，提升可擴展性和效率。
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 卡片 -->
+              <div class="row g-3" id="card">
+                <div class="col-12 col-md-6">
+                  <div class="card position-relative">
+                    <div class="card-body">
+                      <h6 class="card-title">前端精進！掌握 JavaScript 和 jQuery</h6>
+                      <div class="card-subtitle text-body-secondary">2023/5/19</div>
+                      <p class="card-text">
+                        加深對前端互動的理解！本教學將深入 JavaScript 和 jQuery 的強大功能，從基礎語法到實際應用，全方位提升你的網頁動態效果～
+                        透過實用的案例，你將學習如何有效地運用這兩種工具來改善使用者體驗，讓網頁更加生動互動。
+                      </p>
+                      <a href="#" class="btn btn-primary stretched-link">查看更多</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h6 class="card-title">優化後端！探索 Java 與 Spring 框架</h6>
+                      <div class="card-subtitle text-body-secondary">2023/5/22</div>
+                      <p class="card-text">
+                        本教學將帶你深入 Java 的世界，並且探索 Spring 框架的多樣性。從基本架構到進階功能，逐步解析如何利用 Spring Boot 和 Spring MVC 提高後端開發效率與性能。學習如何構建穩定而高效的服務器和數據庫連接，成為後端開發的高手。
+                      </p>
+                      <a href="#" class="btn btn-primary">查看更多</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h6 class="card-title placeholder-wave">
+                        <span class="placeholder col-7"></span>
+                      </h6>
+                      <div class="card-subtitle placeholder-wave">
+                        <span class="placeholder col-3 placeholder-sm"></span>
+                      </div>
+                      <p class="card-text placeholder-wave">
+                        <span class="placeholder col-7"></span>
+                        <span class="placeholder col-4"></span>
+                        <span class="placeholder col-4"></span>
+                        <span class="placeholder col-6"></span>
+                        <span class="placeholder col-8"></span>
+                      </p>
+                      <a href="#" class="btn btn-primary placeholder col-3 disabled"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 進度條 -->
+              <div class="progress my-3" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width: 75%"></div>
+              </div>
+              <!-- 表單 -->
+              <form class="my-3" id="form">
+                <h2 class="text-primary fs-4">留個言吧</h2>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="nameInput" placeholder="" />
+                  <label for="nameInput">姓名或暱稱</label>
+                </div>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="email" />
+                  <span class="input-group-text">@gmail.com</span>
+                </div>
+                <div class="mb-3">
+                  <label for="moreInput" class="form-label">還想了解關於Bootstrap的...</label>
+                  <input class="form-control" list="moreList" id="moreInput" placeholder="請輸入..." />
+                  <datalist id="moreList">
+                    <option value="Grid">網格</option>
+                    <option value="Button">按鈕</option>
+                    <option value="Modal">模式對話框</option>
+                  </datalist>
+                </div>
+                <div class="form-check form-switch mb-3">
+                  <input class="form-check-input" type="checkbox" role="switch" id="subscribeCheckbox" checked />
+                  <label class="form-check-label" for="subscribeCheckbox">是否訂閱電子報</label>
+                </div>
+                <button type="submit" class="btn btn-primary">送出</button>
+              </form>
+              <!-- alert -->
+              <div class="mb-3">
+                <button type="button" class="btn btn-primary mb-3 hstack gap-1 align-items-center" id="alertBtn">
+                  <svg width="16" height="16" fill="currentColor" class="bi bi-brightness-high">
+                    <use xlink:href="#sunIcon" />
+                  </svg>
+                  點我給你一個驚喜
+                </button>
+                <div id="alert"></div>
+              </div>
+              <!-- toast -->
+              <div class="mb-3">
+                <button type="button" class="btn btn-danger" id="toastBtn">toast想跟你打招呼</button>
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                  <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                      <strong class="me-auto">Toast說</strong>
+                      <small>11分鐘前</small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">你好呀！！！</div>
+                  </div>
+                </div>
+              </div>
+              <!-- popover -->
+              <div class="mb-3">
+                <button type="button" class="btn btn-success" data-bs-toggle="popover" data-bs-title="Popover說" data-bs-content="嗨～～～">popover想跟你打招呼</button>
+              </div>
+              <!-- modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">modal想跟你打招呼</button>
+            </div>
+          </div>
+          <!-- 側邊欄 -->
+          <div class="col-12 col-sm-4 vstack gap-3">
+            <!-- 技術分享 -->
+            <div class="vstack gap-3 p-3 bg-white rounded-4 border border-2 shadow flex-grow-0 position-sticky z-1" style="top: 80px">
+              <h2 class="text-center text-primary fs-4">我的技術旅程</h2>
+              <div class="order-2 d-flex flex-column" style="height: 120px">
+                <h5 class="mb-auto">Java開發實踐</h5>
+                <small>2023/5/19</small>
+                <div>探討從Java入門到進階的關鍵知識點，包括面向對象的設計和多線程處理。</div>
+                <div>150人看過</div>
+              </div>
+              <div class="order-3">
+                <h5 class="text-truncate" title="SQL與T-SQL實作">數據庫管理與優化</h5>
+                <small>2023/5/22</small>
+                <div>深入SQL基礎，並實際操作T-SQL，提升數據庫查詢效率和數據整合能力。</div>
+              </div>
+              <div class="vstack gap-1 order-1 justify-content-between" style="height: 160px">
+                <div>
+                  <h5 class="position-relative d-inline-block">
+                    現代網頁開發框架
+                    <span class="badge text-bg-warning position-absolute top-0 start-100 translate-middle-y rounded-pill">NEW</span>
+                  </h5>
+                </div>
+                <div>
+                  <small>2023/5/18</small>
+                  <div>涵蓋前端技術如HTML, JavaScript, jQuery, Bootstrap，以及後端技術包括Servlet, Hibernate, Spring框架。</div>
+                  <div>200人看過</div>
+                </div>
+              </div>
+            </div>
+            <!-- 文章分類 -->
+            <div class="vstack gap-3 p-3 bg-white rounded-4 border border-2 text-center flex-grow-0 z-0">
+              <h2 class="text-primary fs-4">文章分類</h2>
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center active">
+                  教學
+                  <span class="badge text-bg-warning rounded-pill">8</span>
+                </li>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  資源分享
+                  <span class="badge text-bg-warning rounded-pill">8</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  實作範例
+                  <span class="badge text-bg-warning rounded-pill">8</span>
+                </a>
+              </ul>
+            </div>
+            <!-- 關於我 -->
+            <!-- d-flex flex-column -->
+            <div class="vstack gap-3 p-3 bg-white rounded-4 border border-2 text-center flex-grow-0">
+              <h2 class="text-primary fs-4">關於我</h2>
+              <div class="rounded-circle overflow-hidden align-self-center ratio ratio-1x1" style="width: 120px">
+                <img src="./MEMEMEME.jpg" alt="" class="object-fit-cover w-100 h-100" />
+              </div>
+              <strong class="text-primary text-uppercase fs-5">Ivan</strong>
+              <div class="text-bg-primary rounded-pill p-2 ">全端工程師</div>
+              <dl class="row text-start">
+                <dt class="col-4">Email</dt>
+                <dd class="col-8 text-break">jeff11051212@gmail.com</dd>
+                <dt class="col-4">Discord</dt>
+                <dd class="col-8">豆豆桑</dd>
+                <dt class="col-4">TEL</dt>
+                <dd class="col-8">0937403585</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalLabel">Modal說</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">很高興認識您</div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+    <script>
+      const alertEl = document.getElementById('alert');
+      const alertBtnEl = document.getElementById('alertBtn');
+
+      const appendAlert = (message, type) => {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = [
+          `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          '</div>',
+        ].join('');
+
+        alertEl.append(wrapper);
+      };
+
+      if (alertBtnEl) {
+        alertBtnEl.addEventListener('click', () => {
+          appendAlert('哈囉～～～', 'danger');
+        });
+      }
+    </script>
+    <script>
+      const toastBtnEl = document.getElementById('toastBtn');
+      const toastEl = document.getElementById('toast');
+
+      if (toastBtnEl) {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl);
+        toastBtnEl.addEventListener('click', () => {
+          toastBootstrap.show();
+        });
+      }
+    </script>
+    <script>
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+      const popoverList = [...popoverTriggerList].map((item) => new bootstrap.Popover(item));
+    </script>
+    <script>
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+      const tooltipList = [...tooltipTriggerList].map((item) => new bootstrap.Tooltip(item));
+    </script>
+  </body>
+</html>

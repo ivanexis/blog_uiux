@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan_Zhao Web</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    .hero-section {
+      min-height: 100vh;
+      background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('images/view.webp');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 0;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* 新增样式 */
+    .gradient-text {
+      background: linear-gradient(45deg, #3498db, #2ecc71);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stats-section {
+      background: #1a1a1a;
+      color: white;
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stats-card {
+      text-align: center;
+      padding: 30px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .footer {
+      background: #1a1a1a;
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #3498db;
+    }
+
+    /* 新增视差滚动相关样式 */
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      background-color: #fff;
+      margin-top: 100vh;
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 优化其他区域样式 */
+    #features {
+      background-color: #fff;
+    }
+
+    /* 新增動畫相關樣式 */
+    .parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images/view.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 1;
+      z-index: -1;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-30px);
+      }
+
+      60% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .progress-bar {
+      transition: width 1.5s ease-in-out;
+    }
+
+    .hover-card {
+      transition: all 0.3s ease;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .hover-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .hover-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    .btn-group .btn {
+      margin-right: 0.5rem;
+    }
+
+    /* 確保卡片內容的間距舒適 */
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .card-text {
+      margin-bottom: 1.5rem;
+      color: #6c757d;
+    }
+
+    .content-wrapper {
+      transition: transform 0.5s ease-out;
+    }
+
+    /* 滾動指示器樣式 */
+    .scroll-down {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+    }
+
+    .scroll-down i {
+      font-size: 2rem;
+      animation: floating 2s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* 修改視差滾動區域樣式 */
+    .parallax-section {
+      position: relative;
+      min-height: 60vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('images/view.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* 移除舊的 parallax-bg 相關樣式，因為我們直接在 section 上設置背景 */
+    .parallax-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+      z-index: 1;
+    }
+
+    .parallax-section .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 修改導航欄的品牌部分 */
+    .navbar-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border: 2px solid white;
+      background-color: white;
+      padding: 2px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Logo hover 效果 */
+    .navbar-logo:hover {
+      transform: scale(1.1);
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .navbar-brand span {
+      margin-left: 8px;
+    }
+
+    /* 作品卡片樣式 */
+    .work-card {
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .work-card img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .work-info {
+      padding: 0.5rem 0;
+    }
+
+    .work-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      color: #333;
+    }
+
+    .work-category {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .work-card {
+        margin-bottom: 1.5rem;
+      }
+
+      .work-info {
+        padding: 0.5rem;
+      }
+    }
+
+    /* 主圖片容器調整 */
+    .work-image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 3/2;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    /* 縮圖容器調整 */
+    .thumbnail-container {
+      position: absolute;
+      bottom: 0;
+      /* 直接顯示在底部 */
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      transform: translateY(100%);
+      /* 初始隱藏 */
+      transition: transform 0.3s ease;
+    }
+
+    /* 懸停時顯示縮圖 */
+    .work-image-container:hover .thumbnail-container {
+      transform: translateY(0);
+      /* 顯示縮圖 */
+    }
+
+    /* 縮圖樣式調整 */
+    .thumbnail {
+      width: calc(33.333% - 10px);
+      /* 平均分配寬度 */
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.05);
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .thumbnail {
+        height: 50px;
+      }
+
+      .thumbnail-container {
+        padding: 8px;
+        gap: 6px;
+      }
+    }
+
+    /* 關於我區域樣式 */
+    #about {
+      padding: 80px 0;
+    }
+
+    #about h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #about ul li {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    #about p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    #about .btn-outline-dark {
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    #about .btn-outline-dark:hover {
+      background-color: #333;
+      color: white;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 992px) {
+      #about .col-lg-4 {
+        margin-bottom: 2rem;
+      }
+
+      #about .col-lg-4:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    /* 作品區標題和分隔線樣式 */
+    .works-header {
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .works-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #e0e0e0;
+      margin-top: 1rem;
+    }
+
+    /* 調整作品區背景 */
+    .works-section {
+      background-color: #fff;
+      /* 改為白色背景 */
+    }
+
+    /* 確保作品卡片間距恰當 */
+    .works-section .row {
+      margin-top: 2rem;
+    }
+
+    /* 作品卡片連結樣式 */
+    .work-card {
+      color: inherit;
+      /* 保持原有文字顏色 */
+      transition: transform 0.3s ease;
+    }
+
+    a:hover .work-card {
+      transform: translateY(-5px);
+    }
+
+    /* 確保連結不會影響卡片樣式 */
+    a.text-decoration-none:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 專案技能區 */
+    .skill-category {
+      margin-bottom: 1rem;
+    }
+
+    .skill-category h3 {
+      color: #333;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .skill-category h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: #4f85a6;
+    }
+
+    .skill-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      color: #4f85a6;
+      margin-bottom: 1rem;
+    }
+
+    .progress {
+      height: 6px;
+      background-color: #e9ecef;
+      border-radius: 3px;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar {
+      background-color: #4f85a6;
+      border-radius: 3px;
+    }
+
+    .skill-level {
+      margin-top: 1rem;
+    }
+
+    /* 技能區塊樣式 */
+    .skill-category {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .category-title {
+      font-size: 1.25rem;
+      color: #333;
+      font-weight: 600;
+      border-bottom: 2px solid #4f85a6;
+      padding-bottom: 0.5rem;
+    }
+
+    .skill-item {
+      padding: 0.75rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .skill-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .skill-item i {
+      font-size: 1rem;
+      color: #4f85a6;
+      width: 20px;
+      text-align: center;
+    }
+
+    .skill-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .progress {
+      background-color: #e9ecef;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background-color: #4f85a6;
+      transition: width 1s ease;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .skill-category {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    /* 添加 Adobe 相關圖標的特殊樣式 */
+    .fab.fa-adobe {
+      color: #4f85a6;
+      /* Adobe 紅色 */
+    }
+
+    /* 可以為不同的 Adobe 產品使用不同的偽元素來區分 */
+    .skill-item:nth-child(2) .fab.fa-adobe::after {
+      content: " Ps";
+      /* Photoshop */
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    .skill-item:nth-child(3) .fab.fa-adobe::after {
+      content: " Ai";
+      /* Illustrator */
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+  </style>
+  <!-- 新增 Font Awesome 图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="images/logo.png" alt="Ivan_Zhao Logo" class="rounded-circle me-2 navbar-logo">
+        <span>Ivan_Zhao</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="pages/uiux.html">UIUX</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">Frontend</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Backend</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主視覺 -->
+  <section class="hero-section d-flex align-items-center">
+    <div class="container">
+      <div class="row align-items-center">
+
+        <div class="col-lg-6">
+          <!-- 这里可以放置主视觉图片 -->
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-down">
+      <p class="mb-2">向下滾動</p>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- 關於我（About Me） -->
+  <div class="content-wrapper">
+    <!-- 簡介區 -->
+    <section id="about" class="py-5" data-aos="fade-up" data-aos-duration="1000">
+      <div class="container">
+        <div class="row align-items-center">
+          <h1 class="mb-4 fw-bold ">創作無界之美，讓靈魂在美之中覺醒。</h1>
+          <!-- 左側內容 -->
+          <div class="col-lg-4">
+            <div class="p-4">
+              <ul class="list-unstyled">
+                <h2 class="mb-2">趙冠柏</h2>
+                <li class="mb-2">—全端工程師 & 地方創生推動者</li>
+                <li class="mb-2">—山莎蔓岸竹炭合作社共同創辦人</li>
+                <li class="mb-2">—設計美學 × 程式設計 × 文化創新探索者</li>
+              </ul>
+              <a href="#" class="btn btn-outline-dark mt-3">了解更多</a>
+            </div>
+          </div>
+
+          <!-- 中間圖片 -->
+          <div class="col-lg-4">
+            <img src="images/mememe.png" alt="Profile" class="img-fluid rounded-4">
+          </div>
+
+          <!-- 右側內容 -->
+          <div class="col-lg-4">
+            <div class="p-4">
+              <p class="mb-4">1989年出生於台灣，居住於新北市永和。</p>
+              <p class="mb-4">擁有景觀設計與軟體開發的跨領域背景，致力於結合技術與藝術，創造直覺且富有美感的數位體驗。</p>
+              <p>目前專注於網站與系統開發，並積極參與地方創生與文化設計，運用技術推動社區營造，為地方文化帶來更多創新可能。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 作品展示區 -->
+    <section class="works-section py-5">
+      <div class="container">
+        <!-- 添加標題和分隔線 -->
+        <div class="works-header mb-5">
+          <h3 class="works-title mb-3">作品列表</h3>
+          <div class="divider"></div>
+        </div>
+
+        <div class="row g-4">
+          <!-- 第一個作品 - UIUX -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <a href="pages/uiux2.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/JFSWING.png" class="img-fluid main-image" alt="JF SWING Dance">
+                  <div class="thumbnail-container">
+                    <img src="images/JFSWING.png" class="thumbnail" alt="縮圖1">
+                    <img src="images/JFSWING.png" class="thumbnail" alt="縮圖2">
+                    <img src="images/JFSWING.png" class="thumbnail" alt="縮圖3">
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">JF SWING Dance</h6>
+                  <p class="work-category">Web Design</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 第二個作品 - 大北坑社區故事書 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <a href="pages/Portfolio.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/13.jpg" class="img-fluid main-image" alt="大北坑社區故事書">
+                  <div class="thumbnail-container">
+                    <img src="images/13.jpg" class="thumbnail" alt="縮圖1">
+                    <img src="images/13.jpg" class="thumbnail" alt="縮圖2">
+                    <img src="images/13.jpg" class="thumbnail" alt="縮圖3">
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">大北坑社區故事書</h6>
+                  <p class="work-category">地方創新設計</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 第三個作品 - 山莎蔓岸竹炭合作社 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <a href="pages/Portfolio.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/13.jpg" class="img-fluid main-image" alt="山莎蔓岸竹炭合作社">
+                  <div class="thumbnail-container">
+                    <img src="images/13.jpg" class="thumbnail" alt="縮圖1">
+                    <img src="images/13.jpg" class="thumbnail" alt="縮圖2">
+                    <img src="images/13.jpg" class="thumbnail" alt="縮圖3">
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">山莎蔓岸竹炭合作社</h6>
+                  <p class="work-category">區域品牌與文化設計</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 專案技能區 -->
+    <section id="skills" class="py-5">
+      <div class="container" data-aos="fade-up">
+        <h2 class="text-center mb-5 fw-bold">技術能力</h2>
+
+        <!-- 專案技能區 - 第一行 -->
+        <div class="row g-4 mb-4">
+          <!-- UI/UX Design Tools -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-category">
+              <h3 class="category-title mb-4">
+                <i class="fas fa-palette me-2"></i>UI/UX
+              </h3>
+              <div class="skill-list">
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-figma me-2"></i>
+                    <span class="skill-name">Figma</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-adobe me-2"></i>
+                    <span class="skill-name">Adobe Photoshop</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-adobe me-2"></i>
+                    <span class="skill-name">Adobe Illustrator</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-palette me-2"></i>
+                    <span class="skill-name">Canva</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 88%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frontend Development -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-category">
+              <h3 class="category-title mb-4">
+                <i class="fas fa-code me-2"></i>Frontend
+              </h3>
+              <div class="skill-list">
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-vuejs me-2"></i>
+                    <span class="skill-name">Vue</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 88%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-bootstrap me-2"></i>
+                    <span class="skill-name">Bootstrap</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-js me-2"></i>
+                    <span class="skill-name">JavaScript & jQuery</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-html5 me-2"></i>
+                    <span class="skill-name">HTML/CSS</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 92%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backend Development -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-category">
+              <h3 class="category-title mb-4">
+                <i class="fas fa-server me-2"></i>Backend
+              </h3>
+              <div class="skill-list">
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-java me-2"></i>
+                    <span class="skill-name">Java</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-python me-2"></i>
+                    <span class="skill-name">Python</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 80%"></div>
+                  </div>
+                </div>
+
+
+
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-database me-2"></i>
+                    <span class="skill-name">MySQL, T-SQL</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 82%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-database me-2"></i>
+                    <span class="skill-name">JDBC</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 專案技能區 - 第二行 -->
+        <div class="row g-4">
+          <!-- Frameworks -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-category">
+              <h3 class="category-title mb-4">
+                <i class="fas fa-layer-group me-2"></i>Frameworks
+              </h3>
+              <div class="skill-list">
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-leaf me-2"></i>
+                    <span class="skill-name">Spring, Spring MVC</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 88%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-leaf me-2"></i>
+                    <span class="skill-name">Spring Boot</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-database me-2"></i>
+                    <span class="skill-name">Hibernate</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 82%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collaboration -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-category">
+              <h3 class="category-title mb-4">
+                <i class="fas fa-users me-2"></i>Collaboration
+              </h3>
+              <div class="skill-list">
+                <div class="skill-item">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-git-alt me-2"></i>
+                    <span class="skill-name">Git</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DevOps -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-category">
+              <h3 class="category-title mb-4">
+                <i class="fas fa-cloud me-2"></i>DevOps
+              </h3>
+              <div class="skill-list">
+                <div class="skill-item mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-cloud me-2"></i>
+                    <span class="skill-name">Cloudflare</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                  </div>
+                </div>
+
+                <div class="skill-item">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-github me-2"></i>
+                    <span class="skill-name">GitHub Pages</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 88%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 近期文章區 -->
+    <section id="blog" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">技術分享</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">從零開始的前端之旅</h5>
+                <p class="card-text">分享我是如何學習前端開發，以及一路上遇到的挑戰與解決方案。</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">2024/03/15</small>
+                  <a href="#" class="btn btn-sm btn-outline-primary">閱讀更多</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 可以繼續添加更多文章卡片 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 在近期文章區和聯絡表單區之間添加以下代碼 -->
+    <section class="parallax-section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="text-center text-white">
+          <h2 class="display-4 fw-bold mb-4">創新思維，卓越技術</h2>
+          <p class="lead mb-4">讓我們一起創造下一個精彩的數位體驗</p>
+          <a href="#contact" class="btn btn-outline-light btn-lg">開始合作</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯絡表單區 -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">聯絡我</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="text-center mb-4">
+              <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-github fa-2x text-dark"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-linkedin fa-2x text-primary"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="far fa-envelope fa-2x text-danger"></i>
+                </a>
+              </div>
+              <a href="resume.pdf" class="btn btn-outline-primary mb-4">
+                <i class="fas fa-download me-2"></i>下載履歷
+              </a>
+            </div>
+            <form class="p-4 border rounded-4 shadow-sm">
+              <div class="mb-3">
+                <label for="name" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">留言內容</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">發送訊息</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <h5 class="mb-3">關於我</h5>
+            <p>致力於提供創新的技術解決方案，專注於網頁開發與使用者體驗設計。</p>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">快速連結</h5>
+            <ul class="list-unstyled">
+              <li><a href="#about" class="text-white text-decoration-none">關於我</a></li>
+              <li><a href="#works" class="text-white text-decoration-none">作品集</a></li>
+              <li><a href="#contact" class="text-white text-decoration-none">聯絡方式</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">追蹤我</h5>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center">
+          <p class="mb-0">&copy; 2024 Ivan Zhao. 保留所有權利。</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // 初始化 AOS
+    AOS.init({
+      duration: 1000,
+      once: false,
+      mirror: true
+    });
+
+    // 平滑滾動
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // 滾動時的視差效果
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero-section');
+      hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    });
+
+    // 進度條動畫
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    });
+
+    document.querySelectorAll('.progress-bar').forEach((bar) => {
+      observer.observe(bar);
+    });
+
+    // 視差滾動效果
+    window.addEventListener('scroll', () => {
+      const parallaxBg = document.getElementById('parallaxBg');
+      if (parallaxBg) {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.3;
+        parallaxBg.style.transform = `translate3d(0, ${rate}px, 0)`;
+      }
+    });
+  </script>
+</body>
+
+</html>
