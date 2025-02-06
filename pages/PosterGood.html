@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品詳情 - Ivan's Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../scss/custom.css" />
+    <style>
+        /* 修改基本樣式 */
+        body {
+            padding-top: 80px;
+            /* 為固定導航欄留出空間 */
+            background-color: #fff;
+        }
+
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            color: rgb(46, 16, 16);
+        }
+
+        .navbar-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border: 2px solid white;
+            background-color: white;
+            padding: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        /* 作品詳情頁面特定樣式 */
+        .portfolio-header {
+            text-align: center;
+            padding: 6rem 0 4rem;
+            /* 增加上方間距 */
+            background-color: #fff;
+            position: relative;
+        }
+
+        .portfolio-category-tag {
+            display: block;
+            text-align: center;
+            color: rgb(46, 16, 16);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        .portfolio-title {
+            font-size: 3.2rem;
+            font-weight: 600;
+            margin: 0 auto;
+            position: relative;
+            display: inline-block;
+            letter-spacing: 0.05em;
+            color: rgb(46, 16, 16);
+        }
+
+        .portfolio-title::after {
+            display: none;
+        }
+
+        .main-image-container {
+            margin: -2rem auto 1rem;
+            max-width: 1440px;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .main-image {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            /* 只保留圓角 */
+        }
+
+        .portfolio-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 2rem 4rem 6rem;
+            width: 100%;
+        }
+
+        .portfolio-description {
+            margin-bottom: 4rem;
+        }
+
+        .description-section {
+            margin-bottom: 3rem;
+        }
+
+        .description-section h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: rgb(46, 16, 16);
+        }
+
+        .description-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgb(46, 16, 16);
+            margin-bottom: 1.2rem;
+        }
+
+        .portfolio-info {
+            margin-top: 4rem;
+            padding: 2.5rem;
+            background-color: #f5f5f5;
+            border-radius: 16px;
+        }
+
+        .info-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: rgb(46, 16, 16);
+        }
+
+        .info-text {
+            font-size: 1.1rem;
+            color: rgb(46, 16, 16);
+        }
+
+        /* 導航欄文字顏色 */
+        .navbar-brand {
+            color: rgb(46, 16, 16) !important;
+        }
+
+        .nav-link {
+            color: rgb(46, 16, 16) !important;
+        }
+
+        /* 移除 navbar-dark 類別，改為自定義顏色 */
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(46,16,16)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        /* 頁尾保持白色文字 */
+        .footer a,
+        .footer p,
+        .footer h5 {
+            color: white !important;
+        }
+
+        .design-feature {
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .design-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-title {
+            color: #2e1010;
+            font-size: 1.6rem;
+            font-weight: 600;
+            border-bottom: 2px solid #4f85a6;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sub-feature {
+            color: #2e1010;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-content {
+            padding-left: 1.5rem;
+            border-left: 3px solid #4f85a6;
+        }
+
+        .feature-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #2e1010;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 响应式设计优化 */
+        @media (max-width: 1440px) {
+            .portfolio-content,
+            .main-image-container {
+                max-width: 100%;
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .portfolio-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .design-feature {
+                padding: 2rem;
+            }
+            
+            .feature-title {
+                font-size: 1.4rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .design-feature {
+                padding: 1.5rem;
+            }
+            
+            .feature-title {
+                font-size: 1.2rem;
+            }
+            
+            .sub-feature {
+                font-size: 1.1rem;
+            }
+            
+            .feature-content {
+                padding-left: 1rem;
+            }
+            
+            .feature-content p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .portfolio-content {
+                padding: 1.5rem 1rem;
+            }
+            
+            .design-feature {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../images/logo_2.jpg" alt="Ivan_Zhao Logo" class="rounded-circle me-2 navbar-logo">
+                <span>Ivan_Zhao</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="uiux.html">UIUX</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#about">Frontend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#contact">Backend</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 作品詳情內容 -->
+    <div class="portfolio-header">
+        <div class="container">
+            <h2 class="portfolio-category-tag">海報設計</h2>
+            <h1 class="portfolio-title">職涯講座 - 不急夫妻返創人生</h1>
+        </div>
+    </div>
+
+    <div class="main-image-container">
+        <img src="../images/poster3.png" alt="作品主圖" class="main-image">
+    </div>
+
+    <div class="portfolio-content container">
+        <div class="portfolio-description">
+            <!-- 專案概述 -->
+            <div class="description-section">
+
+                
+                <!-- 主視覺設計 -->
+                <div class="design-feature mb-5">
+                    <h4 class="feature-title mb-3">
+                        <i class="fas fa-shapes me-2"></i>主視覺設計
+                    </h4>
+                    <div class="feature-content">
+                        <h5 class="sub-feature mb-2">幾何元素應用</h5>
+                        <p class="mb-3">三角形元素以對比色調排列，營造現代感與視覺吸引力。通過幾何圖形的精心配置，創造出動態平衡的視覺效果。</p>
+                        
+                        <h5 class="sub-feature mb-2">視覺層次</h5>
+                        <p class="mb-3">建立清晰的視覺層次，使設計既富有張力又保持和諧，讓觀者能夠直觀地理解信息的重要性。</p>
+                    </div>
+                </div>
+                
+                <!-- 色彩計劃 -->
+                <div class="design-feature mb-5">
+                    <h4 class="feature-title mb-3">
+                        <i class="fas fa-palette me-2"></i>色彩計劃
+                    </h4>
+                    <div class="feature-content">
+                        <h5 class="sub-feature mb-2">主色調搭配</h5>
+                        <p class="mb-3">採用橙紅色作為主色調，搭配黑白灰作為輔助色，創造出強烈而專業的視覺效果。</p>
+                        
+                        <h5 class="sub-feature mb-2">色彩心理</h5>
+                        <p class="mb-3">精心挑選的配色方案不僅提升視覺衝擊力，更能引導觀者情緒，強化專業氛圍的營造。</p>
+                    </div>
+                </div>
+                
+                <!-- 版面規劃 -->
+                <div class="design-feature mb-5">
+                    <h4 class="feature-title mb-3">
+                        <i class="fas fa-th-large me-2"></i>版面規劃
+                    </h4>
+                    <div class="feature-content">
+                        <h5 class="sub-feature mb-2">區塊配置</h5>
+                        <p class="mb-3">採用左右分區的清晰布局，確保信息傳達的有效性。模組化的設計讓各個元素之間保持良好的視覺關係。</p>
+                        
+                        <h5 class="sub-feature mb-2">響應式設計</h5>
+                        <p class="mb-3">針對不同裝置尺寸進行優化，確保在各種螢幕上都能呈現最佳的閱讀體驗。版面元素會根據設備特性自動調整排列方式。</p>
+                    </div>
+                </div>
+                
+                <!-- 使用者體驗 -->
+                <div class="design-feature">
+                    <h4 class="feature-title mb-3">
+                        <i class="fas fa-user-check me-2"></i>使用者體驗
+                    </h4>
+                    <div class="feature-content">
+                        <h5 class="sub-feature mb-2">閱讀動線</h5>
+                        <p class="mb-3">精心設計的視覺引導，幫助讀者快速捕捉重要信息，建立自然流暢的閱讀路徑。</p>
+                        
+                        <h5 class="sub-feature mb-2">互動體驗</h5>
+                        <p class="mb-3">考慮數位載體的特性，加入適當的互動效果，提升整體的使用體驗，使設計更具生命力。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 專案資訊 -->
+            <div class="portfolio-info">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="info-item">
+                            <div class="info-label">專案時程</div>
+                            <div class="info-text">2023.09 - 2024.03</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-item">
+                            <div class="info-label">合作單位</div>
+                            <div class="info-text">原資中心</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-item">
+                            <div class="info-label">負責工作</div>
+                            <div class="info-text">海報設計</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="mb-3">關於我</h5>
+                    <p>致力於提供創新的技術解決方案，專注於網頁開發與使用者體驗設計。</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">快速連結</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html#about" class="text-white text-decoration-none">關於我</a></li>
+                        <li><a href="../index.html#works" class="text-white text-decoration-none">作品集</a></li>
+                        <li><a href="../index.html#contact" class="text-white text-decoration-none">聯絡方式</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">追蹤我</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 Ivan Zhao. 保留所有權利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</body>
+
+</html>

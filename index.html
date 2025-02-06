@@ -375,8 +375,8 @@
     .thumbnail {
       width: calc(33.333% - 10px);
       /* 平均分配寬度 */
-      height: 60px;
-      object-fit: cover;
+      height: 70px;
+      object-fit: contain; /* 確保圖片保持原比例並適應框架 */
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.6);
       cursor: pointer;
@@ -627,6 +627,147 @@
       font-size: 0.8em;
       font-weight: bold;
     }
+
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    @media (max-width: 576px) {
+      .loading-container {
+        height: 250px;
+      }
+      .spinner-border {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      .loading-text {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .loading-container {
+        height: 200px;
+      }
+      .spinner-border {
+        width: 2rem;
+        height: 2rem;
+      }
+      .loading-text {
+        font-size: 0.85rem;
+      }
+    }
+
+    .loading-animation {
+      text-align: center;
+    }
+
+    .loading-text {
+      color: #6c757d;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .loading-placeholder {
+      padding: 1rem 0;
+    }
+
+    /* 修改模態框樣式 */
+    .modal {
+      background: none !important;
+      padding-right: 0 !important;
+    }
+
+    .modal-backdrop {
+      display: none !important;
+    }
+
+    .modal-content {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      background: white !important;
+      width: 100%;
+    }
+
+    .modal-dialog {
+      margin: 1rem auto !important;
+    }
+
+    @media (max-width: 1024px) {
+      .modal-dialog {
+        width: 95%;
+        max-width: 95% !important;
+        margin: 0.5rem auto !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-dialog {
+        width: 92%;
+        max-width: 92% !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .modal-dialog {
+        width: 90%;
+        max-width: 90% !important;
+        margin: 0.25rem auto !important;
+      }
+    }
+
+    body.modal-open {
+      padding-right: 0 !important;
+      overflow: auto !important;
+    }
+
+    .resume-container {
+      position: relative;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .resume-image {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* 美化滾動條 */
+    .resume-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .resume-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .resume-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .resume-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   </style>
   <!-- 新增 Font Awesome 图标库 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -646,7 +787,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="pages/uiux.html">UIUX</a>
+            <a class="nav-link" href="pages/aboutme.html">About Me</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#about">Frontend</a>
@@ -723,21 +864,23 @@
         </div>
 
         <div class="row g-4">
+
+          
           <!-- 第一個作品 - UIUX -->
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-            <a href="pages/uiux2.html" class="text-decoration-none">
+            <a href="pages/Jf.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
                   <img src="images/JFSWING.png" class="img-fluid main-image" alt="JF SWING Dance">
                   <div class="thumbnail-container">
-                    <img src="images/JFSWING.png" class="thumbnail" alt="縮圖1">
-                    <img src="images/JFSWING.png" class="thumbnail" alt="縮圖2">
-                    <img src="images/JFSWING.png" class="thumbnail" alt="縮圖3">
+                    <img src="images/10.jpg" class="thumbnail" alt="縮圖1">
+                    <img src="images/11.jpg" class="thumbnail" alt="縮圖2">
+                    <img src="images/01.jpg" class="thumbnail" alt="縮圖3">
                   </div>
                 </div>
                 <div class="work-info mt-3">
                   <h6 class="work-title">JF SWING Dance</h6>
-                  <p class="work-category">Web Design</p>
+                  <p class="work-category">網站設計</p>
                 </div>
               </div>
             </a>
@@ -745,39 +888,155 @@
 
           <!-- 第二個作品 - 大北坑社區故事書 -->
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-            <a href="pages/Portfolio.html" class="text-decoration-none">
+            <a href="pages/book1.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
-                  <img src="images/13.jpg" class="img-fluid main-image" alt="大北坑社區故事書">
+                  <img src="images/book1-0.png" class="img-fluid main-image" alt="大北坑社區故事書">
                   <div class="thumbnail-container">
-                    <img src="images/13.jpg" class="thumbnail" alt="縮圖1">
-                    <img src="images/13.jpg" class="thumbnail" alt="縮圖2">
-                    <img src="images/13.jpg" class="thumbnail" alt="縮圖3">
+                    <img src="images/book1-1.png" class="thumbnail" alt="縮圖1">
+                    <img src="images/book1-2.png" class="thumbnail" alt="縮圖2">
+                    <img src="images/book1-3.png" class="thumbnail" alt="縮圖3">
                   </div>
                 </div>
                 <div class="work-info mt-3">
                   <h6 class="work-title">大北坑社區故事書</h6>
-                  <p class="work-category">地方創新設計</p>
+                  <p class="work-category">地方創生</p>
                 </div>
               </div>
             </a>
           </div>
 
-          <!-- 第三個作品 - 山莎蔓岸竹炭合作社 -->
+          <!-- 第三個作品 -  -->
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-            <a href="pages/Portfolio.html" class="text-decoration-none">
+            <a href="pages/book2.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
-                  <img src="images/13.jpg" class="img-fluid main-image" alt="山莎蔓岸竹炭合作社">
+                  <img src="images/book2-1.png" class="img-fluid main-image" alt="山莎蔓岸竹炭合作社">
                   <div class="thumbnail-container">
-                    <img src="images/13.jpg" class="thumbnail" alt="縮圖1">
-                    <img src="images/13.jpg" class="thumbnail" alt="縮圖2">
-                    <img src="images/13.jpg" class="thumbnail" alt="縮圖3">
+                    <img src="images/book2-1.png" class="thumbnail" alt="縮圖1">
+
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">創生 • 帝那度</h6>
+                  <p class="work-category">地方創生</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <!-- 第4個作品 - -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <a href="pages/Poster1.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/poster1.png" class="img-fluid main-image" alt="JF SWING Dance">
+                  <div class="thumbnail-container">
+                    <img src="images/poster1.png" class="thumbnail" alt="縮圖1">
+
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">職涯講座-返創人生</h6>
+                  <p class="work-category">海報設計</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 第5個作品  -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <a href="pages/Poster1.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/poster2.png" class="img-fluid main-image" alt="大北坑社區故事書">
+                  <div class="thumbnail-container">
+                    <img src="images/poster2.png" class="thumbnail" alt="縮圖1">
+
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">110年度工作會議暨原力培力</h6>
+                  <p class="work-category">海報設計</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 第6個作品 -  -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <a href="pages/Poster3.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/poster3.png" class="img-fluid main-image" alt="山莎蔓岸竹炭合作社">
+                  <div class="thumbnail-container">
+                    <img src="images/poster3.png" class="thumbnail" alt="縮圖1">
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">職涯講座 - 不急夫妻返創人生</h6>
+                  <p class="work-category">海報設計</p>
+                </div>
+              </div>
+            </a>
+          </div>          <!-- 第7個作品  -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <a href="pages/sa.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/sa1.jpg" class="img-fluid main-image" alt="JF SWING Dance">
+                  <div class="thumbnail-container">
+                    <img src="images/sa.png" class="thumbnail" alt="縮圖1">
+
                   </div>
                 </div>
                 <div class="work-info mt-3">
                   <h6 class="work-title">山莎蔓岸竹炭合作社</h6>
-                  <p class="work-category">區域品牌與文化設計</p>
+                  <p class="work-category">地方創生</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 第8個作品 - -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <a href="pages/Portfolio.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/web.png" class="img-fluid main-image" alt="大北坑社區故事書">
+                  <div class="thumbnail-container">
+                    <img src="images/web.png" class="thumbnail" alt="縮圖1">
+
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">Ivan_Zhao Web Design</h6>
+                  <p class="work-category">網站設計</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 第9個作品 -  -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <a href="pages/Portfolio.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container loading-container">
+                  <div class="loading-animation">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="loading-text mt-3">加載中...</p>
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <div class="loading-placeholder">
+                    <div class="placeholder-glow">
+                      <span class="placeholder col-6"></span>
+                    </div>
+                    <div class="placeholder-glow mt-2">
+                      <span class="placeholder col-4"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </a>
@@ -986,25 +1245,7 @@
             </div>
           </div>
 
-          <!-- Collaboration -->
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-category">
-              <h3 class="category-title mb-4">
-                <i class="fas fa-users me-2"></i>Collaboration
-              </h3>
-              <div class="skill-list">
-                <div class="skill-item">
-                  <div class="d-flex align-items-center mb-2">
-                    <i class="fab fa-git-alt me-2"></i>
-                    <span class="skill-name">Git</span>
-                  </div>
-                  <div class="progress" style="height: 4px;">
-                    <div class="progress-bar" role="progressbar" style="width: 90%"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
 
           <!-- DevOps -->
           <div class="col-lg-4 col-md-6">
@@ -1035,6 +1276,28 @@
               </div>
             </div>
           </div>
+
+          <!-- Collaboration -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-category">
+              <h3 class="category-title mb-4">
+                <i class="fas fa-users me-2"></i>Collaboration
+              </h3>
+              <div class="skill-list">
+                <div class="skill-item">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fab fa-git-alt me-2"></i>
+                    <span class="skill-name">Git</span>
+                  </div>
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
         </div>
       </div>
     </section>
@@ -1090,9 +1353,9 @@
                   <i class="far fa-envelope fa-2x text-danger"></i>
                 </a>
               </div>
-              <a href="resume.pdf" class="btn btn-outline-primary mb-4">
-                <i class="fas fa-download me-2"></i>下載履歷
-              </a>
+              <button class="btn btn-outline-primary mb-4" data-bs-toggle="modal" data-bs-target="#resumeModal">
+                <i class="fas fa-eye me-2"></i>查看履歷
+              </button>
             </div>
             <form class="p-4 border rounded-4 shadow-sm">
               <div class="mb-3">
@@ -1113,6 +1376,21 @@
         </div>
       </div>
     </section>
+
+    <!-- 履歷模態框 -->
+    <div class="modal" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" style="max-width: min(595px, 95vw); margin: 1rem auto;">
+        <div class="modal-content bg-white" style="box-shadow: none;">
+          <div class="modal-body p-0">
+            <div class="resume-wrapper" style="position: relative; width: 100%; padding-top: 141.4%;">
+              <div class="resume-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;" data-bs-dismiss="modal">
+                <img src="images/Resume.png" alt="我的履歷" style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- 頁尾 -->
     <footer class="footer">
