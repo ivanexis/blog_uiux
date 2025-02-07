@@ -298,6 +298,25 @@
                 margin: 1.5rem auto;
             }
         }
+
+        /* YouTube 影片容器樣式 */
+        .video-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .ratio-16x9 {
+            border-radius: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                margin: 0 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -338,6 +357,20 @@
 
     <div class="main-image-container">
         <img src="../images/book1-0.png" alt="作品主圖" class="main-image">
+        
+        <!-- YouTube 影片嵌入 -->
+        <div class="video-container mt-4">
+            <div class="ratio ratio-16x9">
+                <iframe 
+                    src="https://www.youtube.com/embed/21eF6b3UeS0?autoplay=1&mute=1" 
+                    title="大北坑客家文化保存與觀光發展規劃" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
         <div class="report-link-container text-center mt-4">
             <a href="https://drive.google.com/file/d/147B9i0X6bFfE7ngl-Drz8_C5aokR7S8G/view" class="btn btn-primary btn-lg report-link">
                 <i class="fas fa-book-open me-2"></i>查看完整報告書
@@ -404,7 +437,7 @@
                     <div class="col-md-4">
                         <div class="info-item">
                             <div class="info-label">專案時程</div>
-                            <div class="info-text">2023.06 - 2024.06</div>
+                            <div class="info-text">2020.02 - 2024.08</div>
                         </div>
                     </div>
                     <div class="col-md-4">

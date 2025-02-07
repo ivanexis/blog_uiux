@@ -839,6 +839,52 @@
       user-select: none;  /* 禁止文字选择 */
       pointer-events: none;  /* 禁止点击事件 */
     }
+
+    /* 修改 parallax-section 樣式 */
+    .parallax-section {
+        background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('images/view.webp');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;  /* 添加視差效果 */
+        position: relative;
+        padding: 100px 0;  /* 增加上下間距 */
+        margin: 50px 0;    /* 增加與其他區塊的間距 */
+    }
+
+    /* 確保文字在背景上清晰可見 */
+    .parallax-section .text-white {
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  /* 添加文字陰影 */
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+        .parallax-section {
+            padding: 60px 0;
+            margin: 30px 0;
+            background-attachment: scroll;  /* 在移動設備上禁用視差效果 */
+        }
+    }
+
+    .parallax-section {
+      background: linear-gradient(45deg, rgba(26, 26, 26, 0.8), rgba(42, 42, 42, 0.8)), url('images/view.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+    }
+
+    #particleCanvas {
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .parallax-section .container {
+      z-index: 2;
+    }
   </style>
 </head>
 
@@ -1366,7 +1412,7 @@
     </section>
 
 
-    <!-- 在近期文章區和聯絡表單區之間添加以下代碼 -->
+    <!-- 創新思維，卓越技術 -->
     <section class="parallax-section py-5">
       <div class="container" data-aos="fade-up">
         <div class="text-center text-white">
