@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宇宙互动动画页面</title>
+  <style>
+    /* 基本重置与背景设定 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #2b003b;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    /* 全屏 Canvas */
+    #universeCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    /* 前景标语与互动提示，使用 pointer-events: none 让画布互动不受遮挡 */
+    .overlay {
+      position: absolute;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+      color: #fff;
+      font-size: 3em;
+      opacity: 0.8;
+      user-select: none;
+    }
+    .interaction-info {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+      pointer-events: none;
+      font-size: 1em;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="universeCanvas"></canvas>
+  <div class="overlay">歡迎進入宇宙</div>
+  <div class="interaction-info">拖曳滑鼠探索宇宙</div>
+  
+  <script>
+    const canvas = document.getElementById("universeCanvas");
+    const ctx = canvas.getContext("2d");
+    
+    // 动画控制参数
+    const introDuration = 6000;   // 6秒内完成缩放动画
+    const pauseDuration = 3000;   // 动画结束后停留3秒
+    let isPausedForReset = false; // 是否处于暂停状态
+    let pauseStart = 0;           // 暂停开始时间
+    let introStart = Date.now();  // 动画开始时间
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      bgGradient.addColorStop(0, "#2b003b");
+      bgGradient.addColorStop(1, "#000000");
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    let bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    bgGradient.addColorStop(0, "#2b003b");
+    bgGradient.addColorStop(1, "#000000");
+
+    const stars = [];
+    const numStars = 300;
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.2,
+        alpha: Math.random(),
+        twinkleSpeed: Math.random() * 0.05 + 0.01
+      });
+    }
+    
+    const planets = [];
+    const numPlanets = 5;
+    const planetColors = ["#9d4edd", "#e0aaff", "#bf40bf", "#a64ca6", "#d18cd1"];
+    for (let i = 0; i < numPlanets; i++){
+      planets.push({
+        orbitRadius: Math.random() * 200 + 100,
+        angle: Math.random() * Math.PI * 2,
+        speed: (Math.random() * 0.001 + 0.0005) * (Math.random() > 0.5 ? 1 : -1),
+        size: Math.random() * 20 + 10,
+        color: planetColors[i % planetColors.length]
+      });
+    }
+    
+    let offsetX = 0;
+    let offsetY = 0;
+    let isDragging = false;
+    let lastMouse = { x: 0, y: 0 };
+
+    canvas.addEventListener("mousedown", function(e){
+      isDragging = true;
+      lastMouse.x = e.clientX;
+      lastMouse.y = e.clientY;
+    });
+    
+    canvas.addEventListener("mousemove", function(e){
+      if(isDragging){
+        let dx = e.clientX - lastMouse.x;
+        let dy = e.clientY - lastMouse.y;
+        offsetX += dx;
+        offsetY += dy;
+        lastMouse.x = e.clientX;
+        lastMouse.y = e.clientY;
+      }
+    });
+    
+    canvas.addEventListener("mouseup", () => isDragging = false);
+    canvas.addEventListener("mouseleave", () => isDragging = false);
+    
+    function drawStars() {
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      for (let star of stars){
+        star.alpha += star.twinkleSpeed;
+        if (star.alpha > 1 || star.alpha < 0) {
+          star.twinkleSpeed = -star.twinkleSpeed;
+        }
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2);
+        ctx.fillStyle = "rgba(255,255,255," + star.alpha.toFixed(2) + ")";
+        ctx.fill();
+      }
+    }
+
+    function drawPlanets() {
+      let elapsed = Date.now() - introStart;
+      let scaleFactor = 1;
+
+      if (elapsed < introDuration) {
+        // 前6秒，从小变大
+        scaleFactor = 0.2 + (1 - 0.2) * (elapsed / introDuration);
+      } else {
+        // 6秒后，检查是否需要暂停
+        if (!isPausedForReset) {
+          isPausedForReset = true;
+          pauseStart = Date.now();
+        }
+        
+        let pauseElapsed = Date.now() - pauseStart;
+        if (pauseElapsed >= pauseDuration) {
+          // 暂停3秒后，重置动画
+          introStart = Date.now();
+          isPausedForReset = false;
+        }
+        // 维持正常大小
+        scaleFactor = 1;
+      }
+
+      for (let planet of planets) {
+        planet.angle += planet.speed;
+        let planetX = canvas.width/2 + (planet.orbitRadius * scaleFactor) * Math.cos(planet.angle + offsetX * 0.002);
+        let planetY = canvas.height/2 + (planet.orbitRadius * scaleFactor) * Math.sin(planet.angle + offsetY * 0.002);
+        
+        ctx.beginPath();
+        ctx.arc(planetX, planetY, planet.size * scaleFactor, 0, Math.PI*2);
+        let grad = ctx.createRadialGradient(
+          planetX - planet.size*0.3, 
+          planetY - planet.size*0.3, 
+          planet.size*0.1 * scaleFactor,
+          planetX, 
+          planetY, 
+          planet.size * scaleFactor
+        );
+        grad.addColorStop(0, "#ffffff");
+        grad.addColorStop(0.5, planet.color);
+        grad.addColorStop(1, "#000000");
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+    }
+
+    function animate(){
+      drawStars();
+      drawPlanets();
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

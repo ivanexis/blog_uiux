@@ -7,24 +7,68 @@
   <title>Ivan_Zhao Web</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- 添加 GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
     .body {
       margin: 0;
       font-family: 'Noto Sans TC', sans-serif;
       background-color: #6B4E71;  /* 添加紫色系背景 */
       color: #111111;
+      overflow-x: hidden;
     }
     .hero-section {
       min-height: 100vh;
       background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('images/view.webp');
       background-size: cover;
       background-position: center;
-      color: white;
-      position: fixed;
+      position: relative;
+      color: #fff;
+      z-index: 1;
+    }
+
+    /* 新增 Particles 层：位于背景与球体之间 */
+    #particlesCanvas {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    #iconCloudCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 1;
+      pointer-events: auto;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 40vh;
+    }
+
+    .hero-morph-text {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: #fff;
+      font-size: 55px;
+      font-weight: 600;
+      filter: blur(30px);
+      opacity: 0;
+      transition: none;
+      user-select: none;
+      pointer-events: none;
     }
 
     .navbar-custom {
@@ -211,6 +255,9 @@
       transform: translateX(-50%);
       color: white;
       text-align: center;
+      z-index: 2;
+      width: 100%;
+      pointer-events: none;
     }
 
     .scroll-down i {
@@ -219,17 +266,9 @@
     }
 
     @keyframes floating {
-      0% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-15px);
-      }
-
-      100% {
-        transform: translateY(0);
-      }
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
     }
 
     /* 修改視差滾動區域樣式 */
@@ -239,7 +278,7 @@
       overflow: hidden;
       display: flex;
       align-items: center;
-      background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('images/view.webp');
+      background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('#');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -768,9 +807,39 @@
     .resume-container::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
+
+    /* 文字轮替相关样式 */
+    .hero-morph-text {
+      display: inline-block;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: #fff;
+      font-size: 55px;
+      font-weight: 600;
+      filter: blur(30px);
+      opacity: 0;
+      transition: none;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    /* 3D 文字相关样式 */
+    .hero-text-3d {
+      perspective: 1000px;
+      display: inline-block;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    .hero-text-3d span {
+      display: inline-block;
+      transform-style: preserve-3d;
+      transform: rotateY(90deg);
+      opacity: 0;
+      margin: 0 0.25rem;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
   </style>
-  <!-- 新增 Font Awesome 图标库 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
@@ -787,13 +856,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="pages/aboutme.html">About Me</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#about">Frontend</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact">Backend</a>
+            <a class="nav-link" href="#contact">Contact Me</a>
           </li>
         </ul>
       </div>
@@ -801,24 +870,23 @@
   </nav>
 
   <!-- 主視覺 -->
-  <section class="hero-section d-flex align-items-center">
-    <div class="container">
-      <div class="row align-items-center">
-
-        <div class="col-lg-6">
-          <!-- 这里可以放置主视觉图片 -->
-        </div>
-      </div>
+  <section class="hero-section d-flex align-items-center" style="position: relative;">
+    <!-- 背景图片由 hero-section 背景设定 -->
+    <!-- 新增 Particles 层 -->
+    <canvas id="particlesCanvas"></canvas>
+    <!-- 原有球体旋转层 -->
+    <canvas id="iconCloudCanvas"></canvas>
+    <div class="container text-center" style="position: relative; z-index: 2; pointer-events: none;">
+      <div class="hero-morph-text"></div>
     </div>
-
-    <div class="scroll-down">
+    <div class="scroll-down" style="pointer-events: none;">
       <p class="mb-2">向下滾動</p>
       <i class="fas fa-chevron-down"></i>
     </div>
   </section>
 
   <!-- 關於我（About Me） -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="margin-top: -2rem;">
     <!-- 簡介區 -->
     <section id="about" class="py-5" data-aos="fade-up" data-aos-duration="1000">
       <div class="container">
@@ -833,7 +901,7 @@
                 <li class="mb-2">—山莎蔓岸竹炭合作社共同創辦人</li>
                 <li class="mb-2">—設計美學 × 程式設計 × 文化創新探索者</li>
               </ul>
-              <a href="#" class="btn btn-outline-dark mt-3">了解更多</a>
+              <a href="pages/aboutme.html" class="btn btn-outline-dark mt-3">了解更多</a>
             </div>
           </div>
 
@@ -864,10 +932,28 @@
         </div>
 
         <div class="row g-4">
-
-          
-          <!-- 第一個作品 - UIUX -->
+          <!-- 第一個作品 - 不解釋 -->
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <a href="pages/web.html" class="text-decoration-none">
+              <div class="work-card">
+                <div class="work-image-container">
+                  <img src="images/web1-0.png" class="img-fluid main-image" alt="不解釋">
+                  <div class="thumbnail-container">
+                    <img src="images/web1-1.png" class="thumbnail" alt="縮圖1">
+                    <img src="images/web1-2.png" class="thumbnail" alt="縮圖2">
+                    <img src="images/w.png" class="thumbnail" alt="縮圖3">
+                  </div>
+                </div>
+                <div class="work-info mt-3">
+                  <h6 class="work-title">不解釋</h6>
+                  <p class="work-category">互動設計</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- 第二個作品 - UIUX -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
             <a href="pages/Jf.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
@@ -886,8 +972,8 @@
             </a>
           </div>
 
-          <!-- 第二個作品 - 大北坑社區故事書 -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <!-- 第三個作品 - 大北坑社區故事書 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
             <a href="pages/book1.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
@@ -906,8 +992,8 @@
             </a>
           </div>
 
-          <!-- 第三個作品 -  -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <!-- 第四個作品 - 創生 • 帝那度 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
             <a href="pages/book2.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
@@ -924,8 +1010,9 @@
               </div>
             </a>
           </div>
-          <!-- 第4個作品 - -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+
+          <!-- 第五個作品 - 職涯講座-返創人生 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
             <a href="pages/Poster1.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
@@ -943,9 +1030,9 @@
             </a>
           </div>
 
-          <!-- 第5個作品  -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-            <a href="pages/Poster1.html" class="text-decoration-none">
+          <!-- 第六個作品 - 110年度工作會議暨原力培力 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <a href="pages/Poster2.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
                   <img src="images/poster2.png" class="img-fluid main-image" alt="大北坑社區故事書">
@@ -962,8 +1049,8 @@
             </a>
           </div>
 
-          <!-- 第6個作品 -  -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <!-- 第七個作品 - 職涯講座 - 不急夫妻返創人生 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
             <a href="pages/Poster3.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
@@ -978,8 +1065,10 @@
                 </div>
               </div>
             </a>
-          </div>          <!-- 第7個作品  -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          </div>
+
+          <!-- 第八個作品 - 山莎蔓岸竹炭合作社 -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
             <a href="pages/sa.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
@@ -997,8 +1086,8 @@
             </a>
           </div>
 
-          <!-- 第8個作品 - -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <!-- 第九個作品 - Ivan_Zhao Web Design -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
             <a href="pages/Portfolio.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
@@ -1010,33 +1099,7 @@
                 </div>
                 <div class="work-info mt-3">
                   <h6 class="work-title">Ivan_Zhao Web Design</h6>
-                  <p class="work-category">網站設計</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <!-- 第9個作品 -  -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-            <a href="pages/Portfolio.html" class="text-decoration-none">
-              <div class="work-card">
-                <div class="work-image-container loading-container">
-                  <div class="loading-animation">
-                    <div class="spinner-border text-primary" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="loading-text mt-3">加載中...</p>
-                  </div>
-                </div>
-                <div class="work-info mt-3">
-                  <div class="loading-placeholder">
-                    <div class="placeholder-glow">
-                      <span class="placeholder col-6"></span>
-                    </div>
-                    <div class="placeholder-glow mt-2">
-                      <span class="placeholder col-4"></span>
-                    </div>
-                  </div>
+                  <p class="work-category">網站設計解說</p>
                 </div>
               </div>
             </a>
@@ -1288,10 +1351,10 @@
                   <div class="d-flex align-items-center mb-2">
                     <i class="fab fa-git-alt me-2"></i>
                     <span class="skill-name">Git</span>
-                  </div>
+        </div>
                   <div class="progress" style="height: 4px;">
                     <div class="progress-bar" role="progressbar" style="width: 90%"></div>
-                  </div>
+      </div>
                 </div>
               </div>
             </div>
@@ -1302,27 +1365,6 @@
       </div>
     </section>
 
-    <!-- 近期文章區 -->
-    <section id="blog" class="py-5 bg-light">
-      <div class="container">
-        <h2 class="text-center mb-5 fw-bold">技術分享</h2>
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">從零開始的前端之旅</h5>
-                <p class="card-text">分享我是如何學習前端開發，以及一路上遇到的挑戰與解決方案。</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">2024/03/15</small>
-                  <a href="#" class="btn btn-sm btn-outline-primary">閱讀更多</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 可以繼續添加更多文章卡片 -->
-        </div>
-      </div>
-    </section>
 
     <!-- 在近期文章區和聯絡表單區之間添加以下代碼 -->
     <section class="parallax-section py-5">
@@ -1428,6 +1470,340 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
+    // 取得 canvas 與 context
+    const canvas = document.getElementById('iconCloudCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 設置 canvas 寬高隨視窗大小調整
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // 設定基本參數
+    const numIcons = 30;
+    const iconSize = 15;
+    const radius = 150;
+    const icons = [];
+
+    // 定義 10 種玻璃珠/膠狀小球的色彩資料
+    const beadColors = [
+      { // 深黑色（Black / Charcoal Glass）
+        base: "rgba(30,30,30,0.8)",
+        highlight: "rgba(255,255,255,0.5)",
+        outer: "rgba(0,0,0,0)"
+      },
+      { // 鮮紅色（Bright Red / Ruby Glass）
+        base: "rgba(210,22,26,0.8)",
+        highlight: "rgba(255,59,59,0.9)",
+        outer: "rgba(210,22,26,0)"
+      },
+      { // 琥珀/蜂蜜色（Amber / Honey Glass）
+        base: "rgba(224,166,60,0.7)",
+        highlight: "rgba(255,199,95,0.8)",
+        outer: "rgba(224,166,60,0)"
+      },
+      { // 鮮黃（Vibrant Yellow / Lemon Jelly）
+        base: "rgba(255,234,0,0.7)",
+        highlight: "rgba(255,255,100,0.8)",
+        outer: "rgba(255,234,0,0)"
+      },
+      { // 鮮綠/草綠（Bright Green / Lime Glass）
+        base: "rgba(88,196,67,0.7)",
+        highlight: "rgba(196,255,140,0.8)",
+        outer: "rgba(88,196,67,0)"
+      },
+      { // 淺青綠/水藍（Aqua / Turquoise Jelly）
+        base: "rgba(62,195,201,0.6)",
+        highlight: "rgba(167,255,248,0.8)",
+        outer: "rgba(62,195,201,0)"
+      },
+      { // 天藍/湖藍（Sky Blue / Lake Glass）
+        base: "rgba(0,150,239,0.7)",
+        highlight: "rgba(224,247,255,0.8)",
+        outer: "rgba(0,150,239,0)"
+      },
+      { // 深藍/靛藍（Deep Blue / Indigo Glass）
+        base: "rgba(25,59,130,0.65)",
+        highlight: "rgba(76,121,224,0.8)",
+        outer: "rgba(25,59,130,0)"
+      },
+      { // 淡玫瑰粉（Soft Rose Pink / Rose Quartz）
+        base: "rgba(221,164,179,0.6)",
+        highlight: "rgba(255,240,243,0.8)",
+        outer: "rgba(221,164,179,0)"
+      },
+      { // 銀灰/半透明（Silver / Translucent Grey / Frosted Glass）
+        base: "rgba(226,226,226,0.4)",
+        highlight: "rgba(255,255,255,0.8)",
+        outer: "rgba(226,226,226,0)"
+      }
+    ];
+
+    // 利用 Fibonacci Sphere 生成圖標位置，並依循環取對應玻璃珠色彩資料
+    for (let i = 0; i < numIcons; i++) {
+      const offset = 2 / numIcons;
+      const y = i * offset - 1 + offset / 2;
+      const r = Math.sqrt(1 - y * y);
+      const phi = i * Math.PI * (3 - Math.sqrt(5));
+      icons.push({
+        x: Math.cos(phi) * r * radius,
+        y: y * radius,
+        z: Math.sin(phi) * r * radius,
+        bead: beadColors[i % beadColors.length], // 依序取出固定 10 種顏色
+        id: i
+      });
+    }
+
+    // 初始化旋轉角度與旋轉速率
+    let rotation = { x: 0, y: 0 };
+    const baseVelocity = { x: 0.002, y: 0.005 };
+    let velocity = { x: baseVelocity.x * 4, y: baseVelocity.y * 4 }; // 初始速率為基礎值的4倍
+
+    // 拖動與互動相關變數
+    let isDragging = false;
+    let mouseDown = false;
+    let lastMousePos = { x: 0, y: 0 };
+    let dragVelocity = { x: 0, y: 0 };
+    let mousePos = { x: null, y: null };
+    let paused = false;
+    let frozenElapsed = 0;
+    let pausedScaleFactor = 0;
+
+    // 動畫控制參數
+    const introDuration = 8000; // 8秒
+    let introStart = Date.now();
+    const centerThreshold = 150; // 中心觸發區域半徑
+
+    // 事件監聽器
+    canvas.addEventListener('mousedown', (e) => {
+      mouseDown = true;
+      isDragging = true;
+      lastMousePos = { x: e.clientX, y: e.clientY };
+      velocity.x = 0;
+      velocity.y = 0;
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      mouseDown = false;
+      isDragging = false;
+      introStart = Date.now(); // 重置時間軸
+      velocity.x = baseVelocity.x * 4;
+      velocity.y = baseVelocity.y * 4;
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mousePos.x = e.clientX - rect.left;
+      mousePos.y = e.clientY - rect.top;
+
+      if (isDragging) {
+        const dx = e.clientX - lastMousePos.x;
+        const dy = e.clientY - lastMousePos.y;
+        rotation.y -= dx * 0.005;
+        rotation.x -= dy * 0.005;
+        dragVelocity.x = -dx * 0.005;
+        dragVelocity.y = -dy * 0.005;
+        lastMousePos = { x: e.clientX, y: e.clientY };
+      }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      mouseDown = false;
+      isDragging = false;
+      mousePos = { x: null, y: null };
+      velocity.x = baseVelocity.x * 4;
+      velocity.y = baseVelocity.y * 4;
+    });
+
+    // 檢查滑鼠是否在中心觸發區域
+    function checkMouseCenter() {
+      if (mousePos.x === null || mousePos.y === null || isDragging || mouseDown) return;
+      
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const dist = Math.sqrt((mousePos.x - centerX) ** 2 + (mousePos.y - centerY) ** 2);
+
+      if (dist < centerThreshold && !paused) {
+        paused = true;
+        frozenElapsed = Date.now() - introStart;
+        pausedScaleFactor = 6.0 - (6.0 - 0.2) * (frozenElapsed / introDuration);
+        // 降低旋轉速率至 25%
+        velocity.x = baseVelocity.x;
+        velocity.y = baseVelocity.y;
+      } else if (dist >= centerThreshold && paused) {
+        paused = false;
+        introStart = Date.now() - frozenElapsed;
+        // 恢復正常旋轉速率
+        velocity.x = baseVelocity.x * 4;
+        velocity.y = baseVelocity.y * 4;
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      checkMouseCenter();
+
+      if (!isDragging && !mouseDown) {
+        rotation.x += velocity.x;
+        rotation.y -= velocity.y;
+        dragVelocity.x *= 0.95;
+        dragVelocity.y *= 0.95;
+        rotation.x += dragVelocity.x;
+        rotation.y += dragVelocity.y;
+      }
+
+      let elapsed = Date.now() - introStart;
+      let globalScaleFactor;
+
+      if (mouseDown || isDragging) {
+        globalScaleFactor = 6.0;
+      } else if (paused) {
+        globalScaleFactor = pausedScaleFactor;
+      } else {
+        if (elapsed < introDuration) {
+          globalScaleFactor = 6.0 - (6.0 - 0.0001) * (elapsed / introDuration);
+          // 旋轉速率從4倍逐漸過渡到2倍
+          const speedFactor = 9.0 - (1.0 * elapsed / introDuration);
+          velocity.x = baseVelocity.x * speedFactor;
+          velocity.y = baseVelocity.y * speedFactor;
+        } else {
+          globalScaleFactor = 0.1;
+          velocity.x = baseVelocity.x * 2;
+          velocity.y = baseVelocity.y * 2;
+        }
+      }
+
+      icons.forEach(icon => {
+        const cosY = Math.cos(rotation.y);
+        const sinY = Math.sin(rotation.y);
+        const cosX = Math.cos(rotation.x);
+        const sinX = Math.sin(rotation.x);
+
+        // 使用當前 globalScaleFactor 將原始 3D 座標縮放
+        const dx = icon.x * globalScaleFactor;
+        const dy = icon.y * globalScaleFactor;
+        const dz = icon.z * globalScaleFactor;
+
+        // 經過旋轉矩陣計算新的 3D 座標
+        let x = dx * cosY - dz * sinY;
+        let z = dx * sinY + dz * cosY;
+        let y = dy * cosX - z * sinX;
+        z = dy * sinX + z * cosX;
+
+        // 投影與縮放
+        const scale = (z + 200) / 300;
+        const screenX = canvas.width / 2 + x;
+        const screenY = canvas.height / 2 + y;
+        const alpha = Math.max(0.2, Math.min(1, (z + 150) / 200));
+
+        ctx.save();
+        ctx.translate(screenX, screenY);
+        ctx.scale(scale, scale);
+        ctx.globalAlpha = alpha;
+
+        // 計算動態光源位置
+        const time = Date.now() * 0.001;
+        const dynamicLightX = Math.cos(time) * iconSize * 0.5;
+        const dynamicLightY = Math.sin(time) * iconSize * 0.5;
+
+        // 建立具有動態光源偏移的漸層
+        const gradient = ctx.createRadialGradient(
+          dynamicLightX, dynamicLightY, iconSize * 0.1,
+          0, 0, iconSize
+        );
+        gradient.addColorStop(0, icon.bead.highlight);
+        gradient.addColorStop(0.3, icon.bead.base);
+        gradient.addColorStop(0.6, icon.bead.base);
+        gradient.addColorStop(1, icon.bead.outer);
+
+        ctx.beginPath();
+        ctx.arc(0, 0, iconSize, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        ctx.restore();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // 原有的文字动画代码
+    document.addEventListener('DOMContentLoaded', () => {
+      // 文字清單
+      const textSequence = [
+        { text: "Visual Designer", fontSize: "55px" },
+        { text: "Ivan Zhao", fontSize: "64px" },
+        { text: "Full Stack Engineer", fontSize: "48px" },
+        { text: "Ivan Zhao", fontSize: "64px" },
+      ];
+
+      // 取得容器
+      const morphEl = document.querySelector('.hero-morph-text');
+      if (!morphEl) return;
+
+      // 初始化 GSAP 時間軸
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        repeat: -1  // 無限循環
+      });
+
+      function setTextContent(obj) {
+        morphEl.textContent = obj.text;
+        morphEl.style.fontSize = obj.fontSize;
+      }
+
+      textSequence.forEach((item) => {
+        tl.call(() => setTextContent(item));
+
+        // 文字進場 (淡入 + 旋轉)
+        tl.fromTo(morphEl,
+          { 
+            filter: "blur(30px)", 
+            scale: 0.8, 
+            opacity: 0, 
+            rotationY: 90 
+          },
+          { 
+            filter: "blur(0px)", 
+            scale: 1, 
+            opacity: 1, 
+            rotationY: 0, 
+            duration: 1 
+          }
+        );
+
+        // 停留時間
+        tl.to(morphEl, { duration: 1 });
+
+        // 文字退出 (淡出 + 旋轉)
+        tl.to(morphEl,
+          { 
+            filter: "blur(30px)", 
+            scale: 0.8, 
+            opacity: 0, 
+            rotationY: -90, 
+            duration: 1 
+          }
+        );
+      });
+    });
+
+    // 等整个页面加载完成后执行3D文字动画
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.to('.hero-text-3d span', {
+        duration: 1,
+        rotationY: 0,
+        opacity: 1,
+        stagger: 0.2,
+        ease: 'power2.out'
+      });
+    });
+
     // 初始化 AOS
     AOS.init({
       duration: 1000,
@@ -1485,6 +1861,98 @@
         parallaxBg.style.transform = `translate3d(0, ${rate}px, 0)`;
       }
     });
+
+    /* ========== 粒子效果程式碼 ========== */
+    (() => {
+      // 建立粒子 canvas
+      const particlesCanvas = document.createElement('canvas');
+      particlesCanvas.id = 'particlesCanvas';
+      document.querySelector('.hero-section').appendChild(particlesCanvas);
+      const pctx = particlesCanvas.getContext('2d');
+
+      // 設定粒子 canvas 樣式
+      particlesCanvas.style.position = 'absolute';
+      particlesCanvas.style.top = '0';
+      particlesCanvas.style.left = '0';
+      particlesCanvas.style.width = '100%';
+      particlesCanvas.style.height = '100%';
+      particlesCanvas.style.zIndex = '0';
+      particlesCanvas.style.pointerEvents = 'none';
+
+      // 取得實際尺寸與設定 dpr
+      const dpr = window.devicePixelRatio || 1;
+      let canvasWidth = particlesCanvas.clientWidth;
+      let canvasHeight = particlesCanvas.clientHeight;
+      particlesCanvas.width = canvasWidth * dpr;
+      particlesCanvas.height = canvasHeight * dpr;
+      pctx.scale(dpr, dpr);
+
+      // 建立粒子陣列與預設數量
+      const particles = [];
+      const particleCount = 100;
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(createParticle());
+      }
+
+      // 設定開始時間與總持續時間（6秒）
+      const startTime = performance.now();
+      const totalDuration = 6000;
+
+      function createParticle() {
+        return {
+          x: Math.random() * canvasWidth,
+          y: Math.random() * canvasHeight,
+          size: Math.random() * 2 + 1,
+          speed: Math.random() * 0.5 + 0.2,
+          alpha: Math.random() * 0.5 + 0.5
+        };
+      }
+
+      function updateParticles() {
+        // 計算已經過的時間，並依據 6 秒線性淡出：
+        // 起始時 densityFactor 為 1；6秒後降至 0.3（即保留 30% 強度）
+        const elapsed = performance.now() - startTime;
+        const densityFactor = 0.6 + 0.7 * Math.max(0, (totalDuration - elapsed) / totalDuration);
+        
+        pctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        particles.forEach(p => {
+          // 粒子向上漂浮
+          p.y -= p.speed;
+          // 每幀逐漸減少透明度
+          p.alpha -= 0.005;
+          // 若粒子超出上邊界或透明度過低則從下方重生
+          if (p.alpha <= 0 || p.y < -p.size) {
+            p.x = Math.random() * canvasWidth;
+            p.y = canvasHeight + p.size;
+            p.alpha = Math.random() * 0.5 + 0.5;
+          }
+          pctx.beginPath();
+          pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          // 將每個粒子的 alpha 乘上 densityFactor，以達到全局強度逐漸下降的效果
+          pctx.fillStyle = `rgba(255,255,255,${p.alpha * densityFactor})`;
+          pctx.fill();
+        });
+        requestAnimationFrame(updateParticles);
+      }
+      updateParticles();
+    })();
+
+    /* ========== 球體旋轉動畫程式碼 ========== */
+    (() => {
+      // 取得 canvas 與 context
+      const sphereCanvas = document.getElementById('iconCloudCanvas');
+      const sphereCtx = sphereCanvas.getContext('2d');
+
+      // 設置 canvas 寬高隨視窗大小調整
+      function resizeSphereCanvas() {
+        sphereCanvas.width = sphereCanvas.offsetWidth;
+        sphereCanvas.height = sphereCanvas.offsetHeight;
+      }
+      resizeSphereCanvas();
+      window.addEventListener('resize', resizeSphereCanvas);
+
+      // 其他球体动画代码保持不变，但将所有的 canvas 改为 sphereCanvas，ctx 改为 sphereCtx
+    })();
   </script>
 </body>
 
