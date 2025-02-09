@@ -885,12 +885,52 @@
     .parallax-section .container {
       z-index: 2;
     }
+
+    /* 移动端提示横幅样式 */
+    .mobile-notice {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 0;
+      text-align: center;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      transform: translateY(-100%);
+      animation: slideDown 0.5s ease forwards 0.5s, slideUp 0.5s ease forwards 3.5s;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+    }
+
+    .mobile-notice p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: rgb(46, 16, 16);
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100%); opacity: 0; }
+    }
   </style>
 </head>
 
 <body>
+  <!-- 移动端提示横幅 -->
+  <div class="mobile-notice d-md-none">
+    <div class="container">
+      <p>💻 使用電腦瀏覽可體驗完整互動效果</p>
+    </div>
+  </div>
+
   <!-- Header -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="#">
         <img src="images/logo_2.jpg" alt="Ivan_Zhao Logo" class="rounded-circle me-2 navbar-logo">
@@ -942,6 +982,8 @@
           <div class="col-lg-4">
             <div class="p-4">
               <ul class="list-unstyled">
+
+
                 <h2 class="mb-2">趙冠柏</h2>
                 <li class="mb-2">—全端工程師 & 地方創生推動者</li>
                 <li class="mb-2">—山莎蔓岸竹炭合作社共同創辦人</li>
@@ -1069,7 +1111,7 @@
                   </div>
                 </div>
                 <div class="work-info mt-3">
-                  <h6 class="work-title">職涯講座-返創人生</h6>
+                  <h6 class="work-title">職涯講座 - 返創人生</h6>
                   <p class="work-category">海報設計</p>
                 </div>
               </div>
@@ -1134,18 +1176,18 @@
 
           <!-- 第九個作品 - Ivan_Zhao Web Design -->
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-            <a href="pages/Portfolio.html" class="text-decoration-none">
+            <a href="pages/Poster4.html" class="text-decoration-none">
               <div class="work-card">
                 <div class="work-image-container">
-                  <img src="images/web.png" class="img-fluid main-image" alt="大北坑社區故事書">
+                  <img src="images/poster4.png" class="img-fluid main-image" alt="大北坑社區故事書">
                   <div class="thumbnail-container">
-                    <img src="images/web.png" class="thumbnail" alt="縮圖1">
+                    <img src="images/poster4.png" class="thumbnail" alt="縮圖1">
 
                   </div>
                 </div>
                 <div class="work-info mt-3">
-                  <h6 class="work-title">Ivan_Zhao Web Design</h6>
-                  <p class="work-category">網站設計解說</p>
+                  <h6 class="work-title">文鄉思起 - 創聚在三峽</h6>
+                  <p class="work-category">海報設計</p>
                 </div>
               </div>
             </a>
@@ -1507,7 +1549,7 @@
         </div>
         <hr class="my-4">
         <div class="text-center">
-          <p class="mb-0">&copy; 2024 Ivan Zhao. 保留所有權利。</p>
+          <p class="mb-0">本網站由 Ivan Zhao 親自設計撰寫並保留所有權利。</p>
         </div>
       </div>
     </footer>
