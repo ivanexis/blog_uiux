@@ -1,0 +1,449 @@
+IE、Chrome、Edge三種瀏覽器通用寫法研究報告
+============================================
+
+## 概述
+本報告研究適合IE、Chrome、Edge三種瀏覽器的通用JavaScript寫法，特別關注保持功能完整性和避免下拉選項消失的問題。
+
+## 瀏覽器相容性現況分析
+
+### 1. IE瀏覽器 (Internet Explorer)
+- **支援版本**: IE8, IE9, IE10, IE11
+- **特點**: 支援document.all、showModalDialog等專用API
+- **限制**: 部分現代JavaScript語法不支援
+
+### 2. Chrome瀏覽器
+- **支援版本**: Chrome 60+
+- **特點**: 完全支援現代JavaScript標準
+- **限制**: 不支援IE專用API
+
+### 3. Edge瀏覽器
+- **支援版本**: Edge 79+ (Chromium版本)
+- **特點**: 基於Chromium，支援現代標準
+- **限制**: 不支援IE專用API
+
+## 關鍵功能通用寫法研究
+
+### 1. 元素選擇器通用寫法
+
+#### 問題分析
+- **IE專用**: `document.all["elementName"]`
+- **現代瀏覽器**: `document.getElementById()` 或 `document.querySelector()`
+- **風險**: 使用document.all可能導致元素找不到，下拉選項消失
+
+#### 通用解決方案
+```javascript
+// 完全替代 document.all 的通用函式
+function getByNameOrId(name, index) {
+    // 優先使用標準 DOM API
+    var el = document.getElementById(name);
+    if (!el && document.forms && document.forms['form1']) {
+        el = document.forms['form1'][name];
+    }
+    if (!el) {
+        var list = document.getElementsByName(name);
+        if (list && list.length) {
+            if (typeof index !== 'undefined' && index >= 0 && index < list.length) {
+                el = list[index];
+            } else {
+                el = list[0];
+            }
+        }
+    }
+    
+    // 如果標準 API 都找不到，且瀏覽器支援 document.all，則使用 document.all
+    if (!el && typeof document.all !== 'undefined' && document.all) {
+        if (typeof index !== 'undefined' && index >= 0) {
+            el = document.all[name] ? document.all[name][index] : null;
+        } else {
+            el = document.all[name];
+        }
+    }
+    
+    return el || null;
+}
+
+// 安全設定元素值
+function setElementValue(elementName, value) {
+    var element = getByNameOrId(elementName);
+    if (element && value !== undefined && value !== null) {
+        try {
+            element.value = value;
+            return true;
+        } catch (e) {
+            console.warn('無法設定元素值:', elementName, e);
+            return false;
+        }
+    }
+    return false;
+}
+
+// 安全取得元素值
+function getElementValue(elementName) {
+    var element = getByNameOrId(elementName);
+    if (element) {
+        try {
+            return element.value || '';
+        } catch (e) {
+            console.warn('無法取得元素值:', elementName, e);
+            return '';
+        }
+    }
+    return '';
+}
+```
+
+### 2. 下拉選單操作通用寫法
+
+#### 問題分析
+- **關鍵風險**: 發病原因頁面的下拉選項消失
+- **原因**: 元素選擇器失敗、Ajax請求失敗、DOM操作錯誤
+
+#### 通用解決方案
+```javascript
+// 安全的下拉選單操作函式
+function safeSelectOperation(selectName, operation, data) {
+    var selectElement = getByNameOrId(selectName);
+    if (!selectElement) {
+        console.error('找不到下拉選單:', selectName);
+        return false;
+    }
+    
+    try {
+        switch(operation) {
+            case 'clear':
+                // 安全清空選項
+                while (selectElement.options.length > 0) {
+                    selectElement.remove(0);
+                }
+                // 添加預設選項
+                selectElement.options[0] = new Option("請選擇", "");
+                break;
+                
+            case 'add':
+                // 安全添加選項
+                if (data && Array.isArray(data)) {
+                    data.forEach(function(item) {
+                        if (item.value && item.text) {
+                            selectElement.options[selectElement.options.length] = 
+                                new Option(item.text, item.value);
+                        }
+                    });
+                }
+                break;
+                
+            case 'enable':
+                selectElement.disabled = false;
+                break;
+                
+            case 'disable':
+                selectElement.disabled = true;
+                break;
+                
+            default:
+                console.warn('未知的操作類型:', operation);
+                return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('下拉選單操作失敗:', error);
+        return false;
+    }
+}
+
+// 發病原因聯動選擇的改進版本
+function doChangeReason1_Improved(obj1, type) {
+    var subName = (type == 1) ? "Reason2" : "SecReason2";
+    var obj2 = getByNameOrId(subName);
+    
+    if (!obj2) {
+        console.error('找不到目標下拉選單:', subName);
+        return;
+    }
+    
+    if (obj1 && obj1.trim() != "") {
+        // 先清空並添加預設選項
+        safeSelectOperation(subName, 'clear');
+        safeSelectOperation(subName, 'enable');
+        
+        // 設置查詢條件
+        setElementValue("SqlCondition", "cathay.hospital.ui.select.Pln0801.PlnbColumnDetailTbl.Reason2.001");
+        setElementValue("SELVALUE", obj1);
+        
+        // 執行Ajax請求
+        var action = new Ajax.Request(
+            '<%=request.getContextPath()%>/html/servlet/HttpDispatcher/Pln0801_01/query',
+            {
+                parameters: Form.serialize("form1"),
+                asynchronous: false,
+                onSuccess: function(XHR) {
+                    try {
+                        var jsonObj = XHR.responseJSON;
+                        var results = jsonObj.result;
+                        var optionsData = [];
+                        
+                        if (results && results.each) {
+                            results.each(function(bo, index) {
+                                var record = $H(bo);
+                                var s_option = record.get('OPTION');
+                                var s_value = record.get('VALUE');
+                                optionsData.push({
+                                    value: s_value,
+                                    text: s_value + "：" + s_option
+                                });
+                            });
+                            
+                            // 安全添加選項
+                            safeSelectOperation(subName, 'add', optionsData);
+                        }
+                    } catch (error) {
+                        console.error('處理下拉選項時發生錯誤:', error);
+                        // 錯誤處理：保持預設選項
+                        safeSelectOperation(subName, 'clear');
+                    }
+                },
+                onFailure: function(XHR) {
+                    console.error('Ajax請求失敗:', XHR.status);
+                    // 失敗處理：保持預設選項
+                    safeSelectOperation(subName, 'clear');
+                }
+            }
+        );
+    } else {
+        // 清空選項並禁用
+        safeSelectOperation(subName, 'clear');
+        safeSelectOperation(subName, 'disable');
+    }
+}
+```
+
+### 3. 分頁標籤切換通用寫法
+
+#### 問題分析
+- **IE問題**: document.querySelectorAll可能不支援
+- **現代瀏覽器**: 完全支援querySelectorAll
+- **風險**: 標籤選擇失敗導致分頁無法切換
+
+#### 通用解決方案
+```javascript
+// 跨瀏覽器的分頁標籤切換函式
+function onLoadjsp_Improved(obj, n) {
+    try {
+        // 支援 IE 和其他瀏覽器的元素選擇
+        var tabsF = null;
+        
+        if (document.querySelectorAll) {
+            tabsF = document.querySelectorAll('[id="tabsF"]');
+            if (!tabsF || tabsF.length === 0) {
+                tabsF = document.querySelectorAll('.SelectTab, .unSelectTab');
+            }
+        } else {
+            // IE 8 及以下版本的替代方案
+            var allElements = document.getElementsByTagName('*');
+            var tabsArray = [];
+            for (var i = 0; i < allElements.length; i++) {
+                if (allElements[i].id === 'tabsF' || 
+                    allElements[i].className.indexOf('SelectTab') !== -1 || 
+                    allElements[i].className.indexOf('unSelectTab') !== -1) {
+                    tabsArray.push(allElements[i]);
+                }
+            }
+            tabsF = tabsArray;
+        }
+        
+        if (!tabsF || tabsF.length === 0) {
+            console.error('找不到分頁標籤元素');
+            return;
+        }
+        
+        // 隱藏所有分頁內容
+        for (var i = 0; i < 14; i++) {
+            var mainDiv = document.getElementById('main' + (i + 1));
+            if (mainDiv) {
+                mainDiv.style.display = 'none';
+            }
+        }
+        
+        // 重置所有標籤為未選中狀態
+        for (var i = 0; i < tabsF.length; i++) {
+            if (tabsF[i]) {
+                tabsF[i].className = 'unSelectTab';
+            }
+        }
+        
+        // 設置選中的標籤
+        if (tabsF[n] && tabsF[n] !== null) {
+            tabsF[n].className = 'SelectTab';
+        }
+        
+        // 顯示目標分頁內容
+        var targetDiv = document.getElementById(obj);
+        if (targetDiv) {
+            targetDiv.style.display = 'block';
+        } else {
+            console.error('找不到目標分頁元素:', obj);
+        }
+        
+    } catch (error) {
+        console.error('分頁控制錯誤:', error);
+        // 錯誤處理：直接顯示目標分頁
+        var targetDiv = document.getElementById(obj);
+        if (targetDiv) {
+            targetDiv.style.display = 'block';
+        }
+    }
+}
+```
+
+### 4. 對話框通用寫法
+
+#### 問題分析
+- **IE專用**: `window.showModalDialog`
+- **現代瀏覽器**: 不支援showModalDialog
+- **風險**: 對話框無法顯示，功能失效
+
+#### 通用解決方案
+```javascript
+// 跨瀏覽器的對話框函式
+function openModalDialog_Universal(url, title, width, height) {
+    if (window.showModalDialog) {
+        // IE 支援
+        return window.showModalDialog(url, window, 
+            "dialogHeight:" + height + "px; dialogWidth:" + width + "px; status:no; scroll:no;");
+    } else {
+        // 現代瀏覽器使用 window.open
+        var left = (screen.width - width) / 2;
+        var top = (screen.height - height) / 2;
+        
+        var dialogWindow = window.open(url, title, 
+            "width=" + width + ",height=" + height + 
+            ",left=" + left + ",top=" + top + 
+            ",status=no,scrollbars=no,resizable=yes");
+        
+        // 注意：現代瀏覽器需要額外的處理來獲取對話框結果
+        // 這裡需要根據實際情況調整
+        return dialogWindow;
+    }
+}
+
+// 身分證多筆查詢的改進版本
+function doQueryForUserID_Improved() {
+    var CHARTNO = getByNameOrId("ChartNo");
+    var CHARTID = getByNameOrId("ChartId");
+    
+    if (!CHARTNO || !CHARTID) {
+        return true;
+    }
+    
+    var reOjb = null;
+    if (CHARTNO.value == "" && CHARTID.value != "") {
+        var dialogUrl = "<%=request.getContextPath()%>/html/servlet/HttpDispatcher/Pln0801/queryforuserid?ChartId=" + 
+                       encodeURIComponent(CHARTID.value);
+        
+        reOjb = openModalDialog_Universal(dialogUrl, "queryforuserid", 450, 530);
+        
+        if (reOjb != null) {
+            CHARTNO.value = reOjb[0];
+            CHARTID.value = reOjb[1];
+            return reOjb[2];
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+```
+
+### 5. Ajax請求通用寫法
+
+#### 問題分析
+- **Prototype.js**: 需要確保在所有瀏覽器中正常運作
+- **錯誤處理**: 需要完善的錯誤處理機制
+- **風險**: Ajax失敗導致下拉選項無法載入
+
+#### 通用解決方案
+```javascript
+// 安全的Ajax請求包裝函式
+function safeAjaxRequest(url, parameters, options) {
+    var defaultOptions = {
+        onSuccess: function(XHR) { console.log('Ajax請求成功'); },
+        onFailure: function(XHR) { console.error('Ajax請求失敗:', XHR.status); },
+        onException: function(XHR, error) { console.error('Ajax請求異常:', error); }
+    };
+    
+    // 合併選項
+    var finalOptions = Object.assign({}, defaultOptions, options);
+    
+    try {
+        var action = new Ajax.Request(url, {
+            parameters: parameters,
+            asynchronous: false,
+            onSuccess: function(XHR) {
+                try {
+                    finalOptions.onSuccess(XHR);
+                } catch (error) {
+                    console.error('onSuccess回調執行失敗:', error);
+                    finalOptions.onException(XHR, error);
+                }
+            },
+            onFailure: function(XHR) {
+                finalOptions.onFailure(XHR);
+            },
+            onException: function(XHR, error) {
+                finalOptions.onException(XHR, error);
+            }
+        });
+        
+        return true;
+    } catch (error) {
+        console.error('Ajax請求創建失敗:', error);
+        finalOptions.onException(null, error);
+        return false;
+    }
+}
+```
+
+## 防止下拉選項消失的關鍵策略
+
+### 1. 元素選擇器安全策略
+- **多重備援**: 使用多種方法查找元素
+- **錯誤處理**: 找不到元素時提供明確的錯誤訊息
+- **預設值**: 確保下拉選單始終有基本選項
+
+### 2. Ajax請求安全策略
+- **同步請求**: 使用synchronous: false確保順序執行
+- **錯誤處理**: 完善的onFailure和onException處理
+- **回退機制**: 請求失敗時保持原有選項
+
+### 3. DOM操作安全策略
+- **檢查存在性**: 操作前檢查元素是否存在
+- **try-catch**: 所有DOM操作都包裝在try-catch中
+- **狀態恢復**: 操作失敗時恢復到安全狀態
+
+## 實施建議
+
+### 1. 優先級順序
+1. **高優先級**: 發病原因下拉選單聯動功能
+2. **中優先級**: 分頁標籤切換系統
+3. **低優先級**: 其他輔助功能
+
+### 2. 測試策略
+1. **功能測試**: 確保所有功能正常運作
+2. **相容性測試**: 在IE、Chrome、Edge中測試
+3. **壓力測試**: 測試大量資料載入的情況
+
+### 3. 回退方案
+1. **保留原版本**: 作為備份
+2. **漸進式改版**: 逐步替換功能
+3. **監控機制**: 實時監控功能狀態
+
+## 結論
+
+通過使用這些通用寫法，可以確保：
+
+1. **功能完整性**: 發病原因頁面的下拉選項不會消失
+2. **瀏覽器相容性**: 支援IE、Chrome、Edge三種瀏覽器
+3. **錯誤處理**: 完善的錯誤處理和恢復機制
+4. **用戶體驗**: 一致的跨瀏覽器體驗
+
+下一步需要根據這些通用寫法，制定具體的改版實施計劃。

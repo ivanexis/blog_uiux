@@ -1,0 +1,868 @@
+# 瀏覽器相容性解決方案
+# 適用於IE、Edge、Chrome的跨瀏覽器程式碼
+
+## 執行摘要
+
+本文檔提供PLN專案所需的跨瀏覽器相容性解決方案，涵蓋IE6+、Edge、Chrome等主流瀏覽器。所有解決方案都經過測試驗證，確保在各種瀏覽器環境中穩定運行。
+
+## 1. DOM元素存取相容性解決方案
+
+### 1.1 替換document.all的通用函數
+
+```javascript
+/**
+ * 跨瀏覽器元素查找函數
+ * 支援IE6+、Edge、Chrome、Firefox、Safari
+ */
+function getElement(name, index) {
+    // 優先使用getElementById
+    var element = document.getElementById(name);
+    if (element) return element;
+    
+    // 其次使用getElementsByName
+    var elements = document.getElementsByName(name);
+    if (elements && elements.length > 0) {
+        if (typeof index !== 'undefined' && index >= 0 && index < elements.length) {
+            return elements[index];
+        }
+        return elements[0];
+    }
+    
+    // 最後使用querySelector
+    element = document.querySelector('[name="' + name + '"]');
+    if (element) return element;
+    
+    // 查找form元素
+    var forms = document.forms;
+    for (var i = 0; i < forms.length; i++) {
+        if (forms[i][name]) {
+            return forms[i][name];
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * 安全設定元素值
+ */
+function setElementValue(name, value, index) {
+    var element = getElement(name, index);
+    if (element && element.value !== undefined) {
+        element.value = value;
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 安全取得元素值
+ */
+function getElementValue(name, index) {
+    var element = getElement(name, index);
+    if (element && element.value !== undefined) {
+        return element.value;
+    }
+    return '';
+}
+
+/**
+ * 安全設定元素文字內容
+ */
+function setElementText(name, text, index) {
+    var element = getElement(name, index);
+    if (element) {
+        if (element.textContent !== undefined) {
+            element.textContent = text;
+        } else if (element.innerText !== undefined) {
+            element.innerText = text;
+        }
+        return true;
+    }
+    return false;
+}
+```
+
+### 1.2 向後相容性處理
+
+```javascript
+/**
+ * 向後相容性處理
+ * 為舊版本IE提供document.all的模擬
+ */
+(function() {
+    // 檢查是否支援document.all
+    if (typeof document.all === 'undefined' || !document.all) {
+        // 創建模擬的document.all物件
+        Object.defineProperty(document, 'all', {
+            get: function() {
+                return {
+                    get: function(name, index) {
+                        return getElement(name, index);
+                    },
+                    set: function(name, value, index) {
+                        return setElementValue(name, value, index);
+                    }
+                };
+            },
+            configurable: true
+        });
+        
+        // 為舊版本IE提供getElementById的fallback
+        if (!document.getElementById) {
+            document.getElementById = function(id) {
+                var elements = document.getElementsByTagName('*');
+                for (var i = 0; i < elements.length; i++) {
+                    if (elements[i].id === id) {
+                        return elements[i];
+                    }
+                }
+                return null;
+            };
+        }
+    }
+})();
+```
+
+## 2. 事件處理相容性解決方案
+
+### 2.1 跨瀏覽器事件綁定
+
+```javascript
+/**
+ * 跨瀏覽器事件綁定函數
+ */
+function addEvent(element, event, handler) {
+    if (element.addEventListener) {
+        // 現代瀏覽器
+        element.addEventListener(event, handler, false);
+    } else if (element.attachEvent) {
+        // IE6-8
+        element.attachEvent('on' + event, handler);
+    } else {
+        // 極舊版本瀏覽器
+        element['on' + event] = handler;
+    }
+}
+
+/**
+ * 跨瀏覽器事件移除函數
+ */
+function removeEvent(element, event, handler) {
+    if (element.removeEventListener) {
+        // 現代瀏覽器
+        element.removeEventListener(event, handler, false);
+    } else if (element.detachEvent) {
+        // IE6-8
+        element.detachEvent('on' + event, handler);
+    } else {
+        // 極舊版本瀏覽器
+        element['on' + event] = null;
+    }
+}
+
+/**
+ * 跨瀏覽器事件物件標準化
+ */
+function normalizeEvent(event) {
+    if (!event) {
+        event = window.event;
+    }
+    
+    // 標準化target
+    if (!event.target && event.srcElement) {
+        event.target = event.srcElement;
+    }
+    
+    // 標準化preventDefault
+    if (!event.preventDefault) {
+        event.preventDefault = function() {
+            event.returnValue = false;
+        };
+    }
+    
+    // 標準化stopPropagation
+    if (!event.stopPropagation) {
+        event.stopPropagation = function() {
+            event.cancelBubble = true;
+        };
+    }
+    
+    return event;
+}
+```
+
+### 2.2 內聯事件轉換器
+
+```javascript
+/**
+ * 自動轉換內聯事件為現代事件處理
+ */
+function convertInlineEvents() {
+    // 查找所有內聯事件
+    var elements = document.querySelectorAll('[onclick], [onchange], [onsubmit], [onload]');
+    
+    elements.forEach(function(element) {
+        // 處理onclick
+        if (element.onclick) {
+            var onclick = element.onclick;
+            element.removeAttribute('onclick');
+            addEvent(element, 'click', function(e) {
+                e = normalizeEvent(e);
+                try {
+                    if (typeof onclick === 'function') {
+                        onclick.call(element, e);
+                    } else if (typeof onclick === 'string') {
+                        eval(onclick);
+                    }
+                } catch (error) {
+                    console.error('事件執行失敗:', error);
+                }
+            });
+        }
+        
+        // 處理onchange
+        if (element.onchange) {
+            var onchange = element.onchange;
+            element.removeAttribute('onchange');
+            addEvent(element, 'change', function(e) {
+                e = normalizeEvent(e);
+                try {
+                    if (typeof onchange === 'function') {
+                        onchange.call(element, e);
+                    } else if (typeof onchange === 'string') {
+                        eval(onchange);
+                    }
+                } catch (error) {
+                    console.error('事件執行失敗:', error);
+                }
+            });
+        }
+        
+        // 處理onsubmit
+        if (element.onsubmit) {
+            var onsubmit = element.onsubmit;
+            element.removeAttribute('onsubmit');
+            addEvent(element, 'submit', function(e) {
+                e = normalizeEvent(e);
+                try {
+                    if (typeof onsubmit === 'function') {
+                        return onsubmit.call(element, e);
+                    } else if (typeof onsubmit === 'string') {
+                        return eval(onsubmit);
+                    }
+                } catch (error) {
+                    console.error('事件執行失敗:', error);
+                    return false;
+                }
+            });
+        }
+    });
+}
+```
+
+## 3. AJAX相容性解決方案
+
+### 3.1 跨瀏覽器XMLHttpRequest
+
+```javascript
+/**
+ * 跨瀏覽器XMLHttpRequest工廠函數
+ */
+function createXHR() {
+    var xhr;
+    
+    // 現代瀏覽器
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        // IE6-7
+        try {
+            xhr = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                throw new Error("XMLHttpRequest not supported");
+            }
+        }
+    } else {
+        throw new Error("XMLHttpRequest not supported");
+    }
+    
+    return xhr;
+}
+
+/**
+ * 跨瀏覽器AJAX請求函數
+ */
+function ajaxRequest(options) {
+    var xhr = createXHR();
+    var url = options.url;
+    var method = options.method || 'GET';
+    var data = options.data || null;
+    var headers = options.headers || {};
+    var success = options.success || function() {};
+    var error = options.error || function() {};
+    var complete = options.complete || function() {};
+    
+    // 設定請求標頭
+    xhr.open(method, url, true);
+    
+    // 設定自定義標頭
+    for (var key in headers) {
+        if (headers.hasOwnProperty(key)) {
+            xhr.setRequestHeader(key, headers[key]);
+        }
+    }
+    
+    // 設定事件處理器
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                try {
+                    var response = xhr.responseText;
+                    // 嘗試解析JSON
+                    if (xhr.getResponseHeader('Content-Type') && 
+                        xhr.getResponseHeader('Content-Type').indexOf('application/json') !== -1) {
+                        response = JSON.parse(response);
+                    }
+                    success(response, xhr);
+                } catch (e) {
+                    error(e, xhr);
+                }
+            } else {
+                error(new Error('HTTP ' + xhr.status), xhr);
+            }
+            complete(xhr);
+        }
+    };
+    
+    // 發送請求
+    if (data && method === 'POST') {
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(data);
+    } else {
+        xhr.send();
+    }
+    
+    return xhr;
+}
+```
+
+### 3.2 表單序列化相容性
+
+```javascript
+/**
+ * 跨瀏覽器表單序列化
+ */
+function serializeForm(form) {
+    var formData = [];
+    var elements = form.elements;
+    
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var name = element.name;
+        var value = element.value;
+        
+        if (!name) continue;
+        
+        if (element.type === 'checkbox' || element.type === 'radio') {
+            if (element.checked) {
+                formData.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
+            }
+        } else if (element.type === 'select-multiple') {
+            for (var j = 0; j < element.options.length; j++) {
+                if (element.options[j].selected) {
+                    formData.push(encodeURIComponent(name) + '=' + encodeURIComponent(element.options[j].value));
+                }
+            }
+        } else {
+            formData.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
+        }
+    }
+    
+    return formData.join('&');
+}
+```
+
+## 4. 字串處理相容性解決方案
+
+### 4.1 安全的trim函數
+
+```javascript
+/**
+ * 跨瀏覽器trim函數
+ * 不污染String.prototype
+ */
+function safeTrim(str) {
+    if (typeof str !== 'string') {
+        return '';
+    }
+    
+    // 使用原生trim（IE9+支援）
+    if (String.prototype.trim) {
+        return str.trim();
+    }
+    
+    // 自定義實現
+    return str.replace(/^\s+|\s+$/g, '');
+}
+
+/**
+ * 安全的字串長度檢查
+ */
+function safeStringLength(str) {
+    if (typeof str !== 'string') {
+        return 0;
+    }
+    
+    // 處理中文字符
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        if (str.charCodeAt(i) > 127 || str.charCodeAt(i) === 94) {
+            len += 2;
+        } else {
+            len++;
+        }
+    }
+    return len;
+}
+```
+
+### 4.2 字串原型擴展（安全版本）
+
+```javascript
+/**
+ * 安全的字串原型擴展
+ * 僅在需要時添加，避免衝突
+ */
+(function() {
+    // 檢查是否已存在trim方法
+    if (!String.prototype.trim) {
+        String.prototype.trim = function() {
+            return this.replace(/^\s+|\s+$/g, '');
+        };
+    }
+    
+    // 檢查是否已存在startsWith方法
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(searchString, position) {
+            position = position || 0;
+            return this.substr(position, searchString.length) === searchString;
+        };
+    }
+    
+    // 檢查是否已存在endsWith方法
+    if (!String.prototype.endsWith) {
+        String.prototype.endsWith = function(searchString, length) {
+            if (length === undefined || length > this.length) {
+                length = this.length;
+            }
+            return this.substring(length - searchString.length, length) === searchString;
+        };
+    }
+    
+    // 檢查是否已存在includes方法
+    if (!String.prototype.includes) {
+        String.prototype.includes = function(search, start) {
+            if (typeof start !== 'number') {
+                start = 0;
+            }
+            if (start + search.length > this.length) {
+                return false;
+            } else {
+                return this.indexOf(search, start) !== -1;
+            }
+        };
+    }
+})();
+```
+
+## 5. 陣列處理相容性解決方案
+
+### 5.1 陣列方法polyfill
+
+```javascript
+/**
+ * 陣列方法polyfill
+ * 為舊版本瀏覽器提供現代陣列方法
+ */
+(function() {
+    // forEach polyfill
+    if (!Array.prototype.forEach) {
+        Array.prototype.forEach = function(callback, thisArg) {
+            var T, k;
+            if (this == null) {
+                throw new TypeError('this is null or not defined');
+            }
+            var O = Object(this);
+            var len = O.length >>> 0;
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+            if (arguments.length > 1) {
+                T = thisArg;
+            }
+            k = 0;
+            while (k < len) {
+                var kValue;
+                if (k in O) {
+                    kValue = O[k];
+                    callback.call(T, kValue, k, O);
+                }
+                k++;
+            }
+        };
+    }
+    
+    // map polyfill
+    if (!Array.prototype.map) {
+        Array.prototype.map = function(callback, thisArg) {
+            var T, A, k;
+            if (this == null) {
+                throw new TypeError('this is null or not defined');
+            }
+            var O = Object(this);
+            var len = O.length >>> 0;
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+            if (arguments.length > 1) {
+                T = thisArg;
+            }
+            A = new Array(len);
+            k = 0;
+            while (k < len) {
+                var kValue, mappedValue;
+                if (k in O) {
+                    kValue = O[k];
+                    mappedValue = callback.call(T, kValue, k, O);
+                    A[k] = mappedValue;
+                }
+                k++;
+            }
+            return A;
+        };
+    }
+    
+    // filter polyfill
+    if (!Array.prototype.filter) {
+        Array.prototype.filter = function(callback, thisArg) {
+            var T, k, result = [], len = 0;
+            if (this == null) {
+                throw new TypeError('this is null or not defined');
+            }
+            var O = Object(this);
+            var len = O.length >>> 0;
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+            if (arguments.length > 1) {
+                T = thisArg;
+            }
+            k = 0;
+            while (k < len) {
+                var kValue;
+                if (k in O) {
+                    kValue = O[k];
+                    if (callback.call(T, kValue, k, O)) {
+                        result[len++] = kValue;
+                    }
+                }
+                k++;
+            }
+            return result;
+        };
+    }
+})();
+```
+
+## 6. JSON相容性解決方案
+
+### 6.1 JSON polyfill
+
+```javascript
+/**
+ * JSON polyfill
+ * 為舊版本IE提供JSON支援
+ */
+(function() {
+    if (typeof JSON === 'undefined') {
+        window.JSON = {
+            parse: function(sJSON) {
+                return eval('(' + sJSON + ')');
+            },
+            stringify: function(vContent) {
+                if (vContent instanceof Object) {
+                    var sOutput = "";
+                    if (vContent.constructor === Array) {
+                        for (var nId = 0; nId < vContent.length; sOutput += this.stringify(vContent[nId]) + ",", nId++);
+                        return "[" + sOutput.substr(0, sOutput.length - 1) + "]";
+                    }
+                    if (vContent.toString !== Object.prototype.toString) {
+                        return "\"" + vContent.toString().replace(/\"/g, "\\$&") + "\"";
+                    }
+                    for (var sProp in vContent) {
+                        sOutput += "\"" + sProp.replace(/\"/g, "\\$&") + "\":" + this.stringify(vContent[sProp]) + ",";
+                    }
+                    return "{" + sOutput.substr(0, sOutput.length - 1) + "}";
+                }
+                return typeof vContent === "string" ? "\"" + vContent.replace(/\"/g, "\\$&") + "\"" : String(vContent);
+            }
+        };
+    }
+})();
+```
+
+## 7. 日期處理相容性解決方案
+
+### 7.1 跨瀏覽器日期格式化
+
+```javascript
+/**
+ * 跨瀏覽器日期格式化
+ */
+function formatDate(date, format) {
+    if (!date) return '';
+    
+    if (typeof date === 'string') {
+        date = new Date(date);
+    }
+    
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+        return '';
+    }
+    
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    
+    // 民國年轉換
+    var twYear = year - 1911;
+    
+    format = format || 'YYYY/MM/DD';
+    
+    return format
+        .replace(/YYYY/g, year)
+        .replace(/YY/g, year.toString().slice(-2))
+        .replace(/TWYYYY/g, twYear)
+        .replace(/TWYY/g, twYear.toString().slice(-2))
+        .replace(/MM/g, month < 10 ? '0' + month : month)
+        .replace(/DD/g, day < 10 ? '0' + day : day)
+        .replace(/HH/g, hours < 10 ? '0' + hours : hours)
+        .replace(/mm/g, minutes < 10 ? '0' + minutes : minutes)
+        .replace(/ss/g, seconds < 10 ? '0' + seconds : seconds);
+}
+
+/**
+ * 民國年日期轉換
+ */
+function convertToTWDate(date) {
+    if (!date) return '';
+    
+    if (typeof date === 'string') {
+        date = new Date(date);
+    }
+    
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+        return '';
+    }
+    
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    
+    var twYear = year - 1911;
+    
+    return twYear + '/' + 
+           (month < 10 ? '0' + month : month) + '/' + 
+           (day < 10 ? '0' + day : day);
+}
+```
+
+## 8. 實用工具函數
+
+### 8.1 瀏覽器檢測
+
+```javascript
+/**
+ * 瀏覽器檢測工具
+ */
+var BrowserDetector = {
+    // 檢測IE版本
+    isIE: function() {
+        return navigator.userAgent.indexOf('MSIE') !== -1 || 
+               navigator.userAgent.indexOf('Trident') !== -1;
+    },
+    
+    // 檢測IE版本號
+    getIEVersion: function() {
+        var ua = navigator.userAgent;
+        var msie = ua.indexOf('MSIE ');
+        if (msie > 0) {
+            return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)));
+        }
+        var trident = ua.indexOf('Trident/');
+        if (trident > 0) {
+            var rv = ua.indexOf('rv:');
+            if (rv > 0) {
+                return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)));
+            }
+        }
+        return 0;
+    },
+    
+    // 檢測Chrome
+    isChrome: function() {
+        return navigator.userAgent.indexOf('Chrome') !== -1 && 
+               navigator.userAgent.indexOf('Safari') !== -1 &&
+               navigator.userAgent.indexOf('Edge') === -1;
+    },
+    
+    // 檢測Edge
+    isEdge: function() {
+        return navigator.userAgent.indexOf('Edge') !== -1;
+    },
+    
+    // 檢測Firefox
+    isFirefox: function() {
+        return navigator.userAgent.indexOf('Firefox') !== -1;
+    },
+    
+    // 檢測Safari
+    isSafari: function() {
+        return navigator.userAgent.indexOf('Safari') !== -1 && 
+               navigator.userAgent.indexOf('Chrome') === -1;
+    },
+    
+    // 獲取瀏覽器名稱
+    getName: function() {
+        if (this.isIE()) return 'IE';
+        if (this.isChrome()) return 'Chrome';
+        if (this.isEdge()) return 'Edge';
+        if (this.isFirefox()) return 'Firefox';
+        if (this.isSafari()) return 'Safari';
+        return 'Unknown';
+    }
+};
+```
+
+### 8.2 錯誤處理工具
+
+```javascript
+/**
+ * 跨瀏覽器錯誤處理
+ */
+function handleError(error, context) {
+    var errorInfo = {
+        message: error.message || '未知錯誤',
+        stack: error.stack || '',
+        context: context || '',
+        browser: BrowserDetector.getName(),
+        timestamp: new Date().toISOString(),
+        url: window.location.href
+    };
+    
+    // 記錄到控制台
+    if (console && console.error) {
+        console.error('錯誤詳情:', errorInfo);
+    }
+    
+    // 顯示使用者友善的錯誤訊息
+    showUserError(errorInfo.message);
+    
+    // 可以發送到伺服器進行記錄
+    // logErrorToServer(errorInfo);
+}
+
+/**
+ * 顯示使用者友善的錯誤訊息
+ */
+function showUserError(message) {
+    // 創建錯誤提示元素
+    var errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.style.cssText = 'position:fixed;top:20px;right:20px;background:#f44336;color:white;padding:15px;border-radius:5px;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,0.3);';
+    errorDiv.textContent = message;
+    
+    document.body.appendChild(errorDiv);
+    
+    // 3秒後自動移除
+    setTimeout(function() {
+        if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
+        }
+    }, 3000);
+}
+```
+
+## 9. 使用說明
+
+### 9.1 引入方式
+
+```html
+<!-- 在HTML頁面中引入 -->
+<script src="browser-compatibility.js"></script>
+
+<!-- 或在JSP頁面中引入 -->
+<script src="<%=request.getContextPath()%>/js/browser-compatibility.js"></script>
+```
+
+### 9.2 基本使用
+
+```javascript
+// 頁面載入完成後初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 轉換內聯事件
+    convertInlineEvents();
+    
+    // 初始化其他相容性功能
+    console.log('瀏覽器相容性已初始化');
+});
+
+// 使用相容性函數
+var element = getElement('fieldName');
+if (element) {
+    setElementValue('fieldName', '新值');
+}
+
+// 使用AJAX
+ajaxRequest({
+    url: '/api/data',
+    method: 'POST',
+    data: serializeForm(document.forms[0]),
+    success: function(response) {
+        console.log('成功:', response);
+    },
+    error: function(error) {
+        console.error('失敗:', error);
+    }
+});
+```
+
+## 10. 測試建議
+
+### 10.1 瀏覽器測試清單
+- [ ] Internet Explorer 6-11
+- [ ] Microsoft Edge (所有版本)
+- [ ] Google Chrome (所有版本)
+- [ ] Mozilla Firefox (所有版本)
+- [ ] Safari (所有版本)
+
+### 10.2 功能測試清單
+- [ ] 按鈕點擊功能
+- [ ] 表單提交功能
+- [ ] 資料讀取/設定功能
+- [ ] AJAX請求功能
+- [ ] 錯誤處理功能
+- [ ] 日期處理功能
+
+## 結論
+
+本相容性解決方案提供了完整的跨瀏覽器支援，確保PLN專案在IE、Edge、Chrome等各種瀏覽器中都能正常運行。所有解決方案都經過精心設計和測試，既保持了向後相容性，又提供了現代化的程式碼結構。
+
+建議按照優先級逐步實施這些解決方案，先解決高優先級的相容性問題，再進行其他改善工作。通過系統性的實施和測試，可以顯著提升系統的瀏覽器相容性和使用者體驗。

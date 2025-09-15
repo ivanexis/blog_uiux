@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真閒魔法波能量飲 - 不只是眼鏡，是一把靈性鑰匙</title>
+    <meta name="description" content="真閒魔法波能量飲，金色光粒 × 藍紫高頻的視覺儀式，幫助你看見更多可能，進入更穩定、更專注的狀態。">
+    <meta name="keywords" content="能量眼鏡, 靈性, 專注, 冥想, 身心靈, 真閒魔法波">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="真閒魔法波能量飲 - 不只是眼鏡，是一把靈性鑰匙">
+    <meta property="og:description" content="金色光粒 × 藍紫高頻的視覺儀式，幫助你看見更多可能，進入更穩定、更專注的狀態。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kind-iris-pfvpvz.mystrikingly.com/store/products/d5902a3ca70">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-purple: #682c77;
+            --primary-blue: #27112d;
+            --accent-gold: #ffd700;
+            --light-purple: #f0e1f4;
+            --dark-purple: #2b0d1c;
+            --text-dark: #333;
+            --text-light: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 60% 70%, rgba(255, 215, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.04) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        /* 星光粒子效果 */
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffd700, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffd700, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 215, 0, 0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffd700, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 4s linear infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--accent-gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--accent-gold), #ffed4e);
+            border: none;
+            color: var(--primary-blue);
+            font-weight: 600;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
+            color: var(--primary-blue);
+        }
+        
+        .btn-secondary-custom {
+            background: transparent;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 600;
+            padding: 13px 28px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary-custom:hover {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+        
+        /* Product Image */
+        .product-image {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .product-image {
+            position: relative;
+        }
+        
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: energyPulse 3s ease-in-out infinite;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(255, 215, 0, 0.3));
+            animation: glow 3s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes glow {
+            from { 
+                filter: drop-shadow(0 20px 40px rgba(255, 215, 0, 0.3)) 
+                        drop-shadow(0 0 20px rgba(255, 215, 0, 0.2)); 
+            }
+            to { 
+                filter: drop-shadow(0 25px 50px rgba(255, 215, 0, 0.5)) 
+                        drop-shadow(0 0 30px rgba(255, 215, 0, 0.4)); 
+            }
+        }
+        
+        @keyframes energyPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+        
+        /* 雙生火焰動畫 */
+        @keyframes flame1 {
+            0%, 100% { 
+                transform: rotate(-15deg) scale(1);
+                opacity: 0.1;
+            }
+            50% { 
+                transform: rotate(-10deg) scale(1.1);
+                opacity: 0.2;
+            }
+        }
+        
+        @keyframes flame2 {
+            0%, 100% { 
+                transform: rotate(15deg) scale(1);
+                opacity: 0.1;
+            }
+            50% { 
+                transform: rotate(20deg) scale(1.1);
+                opacity: 0.2;
+            }
+        }
+        
+        /* 限時優惠標籤 */
+        .limited-offer {
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ffd700);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            animation: pulse 2s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* 低門檻承諾樣式 */
+        .promise-badge {
+            background: linear-gradient(45deg, var(--accent-gold), #ffed4e);
+            color: var(--primary-blue);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-purple);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Features Section */
+        .features-section {
+            background: var(--light-purple);
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary-purple), var(--accent-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-purple);
+        }
+        
+        .feature-description {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        /* How It Works Section */
+        .how-it-works-section {
+            background: white;
+        }
+        
+        .step-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--accent-gold), #ffed4e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-purple);
+        }
+        
+        .step-description {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            background: var(--light-purple);
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        
+        .testimonial-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            background: white;
+        }
+        
+        .pricing-card {
+            background: linear-gradient(135deg, var(--primary-purple), var(--primary-blue));
+            color: white;
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .pricing-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .pricing-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-description {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background: var(--light-purple);
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            background: var(--primary-purple);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: var(--primary-blue);
+        }
+        
+        .faq-answer {
+            padding: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-blue);
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            margin-bottom: 2rem;
+        }
+        
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+        
+        .footer-disclaimer {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .feature-card,
+            .testimonial-card {
+                margin-bottom: 2rem;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="hero-content">
+                        <h1 class="hero-title">不只是眼鏡，是一把靈性鑰匙</h1>
+                        <p class="hero-subtitle">金色光粒 × 藍紫高頻的視覺儀式，幫助你看見更多可能，進入更穩定、更專注的狀態。</p>
+                        <div class="cta-buttons">
+                            <a href="#contact" class="btn btn-primary-custom">
+                                <i class="fab fa-line me-2"></i>加 LINE 預約體驗
+                            </a>
+                            <a href="#recruitment" class="btn btn-secondary-custom">
+                                了解夥伴招募
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="product-image text-center">
+                        <img src="https://via.placeholder.com/500x400/682c77/ffffff?text=能量眼鏡" alt="真閒魔法波能量飲" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">真實感受，來自日常的微改變</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">「上班前的 3 分鐘啟動儀式，讓我更快進入心流。」</p>
+                        <p class="testimonial-author">— 產品經理 L*</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">「冥想時配戴，心更穩，靈感也更順。」</p>
+                        <p class="testimonial-author">— 插畫家 C*</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">「和客戶互動更從容，狀態穩定很多。」</p>
+                        <p class="testimonial-author">— 業務 C*</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features-section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">產品特色</h2>
+            <p class="section-subtitle">四個核心特色，為你的日常帶來靈性提升</p>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="feature-title">金色光粒加持</h3>
+                        <p class="feature-description">以金色象徵豐盛與自信，強化「看見可能」的內在暗示。</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="feature-title">藍紫高頻調性</h3>
+                        <p class="feature-description">靈性與覺察的色域，營造冥想般的清明穩定。</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="feature-title">日常即可啟動</h3>
+                        <p class="feature-description">通勤、閱讀、會議、創作皆可佩戴，建立專注儀式感。</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-glasses"></i>
+                        </div>
+                        <h3 class="feature-title">輕鬆配搭</h3>
+                        <p class="feature-description">無度數／可客製度數，日常穿搭也好看。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section how-it-works-section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">怎麼運作</h2>
+            <p class="section-subtitle">簡單三步驟，啟動你的靈性能量</p>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">設定意圖</h3>
+                        <p class="step-description">配戴前，用一句話說明今天最重要的事。</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">呼吸 × 注視</h3>
+                        <p class="step-description">深呼吸 5 次，注視金色光粒 30 秒，把狀態錨定到身體。</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">微行動</h3>
+                        <p class="step-description">立刻完成一項 2 分鐘小任務，啟動你的當下。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Scenarios Section -->
+    <section class="section" style="background: var(--light-purple);" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">使用情境</h2>
+            <p class="section-subtitle">多種場景，隨時啟動你的最佳狀態</p>
+            <div class="row text-center">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="feature-title">專注工作</h3>
+                        <p class="feature-description">提案前的 3 分鐘</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="feature-title">靈感創作</h3>
+                        <p class="feature-description">卡住時的重啟按鈕</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="feature-title">情緒調頻</h3>
+                        <p class="feature-description">會議前、表演前的穩定儀式</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-om"></i>
+                        </div>
+                        <h3 class="feature-title">冥想/祈禱</h3>
+                        <p class="feature-description">更快進入靜心狀態</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing-section" data-aos="fade-up">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="pricing-card">
+                        <div class="pricing-content">
+                            <div class="limited-offer">🔥 限時預購優惠 🔥</div>
+                            <h2 class="pricing-title">體驗套組</h2>
+                            <div class="pricing-price">
+                                <span style="text-decoration: line-through; font-size: 1.5rem; opacity: 0.7;">NT$ 3,980</span>
+                                <br>NT$ 2,980
+                            </div>
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check me-2"></i>能量眼鏡 ×1</li>
+                                <li><i class="fas fa-check me-2"></i>收納硬殼 ×1</li>
+                                <li><i class="fas fa-check me-2"></i>啟動卡 ×1</li>
+                                <li><i class="fas fa-check me-2"></i>7 日練習指南（電子）</li>
+                                <li><i class="fas fa-check me-2"></i>可選無度數／度數客製（另計）</li>
+                                <li><i class="fas fa-check me-2"></i>售後服務：清潔保養指引｜鏡片更換諮詢｜線上啟動引導</li>
+                            </ul>
+                            <div class="promise-badge">
+                                💫 回覆時間內給你三種適配建議
+                            </div>
+                            <a href="#contact" class="btn btn-primary-custom btn-lg">
+                                <i class="fab fa-line me-2"></i>立即預購
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section" id="contact" data-aos="fade-up">
+        <div class="container">
+            <h2 class="cta-title">想先感受它帶來的不同？</h2>
+            <p class="cta-description">加 LINE 與我們對話，獲得適配建議與體驗安排。</p>
+            <div class="promise-badge" style="margin: 2rem auto; display: block; text-align: center; max-width: 400px;">
+                ⚡ 24小時內回覆 ⚡ 免費諮詢 ⚡ 無壓力體驗
+            </div>
+            <a href="https://line.me/ti/p/@magicwave" class="btn btn-primary-custom btn-lg">
+                <i class="fab fa-line me-2"></i>加 LINE：@真閒魔法波
+            </a>
+            <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">
+                或複製 ID：@magicwave
+            </p>
+        </div>
+    </section>
+
+    <!-- Recruitment Section -->
+    <section class="section" id="recruitment" data-aos="fade-up" style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%); color: white; position: relative; overflow: hidden;">
+        <!-- 雙生火焰背景效果 -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.1;">
+            <div style="position: absolute; top: 20%; left: 10%; width: 200px; height: 300px; background: linear-gradient(45deg, #ff6b6b, #ffd700); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; transform: rotate(-15deg); animation: flame1 4s ease-in-out infinite;"></div>
+            <div style="position: absolute; top: 30%; right: 15%; width: 180px; height: 280px; background: linear-gradient(45deg, #4ecdc4, #ffd700); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; transform: rotate(15deg); animation: flame2 4s ease-in-out infinite;"></div>
+        </div>
+        
+        <div class="container" style="position: relative; z-index: 2;">
+            <h2 class="section-title" style="color: var(--accent-gold);">✨ 徵才 ✨ 一起推廣「能量眼鏡」</h2>
+            <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.9);">不只是眼鏡，是一把靈性鑰匙</p>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 215, 0, 0.3);">
+                        <h3 class="feature-title mb-4" style="color: var(--accent-gold);">我們在找：</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fas fa-star text-warning me-2"></i>對靈性、能量世界有熱情，願意深入了解「能量眼鏡」</li>
+                            <li class="mb-3"><i class="fas fa-star text-warning me-2"></i>喜歡分享、善於互動；有服務/銷售經驗更佳</li>
+                            <li class="mb-3"><i class="fas fa-star text-warning me-2"></i>認同靈性成長、樂於自我精進</li>
+                        </ul>
+                        <h3 class="feature-title mb-4 mt-4" style="color: var(--accent-gold);">你將獲得：</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fas fa-gem text-warning me-2"></i>豐盛獎金制度</li>
+                            <li class="mb-3"><i class="fas fa-gem text-warning me-2"></i>靈性學習資源</li>
+                            <li class="mb-3"><i class="fas fa-gem text-warning me-2"></i>雙生金焰頻率共振的場域</li>
+                        </ul>
+                        <a href="https://line.me/ti/p/@magicwave" class="btn btn-primary-custom">
+                            <i class="fab fa-line me-2"></i>加 LINE 留言「能量眼鏡徵才＋簡短自介」
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">常見問題</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <i class="fas fa-plus me-2"></i>有度數嗎？可更換鏡片？
+                        </div>
+                        <div class="faq-answer">
+                            提供無度數與度數客製；更換鏡片請先聯繫提供驗光資訊。
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <i class="fas fa-plus me-2"></i>它有療效嗎？
+                        </div>
+                        <div class="faq-answer">
+                            本產品屬生活風格與身心靈練習工具，不宣稱醫療療效。若有健康疑慮，請洽專業醫師。
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <i class="fas fa-plus me-2"></i>如何清潔與保存？
+                        </div>
+                        <div class="faq-answer">
+                            以清水或中性清潔劑清潔，柔布擦拭；避免高溫、高壓與化學溶劑。
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <i class="fas fa-plus me-2"></i>可以試戴或體驗嗎？
+                        </div>
+                        <div class="faq-answer">
+                            可透過 LINE 安排試戴或線上引導，並附 7 日練習指南。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <h3 class="footer-title">真閒魔法波</h3>
+                <p>打開豐盛視野，調頻你的每日行動</p>
+                <div class="mt-4">
+                    <a href="https://line.me/ti/p/@magicwave" class="btn btn-secondary-custom me-3">
+                        <i class="fab fa-line me-2"></i>LINE 官方帳號
+                    </a>
+                    <a href="mailto:info@magicwave.com" class="btn btn-secondary-custom">
+                        <i class="fas fa-envelope me-2"></i>聯絡我們
+                    </a>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p><strong>重要聲明：</strong>本產品為生活風格與身心靈練習用品，非醫療器材，不具診療或保證療效之宣稱。</p>
+                <p class="mt-2">© 2024 真閒魔法波. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // FAQ Toggle Function
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                icon.className = 'fas fa-plus me-2';
+            } else {
+                answer.style.display = 'block';
+                icon.className = 'fas fa-minus me-2';
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-section');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>

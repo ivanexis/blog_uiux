@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>能量眼鏡 - 宇宙能量匯聚</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #1a1a1a;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* 螺旋星系背景作為主要背景 */
+    .main-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images2/spiral_galaxy_background.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      z-index: -2;
+    }
+
+    /* 星雲背景覆層 */
+    .nebula-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images2/2. 星雲背景.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    /* 導航欄樣式 */
+    .navbar-custom {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand {
+      color: #ffd700 !important;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      color: #ffffff !important;
+      font-weight: 500;
+      margin: 0 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffd700 !important;
+    }
+
+    /* 主視覺區域 */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: 4rem;
+      font-weight: 700;
+      color: #ffd700;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      from {
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+      }
+      to {
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.8);
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.3);
+      margin-bottom: 2rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    /* 能量眼鏡展示區域 */
+    .glasses-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 5rem 0;
+    }
+
+    .glasses-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .energy-glasses {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+      }
+      to {
+        filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+      }
+    }
+
+    /* 金色粒子雲覆層 */
+    .particles-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images2/3. 金色粒子雲.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* 雙生火焰肖像區域 */
+    .portrait-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 5rem 0;
+    }
+
+    .portrait-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .dual-flame-portrait {
+      max-width: 600px;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 視角對比區域 */
+    .vision-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 5rem 0;
+    }
+
+    .vision-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .vision-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .vision-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .vision-image:hover {
+      transform: scale(1.05);
+    }
+
+    .vision-label {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* 特色展示區域 */
+    .features-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 5rem 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: #ffd700;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffd700;
+      margin-bottom: 1rem;
+    }
+
+    .feature-description {
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* 聯絡區域 */
+    .contact-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 5rem 0;
+    }
+
+    .contact-container {
+      text-align: center;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .contact-form {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 20px;
+      padding: 3rem;
+    }
+
+    .form-control {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #ffd700;
+      box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+      color: #ffffff;
+    }
+
+    .btn-gold {
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      border: none;
+      color: #1a1a1a;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+      color: #1a1a1a;
+    }
+
+    /* 頁尾 */
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 3rem 0 1rem;
+      text-align: center;
+    }
+
+    .social-links a {
+      color: #ffd700;
+      font-size: 2rem;
+      margin: 0 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #ffffff;
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+
+      .vision-comparison {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form {
+        padding: 2rem;
+      }
+    }
+
+    /* 滾動指示器 */
+    .scroll-indicator {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+    }
+
+    .scroll-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      margin: 10px 0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .scroll-dot.active {
+      background: #ffd700;
+    }
+
+    /* 平滑滾動 */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* 區段標題 */
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #ffd700;
+      text-align: center;
+      margin-bottom: 3rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 4rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 背景層 -->
+  <div class="main-background"></div>
+  <div class="nebula-overlay"></div>
+
+  <!-- 滾動指示器 -->
+  <div class="scroll-indicator">
+    <div class="scroll-dot active" onclick="scrollToSection('hero')"></div>
+    <div class="scroll-dot" onclick="scrollToSection('glasses')"></div>
+    <div class="scroll-dot" onclick="scrollToSection('portrait')"></div>
+    <div class="scroll-dot" onclick="scrollToSection('vision')"></div>
+    <div class="scroll-dot" onclick="scrollToSection('features')"></div>
+    <div class="scroll-dot" onclick="scrollToSection('contact')"></div>
+  </div>
+
+  <!-- 導航欄 -->
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#hero">
+        <i class="fas fa-glasses me-2"></i>能量眼鏡
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#hero">首頁</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#glasses">能量眼鏡</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#portrait">雙生火焰</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#vision">視角對比</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#features">特色功能</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">聯絡我們</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主視覺區域 -->
+  <section id="hero" class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">能量眼鏡</h1>
+      <p class="hero-subtitle">在螺旋星系的指引下，開啟宇宙能量的神秘之門</p>
+      <button class="btn btn-gold btn-lg" onclick="scrollToSection('glasses')">
+        <i class="fas fa-rocket me-2"></i>探索能量世界
+      </button>
+    </div>
+  </section>
+
+  <!-- 能量眼鏡展示區域 -->
+  <section id="glasses" class="glasses-section">
+    <div class="particles-overlay"></div>
+    <div class="glasses-container">
+      <h2 class="section-title">宇宙能量匯聚</h2>
+      <p class="section-subtitle">感受來自宇宙深處的神秘能量</p>
+      <img src="images2/robot_cutout.png" alt="能量眼鏡" class="energy-glasses">
+      <div class="mt-4">
+        <p class="text-white fs-5">配戴能量眼鏡，開啟你的第三隻眼</p>
+        <p class="text-white-50">體驗前所未有的視覺震撼與心靈覺醒</p>
+            </div>
+          </div>
+  </section>
+
+  <!-- 雙生火焰肖像區域 -->
+  <section id="portrait" class="portrait-section">
+    <div class="portrait-container">
+      <h2 class="section-title">雙生火焰的覺醒</h2>
+      <p class="section-subtitle">當靈魂伴侶相遇，宇宙能量將為你們綻放</p>
+      <img src="images2/6. 雙生火焰肖像.png" alt="雙生火焰肖像" class="dual-flame-portrait">
+      <div class="mt-4">
+        <p class="text-white fs-5">藍紅雙生火焰，象徵陰陽調和</p>
+        <p class="text-white-50">在能量眼鏡的引導下，見證靈魂的完美融合</p>
+        </div>
+      </div>
+    </section>
+
+  <!-- 視角對比區域 -->
+  <section id="vision" class="vision-section">
+      <div class="container">
+      <h2 class="section-title">視角轉換體驗</h2>
+      <p class="section-subtitle">配戴前後的視覺差異，感受能量眼鏡的神奇力量</p>
+      <div class="vision-comparison">
+        <div class="vision-item">
+          <img src="images/view.webp" alt="配戴前視角" class="vision-image">
+          <div class="vision-label">配戴前 - 平凡世界</div>
+        </div>
+        <div class="vision-item">
+          <img src="images2/4. 金色粒子雲.png" alt="配戴後視角" class="vision-image">
+          <div class="vision-label">配戴後 - 能量世界</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- 特色功能區域 -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <h2 class="section-title">能量眼鏡特色</h2>
+      <p class="section-subtitle">探索能量眼鏡帶來的獨特體驗</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-eye"></i>
+                  </div>
+          <h3 class="feature-title">第三隻眼開啟</h3>
+          <p class="feature-description">開啟你的第三隻眼，看見隱藏在現實背後的宇宙能量流動</p>
+                  </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-heart"></i>
+                </div>
+          <h3 class="feature-title">雙生火焰感應</h3>
+          <p class="feature-description">感應你的靈魂伴侶，見證藍紅雙生火焰的完美融合</p>
+                  </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-star"></i>
+                  </div>
+          <h3 class="feature-title">宇宙能量匯聚</h3>
+          <p class="feature-description">匯聚來自宇宙深處的神秘能量，提升你的靈性層次</p>
+                </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-magic"></i>
+                  </div>
+          <h3 class="feature-title">視覺轉換體驗</h3>
+          <p class="feature-description">體驗從平凡世界到能量世界的視覺轉換，感受前所未有的震撼</p>
+                  </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- 聯絡區域 -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="contact-container">
+        <h2 class="section-title">聯絡我們</h2>
+        <p class="section-subtitle">準備好開啟你的能量之旅了嗎？</p>
+        <div class="contact-form">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="您的姓名" required>
+        </div>
+              <div class="col-md-6">
+                <input type="email" class="form-control" placeholder="電子郵件" required>
+      </div>
+              <div class="col-12">
+                <textarea class="form-control" rows="5" placeholder="您的訊息" required></textarea>
+              </div>
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-gold btn-lg">
+                  <i class="fas fa-paper-plane me-2"></i>發送訊息
+              </button>
+            </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+      <div class="container">
+      <div class="social-links mb-4">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+      <p class="text-white-50 mb-0">
+        © 2024 能量眼鏡. 開啟宇宙能量的神秘之門
+      </p>
+      </div>
+    </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // 平滑滾動到指定區段
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 更新滾動指示器
+    function updateScrollIndicator() {
+      const sections = ['hero', 'glasses', 'portrait', 'vision', 'features', 'contact'];
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      
+      sections.forEach((sectionId, index) => {
+        const section = document.getElementById(sectionId);
+        const dot = document.querySelectorAll('.scroll-dot')[index];
+        
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+          
+          if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+            document.querySelectorAll('.scroll-dot').forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+          }
+        }
+      });
+    }
+
+    // 監聽滾動事件
+    window.addEventListener('scroll', updateScrollIndicator);
+
+    // 導航欄滾動效果
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar-custom');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(0, 0, 0, 0.8)';
+      } else {
+        navbar.style.background = 'rgba(0, 0, 0, 0.3)';
+      }
+    });
+
+    // 表單提交處理
+    document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+      alert('感謝您的訊息！我們會盡快回覆您。');
+    });
+
+    // 頁面載入完成後的初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      updateScrollIndicator();
+    });
+  </script>
+</body>
+
+</html>

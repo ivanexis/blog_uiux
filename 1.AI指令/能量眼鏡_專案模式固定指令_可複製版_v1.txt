@@ -1,0 +1,311 @@
+
+能量眼鏡｜專案模式固定指令（可複製版）v1.0
+================================================================
+
+【使用方式（每次出圖都照這個順序貼）】
+1) 先貼「[PROJECT] 全域專案卡」
+2) 再貼「[NEGATIVE] 全域負面指令」
+3) 接著貼本次要做的那一張「[ASSET] 資產卡」
+4) 最後貼你使用的「模型尾註」(Midjourney / SDXL / DALL·E 擇一)
+5) 生成 → 用 [QA] 檢查卡自我驗收 → 不合格就微調 ASSET 的 Overrides 後重生
+
+----------------------------------------------------------------
+A) 全域專案卡（每張圖都先貼）
+----------------------------------------------------------------
+[PROJECT: Energy Glasses Website — Art Bible v1.0]
+Theme: mystical • spiritual • cosmic • dreamy（柔霧、光暈、能量流動）
+Palette: deep purple #27112d, blue‑purple #682c77, gold #ffd700, light‑gold #ffed4e, cool gray #ecf0f1
+Lighting: soft bloom, gentle glow, subtle vignette; golden sparkles as accent; fine bokeh allowed
+Particles: gold dust/particles layered depth（背景較大較散，前景較小較亮）
+Forms: flowing organic clouds, seamless gradients, roundness/wholeness（避免尖刺、硬邊）
+Mood: serene, connected, uplifting；避免 horror/chaos/dystopia
+Typography: 圖中不放文字（除非該資產特別要求）
+Human policy: 不使用名人或可識別真實人物；採原創人像
+Iconography: 避免特定宗教符號；以抽象靈性為主
+Composition defaults: 主視覺置中；FPV 以視窗邊緣暗角＋細金色 bokeh
+Consistency rules: 始終維持上述色票與光感；gold glow = #ffd700/#ffed4e；背景基調 #27112d~#682c77
+Quality target: 乾淨邊緣、低噪、避免色帶；柔中帶銳，細節可讀
+Seed discipline: 本專案固定 seed：827463（除非明確要差異）
+[END PROJECT]
+
+【備註】顆粒與銳度：soft bloom + subtle micro‑contrast；避免過銳或油畫抹糊。
+
+----------------------------------------------------------------
+B) 全域負面指令（每張圖都貼）
+----------------------------------------------------------------
+[NEGATIVE]
+text, watermark, signature, logo, over‑sharpen, chromatic aberration, heavy grain, banding, neon rainbow clutter, harsh speculars, plastic look, overexposed highlights, underexposed blacks, cluttered background, excessive symmetry, religious icon specifics, celebrity likeness, lowres, jpeg artifacts, deformed
+[END NEGATIVE]
+
+----------------------------------------------------------------
+C) 模型尾註（擇一貼在最末）
+----------------------------------------------------------------
+C‑1) Midjourney v6 / niji
+--v 6 --style raw --chaos 0 --stylize 120 --quality 1 --seed 827463 --uplight
+（長寬比依素材：16:9= --ar 16:9；4:3= --ar 4:3；3:2= --ar 3:2；正方= --ar 1:1）
+【無縫需求】加 --tile（支援時）
+【去背需求】MJ 不支援透明：請輸出純色底（建議 #00ff6a）後製去背
+
+C‑2) Stable Diffusion XL（本地/雲端 UI）
+Sampler: DPM++ 2M Karras | Steps: 28–36 | CFG: 5.5–7.0 | Resolution: 依素材
+Hires.fix: 背景類 Off；人像/物件細節需求 On
+Tiling: 僅無縫背景 On
+Seed: 827463（固定）
+Positive: 合併 [PROJECT] + 本張 [ASSET] Must‑haves & Purpose 關鍵語
+Negative: 合併 [NEGATIVE] + (bad anatomy, extra fingers 等常見負面詞)
+Transparency: 若需去背，Positive 明寫「transparent background, clean cutout, alpha channel」
+
+C‑3) DALL·E / OpenAI Images
+Size: 依素材（若不支援 1600×900，先 1024 再裁切）
+Style: mystical cosmic dreamy, soft bloom, golden sparkles
+Seed/StyleRef: 無 seed 時，每次重複相同風格段落作為風格錨
+Transparency: 若支援則啟用；否則輸出純色底利於去背
+
+----------------------------------------------------------------
+D) 驗收檢查卡（生成後自檢）
+----------------------------------------------------------------
+[QA]
+1) 尺寸是否正確（寬×高）
+2) 檔案格式與透明度是否符合（WebP/PNG、是否需 alpha）
+3) 檔案大小是否 ≤ 規格上限
+4) 色票/光感是否符合 Art Bible（#27112d/#682c77/#ffd700/#ffed4e）
+5) 主體/前後景層次是否清楚（背景大軟淡／前景小亮銳）
+6) 無文字/浮水印/名人肖像/宗教符號等禁忌
+不合格→調整 ASSET Overrides（如：seamless tiling / reduce contrast / add fine bokeh）後重生
+[END QA]
+
+----------------------------------------------------------------
+E) 21 張素材的「資產卡」全集
+----------------------------------------------------------------
+【用法】每次出圖只貼其中一張的 [ASSET] 區塊。
+
+[ASSET]
+Asset ID: 01
+Filename: bg-stars.webp
+Purpose: 幕0 導引畫面背景（深藍紫星空，柔霧）
+Must‑haves: deep purple‑blue gradient space; soft misty stars; subtle golden sparkles; ethereal dreamy; soft focus; no sharp details
+Format: WebP • 1600×900 • ≤400KB • no transparency
+Overrides: none
+[END ASSET]
+
+[ASSET]
+Asset ID: 02
+Filename: bg-nebula.webp
+Purpose: 幕1 無縫藍紫能量雲背景
+Must‑haves: flowing organic energy clouds; seamless tiling; golden energy particles (bg layer larger+diffuse); soft gradients; cosmic mystical
+Format: WebP • 1600×900 • ≤400KB • no transparency
+Overrides: enable seamless/tiling generation
+[END ASSET]
+
+[ASSET]
+Asset ID: 03
+Filename: fg-gold-particles.webp
+Purpose: 幕1 前景金色粒子雲（覆在前景）
+Must‑haves: golden energy particles; various sizes (small dots→medium circles); golden glow; natural scatter; foreground sharper
+Format: WebP/PNG • 1600×900 • ≤400KB • transparent background
+Overrides: transparent background; keep particles fine & crisp
+[END ASSET]
+
+[ASSET]
+Asset ID: 04
+Filename: bg-gold-particles.webp
+Purpose: 幕1 後景金色粒子雲（鋪在底層）
+Must‑haves: larger, more diffuse golden particles; soft glow; background blur; gentle density
+Format: WebP/PNG • 1600×900 • ≤400KB • transparent background
+Overrides: transparent background; background particles softer than foreground
+[END ASSET]
+
+[ASSET]
+Asset ID: 05
+Filename: obj-glasses.png
+Purpose: 中央能量眼鏡（去背物件）
+Must‑haves: modern sleek design; golden frame #ffd700; energy glow #ffed4e; small golden particles emanating; clean edges
+Format: PNG • 300×200 • ≤200KB • transparent background
+Overrides: transparent background, clean cutout, alpha channel
+[END ASSET]
+
+[ASSET]
+Asset ID: 06
+Filename: img-dualflame.webp
+Purpose: 雙生火焰人像（男女配戴眼鏡，背後藍紅火焰）
+Must‑haves: two original faces; golden energy glasses emitting particles; blue flame #00bfff + red flame #ff6b6b rising; spiritual connection; centered; soft bloom; natural skin
+Format: WebP • 800×600 • ≤400KB • no transparency
+Overrides: portrait skin micro‑contrast + soft bloom balance
+[END ASSET]
+
+[ASSET]
+Asset ID: 07
+Filename: fx-gold-dust.webp
+Purpose: 金光覆層效果（可加在其他圖上）
+Must‑haves: fine sparkling golden dust; overlay‑friendly; even distribution; ethereal
+Format: WebP/PNG • 800×600 • ≤200KB • transparent background
+Overrides: transparent background; fine particles texture
+[END ASSET]
+
+[ASSET]
+Asset ID: 08
+Filename: fpv-before.webp
+Purpose: FPV 未配戴視角（偏冷、低對比、略降彩）
+Must‑haves: first‑person urban view; cool color temp; low contrast; muted colors; no gold bokeh
+Format: WebP • 1600×900 • ≤400KB • no transparency
+Overrides: reduce saturation & contrast slightly
+[END ASSET]
+
+[ASSET]
+Asset ID: 09
+Filename: fpv-after.webp
+Purpose: FPV 配戴後視角（藍紫基調＋細金色 bokeh）
+Must‑haves: same/similar vantage; blue‑purple tone; fine golden bokeh #ffd700; enhanced vibrancy; mystical uplift
+Format: WebP • 1600×900 • ≤400KB • no transparency
+Overrides: add fine bokeh; boost color vibrancy moderately
+[END ASSET]
+
+[ASSET]
+Asset ID: 10
+Filename: overlay-frame.png
+Purpose: 鏡框邊緣覆層（僅框線，去背）
+Must‑haves: golden frame edge; subtle glow; clean outline only
+Format: PNG • 300×200 • ≤100KB • transparent background
+Overrides: transparent background; crisp edge
+[END ASSET]
+
+[ASSET]
+Asset ID: 11
+Filename: Alien-01.webp
+Purpose: 彩蛋：外星人好奇側頭（右上探出）
+Must‑haves: cute friendly alien; curious look; colorful; corner peeking; simple cartoon
+Format: WebP/PNG • 60×60 • ≤80KB • transparent background
+Overrides: transparent background; bold silhouette readability
+[END ASSET]
+
+[ASSET]
+Asset ID: 12
+Filename: City-01.webp
+Purpose: 彩蛋：霓虹城市招牌（右側）
+Must‑haves: neon sign; glowing lights; urban nightlife vibe; neon colors; simple form
+Format: WebP/PNG • 60×60 • ≤100KB • transparent background
+Overrides: transparent background; controlled glow (no bloom overflow)
+[END ASSET]
+
+[ASSET]
+Asset ID: 13
+Filename: Person-01.webp
+Purpose: 彩蛋：街頭行人剪影（左下遠景）
+Must‑haves: distant walking silhouette; clean recognizable shape; simple
+Format: WebP/PNG • 60×60 • ≤80KB • transparent background
+Overrides: transparent background; edge clarity
+[END ASSET]
+
+[ASSET]
+Asset ID: 14
+Filename: Alien-02.webp
+Purpose: 彩蛋：飛碟剪影（左上天空）
+Must‑haves: classic saucer + dome; clean silhouette; simple
+Format: WebP/PNG • 60×60 • ≤100KB • transparent background
+Overrides: transparent background; avoid extra details
+[END ASSET]
+
+[ASSET]
+Asset ID: 15
+Filename: City-02.webp
+Purpose: 彩蛋：遠景城市天際線（上方）
+Must‑haves: distant skyline silhouette; varied buildings; simple clean line
+Format: WebP/PNG • 60×60 • ≤120KB • transparent background
+Overrides: transparent background; anti‑alias on thin edges
+[END ASSET]
+
+[ASSET]
+Asset ID: 16
+Filename: Person-02.webp
+Purpose: 彩蛋：街頭音樂人（右下）
+Must‑haves: street musician; colorful & expressive; simple cartoon; readable instrument
+Format: WebP/PNG • 60×60 • ≤100KB • transparent background
+Overrides: transparent background; maintain clarity at 60px
+[END ASSET]
+
+[ASSET]
+Asset ID: 17
+Filename: Alien-03.webp
+Purpose: 彩蛋：外星寵物（底部路過）
+Must‑haves: cute alien pet; small friendly colorful; simple cartoon
+Format: WebP/PNG • 60×60 • ≤80KB • transparent background
+Overrides: transparent background; strong silhouette
+[END ASSET]
+
+[ASSET]
+Asset ID: 18
+Filename: City-03.webp
+Purpose: 彩蛋：節慶旗幟（右上彩旗）
+Must‑haves: colorful festival flags; waving motion; vibrant; simple flag design
+Format: WebP/PNG • 60×60 • ≤80KB • transparent background
+Overrides: transparent background; minimal blur
+[END ASSET]
+
+[ASSET]
+Asset ID: 19
+Filename: bg-stars-mobile.webp
+Purpose: 手機版星空背景（直式）
+Must‑haves: mobile‑optimized deep space; purple‑blue gradient; soft misty stars; vertical framing
+Format: WebP • 1080×1350 • ≤350KB • no transparency
+Overrides: composition optimized for vertical
+[END ASSET]
+
+[ASSET]
+Asset ID: 20
+Filename: img-dualflame-mobile.webp
+Purpose: 手機版雙生火焰肖像（直式）
+Must‑haves: man & woman with energy glasses; twin flames behind (blue+red); centered; vertical; mystical portrait
+Format: WebP • 1080×1350 • ≤350KB • no transparency
+Overrides: portrait crop safety (headroom & chin room)
+[END ASSET]
+
+[ASSET]
+Asset ID: 21
+Filename: recruitment-poster.webp
+Purpose: 徵才海報主視覺（直式）
+Must‑haves: title area at top（文本後製排版，圖中可留淨空）; central glowing energy glasses with golden particles; man & woman with glasses; twin flames backdrop; bottom safe area for text
+Format: WebP • 1200×1600 • ≤500KB • no transparency
+Overrides: reserve negative space for typography; avoid heavy detail in text areas
+[END ASSET]
+
+----------------------------------------------------------------
+F) 小貼士（穩定一致性）
+----------------------------------------------------------------
+• 固定語彙（每張都重複 3～5 個）：mystical / cosmic / dreamy / golden sparkles / soft bloom
+• 層次：背景「大、軟、淡」；前景「小、亮、銳」
+• 亮度：整體中低對比 + 局部金色高光（避免過曝）
+• 色票：藍紫（#27112d ↔ #682c77）＋金色（#ffd700/#ffed4e），避免偏青綠或霓虹失控
+• 差異生成：保留 seed；微差用 Stylize（MJ）或 CFG/Steps（SDXL）微調
+• 尺寸：盡量直接輸出最終尺寸，減少後製放大造成的顆粒/色帶
+
+----------------------------------------------------------------
+G) 檔案壓縮／轉檔建議（命令列）
+----------------------------------------------------------------
+# 目標檔案大小（WebP）
+cwebp -size 400000 input.png -o bg-stars.webp        # 約 400KB
+cwebp -size 350000 input.png -o bg-stars-mobile.webp  # 約 350KB
+
+# 透明 PNG 轉 WebP（保留透明）
+cwebp -q 85 -m 6 input.png -o output.webp
+
+# 若有色帶（banding）：生成端加少量 film grain（SDXL）或後製加 1% 噪點再壓縮
+
+----------------------------------------------------------------
+H) 一條龍示範（以 01 星空背景為例，MJ）
+----------------------------------------------------------------
+[PROJECT ...（全域專案卡原文）]
+[NEGATIVE ...（全域負面原文）]
+
+[ASSET]
+Asset ID: 01
+Filename: bg-stars.webp
+Purpose: landing deep space background
+Must‑haves: deep purple‑blue gradient; soft misty stars; subtle golden sparkles; ethereal dreamy; soft focus
+Format: WebP • 1600×900 • ≤400KB • no transparency
+Overrides: none
+[END ASSET]
+
+--v 6 --style raw --chaos 0 --stylize 120 --quality 1 --seed 827463 --ar 16:9 --uplight
+
+================================================================
+（完）

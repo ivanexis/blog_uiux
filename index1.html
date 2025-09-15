@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan_Zhao Web</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- 添加 GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    .body {
+      margin: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #6B4E71;  /* 添加紫色系背景 */
+      color: #111111;
+      overflow-x: hidden;
+    }
+    .hero-section {
+      min-height: 100vh;
+      background: 
+        linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)),
+        url('images/view.webp'),
+        url('images2/1. 星空背景.png'),
+        url('images2/2. 星雲背景.png');
+      background-size: cover, cover, 200% 200%, 300% 300%;
+      background-position: center, center, 0% 0%, 0% 0%;
+      background-repeat: no-repeat, no-repeat, repeat, repeat;
+      background-attachment: fixed, fixed, scroll, scroll;
+      position: relative;
+      color: #fff;
+      z-index: 1;
+    }
+
+    /* 新增 Particles 层：位于背景与球体之间 */
+    #particlesCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 40vh;
+    }
+
+    .hero-morph-text {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: #fff;
+      font-size: 55px;
+      font-weight: 600;
+      filter: blur(30px);
+      opacity: 0;
+      transition: none;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-scrolled .nav-link,
+    .navbar-scrolled .navbar-brand {
+      color: rgb(46, 16, 16) !important;
+    }
+
+    .navbar-scrolled .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(46,16,16)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* 新增样式 */
+    .gradient-text {
+      background: linear-gradient(45deg, #3498db, #2ecc71);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stats-section {
+      background: #1a1a1a;
+      color: white;
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stats-card {
+      text-align: center;
+      padding: 30px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .footer {
+      background: #1a1a1a;
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #3498db;
+    }
+
+    /* 新增视差滚动相关样式 */
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      background-color: transparent; /* 改為透明以顯示背景 */
+      margin-top: 100vh;
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.1);
+      min-height: 1000vh; /* 大幅增加內容高度以實現無限延伸感 */
+    }
+
+    /* 优化其他区域样式 */
+    #features {
+      background-color: #fff;
+    }
+
+    /* 新增動畫相關樣式 - 多層宇宙背景 */
+    .cosmic-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a2e 0%, #16213e 15%, #1a0b2e 35%, #0f3460 55%, #1a0b2e 75%, #0a0a2e 100%);
+      background-size: 400% 400%, 300% 300%, 500% 500%, 100% 100%;
+      animation: infiniteSpace 20s linear infinite;
+      z-index: -3;
+    }
+
+    @keyframes infiniteSpace {
+      0% {
+        background-position: 0% 0%, 0% 0%, 0% 0%, center;
+      }
+      100% {
+        background-position: 100% 100%, -100% -100%, 200% 200%, center;
+      }
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-30px);
+      }
+
+      60% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .progress-bar {
+      transition: width 1.5s ease-in-out;
+    }
+
+    .hover-card {
+      transition: all 0.3s ease;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .hover-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .hover-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    .btn-group .btn {
+      margin-right: 0.5rem;
+    }
+
+    /* 確保卡片內容的間距舒適 */
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .card-text {
+      margin-bottom: 1.5rem;
+      color: #6c757d;
+    }
+
+    .content-wrapper {
+      transition: transform 0.5s ease-out;
+    }
+
+    /* 滾動指示器樣式 */
+    .scroll-down {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .scroll-down i {
+      font-size: 2rem;
+      animation: floating 2s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* 修改視差滾動區域樣式 */
+    .parallax-section {
+      position: relative;
+      min-height: 60vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('#');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* 移除舊的 parallax-bg 相關樣式，因為我們直接在 section 上設置背景 */
+    .parallax-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+      z-index: 1;
+    }
+
+    .parallax-section .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 修改導航欄的品牌部分 */
+    .navbar-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border: 2px solid white;
+      background-color: white;
+      padding: 2px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Logo hover 效果 */
+    .navbar-logo:hover {
+      transform: scale(1.1);
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .navbar-brand span {
+      margin-left: 8px;
+    }
+
+    /* 作品卡片樣式 */
+    .work-card {
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .work-card img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .work-info {
+      padding: 0.5rem 0;
+    }
+
+    .work-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      color: #333;
+    }
+
+    .work-category {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .work-card {
+        margin-bottom: 1.5rem;
+      }
+
+      .work-info {
+        padding: 0.5rem;
+      }
+    }
+
+    /* 主圖片容器調整 */
+    .work-image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 3/2;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    /* 縮圖容器調整 */
+    .thumbnail-container {
+      position: absolute;
+      bottom: 0;
+      /* 直接顯示在底部 */
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      transform: translateY(100%);
+      /* 初始隱藏 */
+      transition: transform 0.3s ease;
+    }
+
+    /* 懸停時顯示縮圖 */
+    .work-image-container:hover .thumbnail-container {
+      transform: translateY(0);
+      /* 顯示縮圖 */
+    }
+
+    /* 縮圖樣式調整 */
+    .thumbnail {
+      width: calc(33.333% - 10px);
+      /* 平均分配寬度 */
+      height: 70px;
+      object-fit: contain; /* 確保圖片保持原比例並適應框架 */
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.05);
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .thumbnail {
+        height: 50px;
+      }
+
+      .thumbnail-container {
+        padding: 8px;
+        gap: 6px;
+      }
+    }
+
+    /* 關於我區域樣式 */
+    #about {
+      padding: 80px 0;
+    }
+
+    #about h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #about ul li {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    #about p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    #about .btn-outline-dark {
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    #about .btn-outline-dark:hover {
+      background-color: #333;
+      color: white;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 992px) {
+      #about .col-lg-4 {
+        margin-bottom: 2rem;
+      }
+
+      #about .col-lg-4:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    /* 作品區標題和分隔線樣式 */
+    .works-header {
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .works-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #e0e0e0;
+      margin-top: 1rem;
+    }
+
+    /* 調整作品區背景 */
+    .works-section {
+      background-color: #fff;
+      /* 改為白色背景 */
+    }
+
+    /* 確保作品卡片間距恰當 */
+    .works-section .row {
+      margin-top: 2rem;
+    }
+
+    /* 作品卡片連結樣式 */
+    .work-card {
+      color: inherit;
+      /* 保持原有文字顏色 */
+      transition: transform 0.3s ease;
+    }
+
+    a:hover .work-card {
+      transform: translateY(-5px);
+    }
+
+    /* 確保連結不會影響卡片樣式 */
+    a.text-decoration-none:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 專案技能區 */
+    .skill-category {
+      margin-bottom: 1rem;
+    }
+
+    .skill-category h3 {
+      color: #333;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .skill-category h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: #4f85a6;
+    }
+
+    .skill-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      color: #4f85a6;
+      margin-bottom: 1rem;
+    }
+
+    .progress {
+      height: 6px;
+      background-color: #e9ecef;
+      border-radius: 3px;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar {
+      background-color: #4f85a6;
+      border-radius: 3px;
+    }
+
+    .skill-level {
+      margin-top: 1rem;
+    }
+
+    /* 技能區塊樣式 */
+    .skill-category {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .category-title {
+      font-size: 1.25rem;
+      color: #333;
+      font-weight: 600;
+      border-bottom: 2px solid #4f85a6;
+      padding-bottom: 0.5rem;
+    }
+
+    .skill-item {
+      padding: 0.75rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .skill-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .skill-item i {
+      font-size: 1rem;
+      color: #4f85a6;
+      width: 20px;
+      text-align: center;
+    }
+
+    .skill-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .progress {
+      background-color: #e9ecef;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background-color: #4f85a6;
+      transition: width 1s ease;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .skill-category {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    /* 添加 Adobe 相關圖標的特殊樣式 */
+    .fab.fa-adobe {
+      color: #4f85a6;
+      /* Adobe 紅色 */
+    }
+
+    /* 可以為不同的 Adobe 產品使用不同的偽元素來區分 */
+    .skill-item:nth-child(2) .fab.fa-adobe::after {
+      content: " Ps";
+      /* Photoshop */
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    .skill-item:nth-child(3) .fab.fa-adobe::after {
+      content: " Ai";
+      /* Illustrator */
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    @media (max-width: 576px) {
+      .loading-container {
+        height: 250px;
+      }
+      .spinner-border {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      .loading-text {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .loading-container {
+        height: 200px;
+      }
+      .spinner-border {
+        width: 2rem;
+        height: 2rem;
+      }
+      .loading-text {
+        font-size: 0.85rem;
+      }
+    }
+
+    .loading-animation {
+      text-align: center;
+    }
+
+    .loading-text {
+      color: #6c757d;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .loading-placeholder {
+      padding: 1rem 0;
+    }
+
+    /* 修改模態框樣式 */
+    .modal {
+      background: none !important;
+      padding-right: 0 !important;
+    }
+
+    .modal-backdrop {
+      display: none !important;
+    }
+
+    .modal-content {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      background: white !important;
+      width: 100%;
+    }
+
+    .modal-dialog {
+      margin: 1rem auto !important;
+    }
+
+    @media (max-width: 1024px) {
+      .modal-dialog {
+        width: 95%;
+        max-width: 95% !important;
+        margin: 0.5rem auto !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-dialog {
+        width: 92%;
+        max-width: 92% !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .modal-dialog {
+        width: 90%;
+        max-width: 90% !important;
+        margin: 0.25rem auto !important;
+      }
+    }
+
+    body.modal-open {
+      padding-right: 0 !important;
+      overflow: auto !important;
+    }
+
+    .resume-container {
+      position: relative;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .resume-image {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* 美化滾動條 */
+    .resume-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .resume-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .resume-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .resume-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* 文字轮替相关样式 */
+    .hero-morph-text {
+      display: inline-block;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: #fff;
+      font-size: 55px;
+      font-weight: 600;
+      filter: blur(30px);
+      opacity: 0;
+      transition: none;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    /* 3D 文字相关样式 */
+    .hero-text-3d {
+      perspective: 1000px;
+      display: inline-block;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    .hero-text-3d span {
+      display: inline-block;
+      transform-style: preserve-3d;
+      transform: rotateY(90deg);
+      opacity: 0;
+      margin: 0 0.25rem;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    /* 修改 parallax-section 樣式 - 宇宙星雲背景 */
+    .parallax-section {
+        background: 
+          linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)),
+          url('images/view.webp'),
+          url('images2/2. 星雲背景.png');
+        background-size: cover, cover, 200% 200%;
+        background-position: center, center, 0% 0%;
+        background-repeat: no-repeat, no-repeat, repeat;
+        background-attachment: fixed, fixed, scroll;
+        position: relative;
+        padding: 100px 0;
+        margin: 50px 0;
+    }
+
+    /* 確保文字在背景上清晰可見 */
+    .parallax-section .text-white {
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  /* 添加文字陰影 */
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+        .parallax-section {
+            padding: 60px 0;
+            margin: 30px 0;
+            background-attachment: scroll;  /* 在移動設備上禁用視差效果 */
+        }
+    }
+
+    .parallax-section {
+      background: 
+        linear-gradient(45deg, rgba(26, 26, 26, 0.8), rgba(42, 42, 42, 0.8)),
+        url('images/view.webp'),
+        url('images2/1. 星空背景.png');
+      background-size: cover, cover, 150% 150%;
+      background-position: center, center, 0% 0%;
+      background-repeat: no-repeat, no-repeat, repeat;
+      background-attachment: fixed, fixed, scroll;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+    }
+
+    #particleCanvas {
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .parallax-section .container {
+      z-index: 2;
+    }
+
+    /* 移动端提示横幅样式 */
+    .mobile-notice {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 0;
+      text-align: center;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      transform: translateY(-100%);
+      animation: slideDown 0.5s ease forwards 0.5s, slideUp 0.5s ease forwards 3.5s;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+    }
+
+    .mobile-notice p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: rgb(46, 16, 16);
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100%); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 移动端提示横幅 -->
+  <div class="mobile-notice d-md-none">
+    <div class="container">
+      <p>💻 使用電腦瀏覽可體驗完整互動效果</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="images/logo_2.jpg" alt="Ivan_Zhao Logo" class="rounded-circle me-2 navbar-logo">
+        <span>Ivan_Zhao</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/aboutme.html">About Me</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact Me</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 宇宙背景層 -->
+  <div class="cosmic-background"></div>
+
+  <!-- 主視覺 -->
+  <section class="hero-section d-flex align-items-center" style="position: relative;">
+    <!-- 背景图片由 hero-section 背景设定 -->
+    <!-- 新增 Particles 层 -->
+    <canvas id="particlesCanvas"></canvas>
+    <div class="container text-center" style="position: relative; z-index: 2; pointer-events: none;">
+      <div class="hero-morph-text"></div>
+    </div>
+    <div class="scroll-down" style="pointer-events: none;">
+      <p class="mb-2">向下滾動體驗無限宇宙</p>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+    <!-- 創新思維，卓越技術 -->
+
+
+
+
+
+
+    <!-- 創新思維，卓越技術 -->
+    <section class="parallax-section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="text-center text-white">
+          <h2 class="display-4 fw-bold mb-4">創新思維，卓越技術</h2>
+          <p class="lead mb-4">讓我們一起創造下一個精彩的數位體驗</p>
+          <a href="#contact" class="btn btn-outline-light btn-lg">開始合作</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 測試滾動效果區域 1 -->
+    <section class="py-5" style="background-color: #f8f9fa;">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h3 class="mb-4">測試滾動效果區域 1</h3>
+            <p class="lead">這裡是測試視差滾動效果的第一個區域。請使用滑鼠滾輪向下滾動，觀察背景圖的視差效果。</p>
+            <div class="row mt-5">
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">測試卡片 1</h5>
+                    <p class="card-text">這是一個測試卡片，用來增加頁面高度，讓您能夠更好地測試滾動效果。</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">測試卡片 2</h5>
+                    <p class="card-text">繼續滾動頁面，觀察背景圖的視差移動效果是否流暢自然。</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">測試卡片 3</h5>
+                    <p class="card-text">視差效果應該讓背景圖移動得比前景內容慢一些，創造深度感。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 測試滾動效果區域 2 -->
+    <section class="py-5" style="background-color: #e9ecef;">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h3 class="mb-4">測試滾動效果區域 2</h3>
+            <p class="lead">這是第二個測試區域。背景圖應該繼續以不同的速度移動，創造視差效果。</p>
+            <div class="row mt-5">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">滾動測試說明</h5>
+                    <ul class="list-unstyled">
+                      <li>• 背景圖應該移動得比文字內容慢</li>
+                      <li>• 視差效果應該流暢且自然</li>
+                      <li>• 不同區域的移動速度可能略有不同</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">效果觀察重點</h5>
+                    <ul class="list-unstyled">
+                      <li>• 觀察背景圖的移動軌跡</li>
+                      <li>• 檢查是否有卡頓或跳躍</li>
+                      <li>• 確認視差效果是否明顯</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 測試滾動效果區域 3 -->
+    <section class="py-5" style="background-color: #dee2e6;">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h3 class="mb-4">測試滾動效果區域 3</h3>
+            <p class="lead">最後一個測試區域。如果您能看到背景圖持續以視差效果移動，那麼設定就成功了！</p>
+            <div class="alert alert-info" role="alert">
+              <h4 class="alert-heading">滾動測試完成！</h4>
+              <p>如果您已經滾動到這裡，並且觀察到背景圖的視差移動效果，那麼視差滾動功能已經正常運作。</p>
+              <hr>
+              <p class="mb-0">您可以繼續向下滾動到聯絡表單區域，或者向上滾動重新測試效果。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯絡表單區 -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">聯絡我</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="text-center mb-4">
+              <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-github fa-2x text-dark"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-linkedin fa-2x text-primary"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="far fa-envelope fa-2x text-danger"></i>
+                </a>
+              </div>
+              <button class="btn btn-outline-primary mb-4" data-bs-toggle="modal" data-bs-target="#resumeModal">
+                <i class="fas fa-eye me-2"></i>查看履歷
+              </button>
+            </div>
+            <form class="p-4 border rounded-4 shadow-sm">
+              <div class="mb-3">
+                <label for="name" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">留言內容</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">發送訊息</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 履歷模態框 -->
+    <div class="modal" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" style="max-width: min(595px, 95vw); margin: 1rem auto;">
+        <div class="modal-content bg-white" style="box-shadow: none;">
+          <div class="modal-body p-0">
+            <div class="resume-wrapper" style="position: relative; width: 100%; padding-top: 141.4%;">
+              <div class="resume-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;" data-bs-dismiss="modal">
+                <img src="images/Resume.png" alt="我的履歷" style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <h5 class="mb-3">關於我</h5>
+            <p>致力於提供創新的技術解決方案，專注於網頁開發與使用者體驗設計。</p>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">快速連結</h5>
+            <ul class="list-unstyled">
+              <li><a href="#about" class="text-white text-decoration-none">關於我</a></li>
+              <li><a href="#works" class="text-white text-decoration-none">作品集</a></li>
+              <li><a href="#contact" class="text-white text-decoration-none">聯絡方式</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">追蹤我</h5>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center">
+          <p class="mb-0">本網站由 Ivan Zhao 親自設計撰寫並保留所有權利。</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+
+    // 原有的文字动画代码
+    document.addEventListener('DOMContentLoaded', () => {
+      // 文字清單
+      const textSequence = [
+        { text: "Visual Designer", fontSize: "55px" },
+        { text: "Ivan Zhao", fontSize: "64px" },
+        { text: "Full Stack Engineer", fontSize: "48px" },
+        { text: "Ivan Zhao", fontSize: "64px" },
+      ];
+
+      // 取得容器
+      const morphEl = document.querySelector('.hero-morph-text');
+      if (!morphEl) return;
+
+      // 初始化 GSAP 時間軸
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        repeat: -1  // 無限循環
+      });
+
+      function setTextContent(obj) {
+        morphEl.textContent = obj.text;
+        morphEl.style.fontSize = obj.fontSize;
+      }
+
+      textSequence.forEach((item) => {
+        tl.call(() => setTextContent(item));
+
+        // 文字進場 (淡入 + 旋轉)
+        tl.fromTo(morphEl,
+          { 
+            filter: "blur(30px)", 
+            scale: 0.8, 
+            opacity: 0, 
+            rotationY: 90 
+          },
+          { 
+            filter: "blur(0px)", 
+            scale: 1, 
+            opacity: 1, 
+            rotationY: 0, 
+            duration: 1 
+          }
+        );
+
+        // 停留時間
+        tl.to(morphEl, { duration: 1 });
+
+        // 文字退出 (淡出 + 旋轉)
+        tl.to(morphEl,
+          { 
+            filter: "blur(30px)", 
+            scale: 0.8, 
+            opacity: 0, 
+            rotationY: -90, 
+            duration: 1 
+          }
+        );
+      });
+    });
+
+    // 等整个页面加载完成后执行3D文字动画
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.to('.hero-text-3d span', {
+        duration: 1,
+        rotationY: 0,
+        opacity: 1,
+        stagger: 0.2,
+        ease: 'power2.out'
+      });
+    });
+
+    // 初始化 AOS
+    AOS.init({
+      duration: 1000,
+      once: false,
+      mirror: true
+    });
+
+    // 添加滚动监听
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar-custom');
+      const scrolled = window.pageYOffset;
+      const heroHeight = document.querySelector('.hero-section').offsetHeight;
+      
+      // 当滚动超过hero section高度的80%时改变navbar样式
+      if (scrolled > heroHeight * 0.8) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+
+      // 视差效果 - 增強背景圖滾動效果
+      const hero = document.querySelector('.hero-section');
+      hero.style.transform = `translateY(${scrolled * 0.8}px)`;
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // 進度條動畫
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    });
+
+    document.querySelectorAll('.progress-bar').forEach((bar) => {
+      observer.observe(bar);
+    });
+
+    // 視差滾動效果 - 多層背景無限滾動
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      
+      // 多層背景以不同速度移動
+      const hero = document.querySelector('.hero-section');
+      if (hero) {
+        hero.style.backgroundPosition = `
+          center ${50 + scrolled * 0.1}%,
+          center ${50 + scrolled * 0.2}%,
+          ${scrolled * 0.5}px ${scrolled * 0.3}px,
+          ${scrolled * 0.3}px ${scrolled * 0.4}px
+        `;
+      }
+      
+      // 宇宙背景層動態調整
+      const cosmicBg = document.querySelector('.cosmic-background');
+      if (cosmicBg) {
+        cosmicBg.style.backgroundPosition = `
+          ${scrolled * 0.2}% ${scrolled * 0.1}%,
+          ${scrolled * 0.3}% ${scrolled * 0.2}%,
+          ${scrolled * 0.1}% ${scrolled * 0.3}%,
+          center
+        `;
+      }
+    });
+
+    /* ========== 粒子效果程式碼 ========== */
+    (() => {
+      // 建立粒子 canvas
+      const particlesCanvas = document.createElement('canvas');
+      particlesCanvas.id = 'particlesCanvas';
+      document.querySelector('.hero-section').appendChild(particlesCanvas);
+      const pctx = particlesCanvas.getContext('2d');
+
+      // 設定粒子 canvas 樣式
+      particlesCanvas.style.position = 'absolute';
+      particlesCanvas.style.top = '0';
+      particlesCanvas.style.left = '0';
+      particlesCanvas.style.width = '100%';
+      particlesCanvas.style.height = '100%';
+      particlesCanvas.style.zIndex = '0';
+      particlesCanvas.style.pointerEvents = 'none';
+
+      // 取得實際尺寸與設定 dpr
+      const dpr = window.devicePixelRatio || 1;
+      let canvasWidth = particlesCanvas.clientWidth;
+      let canvasHeight = particlesCanvas.clientHeight;
+      particlesCanvas.width = canvasWidth * dpr;
+      particlesCanvas.height = canvasHeight * dpr;
+      pctx.scale(dpr, dpr);
+
+      // 建立粒子陣列與預設數量
+      const particles = [];
+      const particleCount = 100;
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(createParticle());
+      }
+
+      // 設定開始時間與總持續時間（6秒）
+      const startTime = performance.now();
+      const totalDuration = 6000;
+
+      function createParticle() {
+        return {
+          x: Math.random() * canvasWidth,
+          y: Math.random() * canvasHeight,
+          size: Math.random() * 2 + 1,
+          speed: Math.random() * 0.5 + 0.2,
+          alpha: Math.random() * 0.5 + 0.5
+        };
+      }
+
+      function updateParticles() {
+        // 計算已經過的時間，並依據 6 秒線性淡出：
+        // 起始時 densityFactor 為 1；6秒後降至 0.3（即保留 30% 強度）
+        const elapsed = performance.now() - startTime;
+        const densityFactor = 0.6 + 0.7 * Math.max(0, (totalDuration - elapsed) / totalDuration);
+        
+        pctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        particles.forEach(p => {
+          // 粒子向上漂浮
+          p.y -= p.speed;
+          // 每幀逐漸減少透明度
+          p.alpha -= 0.005;
+          // 若粒子超出上邊界或透明度過低則從下方重生
+          if (p.alpha <= 0 || p.y < -p.size) {
+            p.x = Math.random() * canvasWidth;
+            p.y = canvasHeight + p.size;
+            p.alpha = Math.random() * 0.5 + 0.5;
+          }
+          pctx.beginPath();
+          pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          // 將每個粒子的 alpha 乘上 densityFactor，以達到全局強度逐漸下降的效果
+          pctx.fillStyle = `rgba(255,255,255,${p.alpha * densityFactor})`;
+          pctx.fill();
+        });
+        requestAnimationFrame(updateParticles);
+      }
+      updateParticles();
+    })();
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+太好了，我把你的 4 幕架構「翻成製作清單」給你，**可直接貼到 Cursor 當成需求規格**，讓它依序產出。全程不寫程式碼，但把關鍵欄位（素材、動效、捲動百分比、降級策略）寫到可以落地。也附上關鍵實作原則的權威參考。
+
+---
+
+# 🧭 全站共用原則（交給 Cursor 前貼在最上面）
+
+* **動畫只動 `transform/opacity`**；避免觸發 layout/paint 的屬性，確保 60FPS，效能由瀏覽器合成器處理。([web.dev][1])
+* \*\*用原生捲動與黏滯定位（sticky）\*\*做場景釘住；避免 scroll-jacking（改變捲動機制的一屏一停/強制節拍）。([MDN Web Docs][2])
+* \*\*捲動驅動動畫（Scroll-linked animations）\*\*作為主方法（支援度允許時），不支援時退回 JS/觀察器。([MDN Web Docs][3])
+* **支援 `prefers-reduced-motion`**：偵測到「減少動態」時，全站改為淡入/靜態，不做視差與位移。([MDN Web Docs][4])
+* **圖檔建議**：Hero/人物各 2 版（桌機 1600×900 ≤400KB；手機 1080×1350 ≤350KB），優先 AVIF/WebP。
+* **固定 CTA**：每幕右下角保留「加 LINE 詢問體驗｜前往蝦皮下單」。
+
+---
+
+# 🎬 幕 0（導引）：「向下滑動，注入能量」
+
+**目的**：提示捲動進場、先載入首屏。
+**素材**
+
+* `bg-stars.webp`：深藍紫星空底（柔霧面）。
+* `hint.txt`：右下角小字「向下滑動，注入能量」。
+  **動效**
+* 背景星點**微亮度呼吸**（opacity 0.9→1.0）。
+* 提示字**淡入→脈動**（opacity、scale 0.98→1.0）。
+  **出場節點（相對本幕進度）**
+* 0–20%：星點淡入；20–100%：提示字輕微脈動。
+  **降級策略**
+* `prefers-reduced-motion: reduce`：僅顯示靜態星空＋固定提示字。([MDN Web Docs][4])
+
+---
+
+# 🌌 幕 1（宇宙能量匯聚 → 灌注眼鏡）
+
+**目的**：建立世界觀，將能量匯聚至中心眼鏡。
+**素材**
+
+* `bg-nebula.webp`：藍紫能量雲（無接縫）。
+* `fg-gold-particles.webp`：金色粒子雲（透明背景，2 層：前/後景）。
+* `obj-glasses.png`：**去背**能量眼鏡，置中。
+  **動效**
+* `obj-glasses`：**position: sticky** 置中，不位移。([MDN Web Docs][2])
+* `fg-gold-particles`：**前後景微差速**朝中心做 `translateY/translateZ` 位移（幅度≤20%）；同時微量 `opacity` 提升呈「灌注」。([web.dev][5])
+* `bg-nebula`：極細幅度視差（位移≤10%）。
+  **出場節點**
+* 0–30%：星雲淡入；
+* 30–80%：金色粒子由四周→中心（前景位移量 > 後景）；
+* 80–100%：粒子靠近鏡框邊緣，亮度略增。
+  **降級策略**
+* 減少動態：取消視差與位移，改為**一次性淡入**三層素材。([MDN Web Docs][4])
+* 低階裝置：粒子前後景只保留**單層**，避免「層爆炸」。可用 `will-change: transform` 但避免過度提升層級。([web.dev][6])
+
+---
+
+# ✨ 幕 2（關鍵字浮現 → 環繞眼鏡定格）
+
+**目的**：把品牌語彙以「光粒文字」形式環繞鏡框，形成記憶點。
+**素材**
+
+* 關鍵字陣列（真文字 DOM，非嵌圖）：
+  `#能量眼鏡 #靈性成長 #覺察 #冥想 #專注力 #儀式感 #高頻 #宇宙連結 #每日啟動 #心流 #內在鍛鍊 #直覺力 #能量共振`
+* `cta`：右下角固定雙按鈕（LINE／蝦皮）。
+  **動效**
+* 關鍵字從**中心金光原點**依序 `opacity/translate` **浮現→向外擴散**到鏡框外圍 8–12 個錨點，最終**定格**，不再閃爍。
+* 文字加微弱外光（text-shadow）即可，避免硬光暈 bitmap。
+  **出場節點**
+* 0–10%：金光原點淡入；
+* 10–70%：分四批出場（每批 3–4 個）：
+
+  1. \#能量眼鏡 #靈性成長 #覺察
+  2. \#冥想 #專注力 #儀式感
+  3. \#高頻 #宇宙連結 #能量共振
+  4. \#每日啟動 #心流 #內在鍛鍊 #直覺力
+* 70–100%：全部**定格**；CTA 保持可點。
+  **降級策略**
+* 減少動態：**一次性淡入全部字詞並定格**；保留可選取性與可讀性。([MDN Web Docs][7])
+* 無障礙：每個關鍵字具 `aria-label`；維持真文字利 SEO/讀屏。
+
+---
+
+# 🔥 幕 3（雙生火焰靜態肖像）
+
+**目的**：建立情感連結（品牌圖騰），給使用者**停留**的靜態時刻。
+**素材**
+
+* `img-dualflame.webp`：一男一女佩戴能量眼鏡，背後藍紅雙生火焰。
+* 細粒金光覆層（可選）：`fx-gold-dust.webp`（透明）。
+  **動效**
+* 主要為**靜態觀賞段**：畫面保持不動；僅做眼鏡邊緣**微呼吸亮度**（opacity + 小幅 scale ≤1.02），節奏慢（>3s）。
+  **出場節點**
+* 0–30%：肖像淡入；
+* 30–80%：停留觀賞（僅微呼吸）；
+* 80–100%：淡出或保持。
+  **降級策略**
+* 減少動態：關閉呼吸亮度，僅保留靜態圖。
+  **可用性備註**
+* 避免任何**改變捲動機制**的硬切換；這段的「停留」應靠視覺吸引與內容，不要劫持捲動。([Nielsen Norman Group][8])
+
+---
+
+# 🫧 幕 4（第一人稱視角：慢慢戴上眼鏡）
+
+**目的**：帶入體驗—戴上後畫面稍微更聚焦、更有「藍紫＋金光」調性。
+**素材**
+
+* `fpv-before.webp`：未配戴視角（色溫略冷、對比低一點點）。
+* `fpv-after.webp`：配戴後視角（藍紫基調＋細金光 bokeh），**不要過度銳化**。
+* `overlay-frame.png`：鏡框邊緣（透明 PNG），置於前景。
+  **動效**
+* 0–50%：鏡框**從邊緣淡入**，`fpv-after` 由 0→70% 不透明度與輕微對比；
+* 50–100%：鏡框就位，`fpv-after` 漸至 100%；背景微量景深（僅 `opacity/scale` 淡淡變化）。
+  **出場節點**
+* 0–20%：before→混合；
+* 20–80%：鏡框入場與色調過渡；
+* 80–100%：定格為「已配戴」狀態。
+  **降級策略**
+* 減少動態：**兩態切換**（before→after）不做中間過場。([MDN Web Docs][4])
+* 行動裝置：縮短過渡（避免暈眩），時間壓縮 30%。
+
+第五部分｜第一人稱視角：慢慢「戴上眼鏡」 （FPV 戴上流程；不寫程式碼，給製作人逐項對照） 目標 用捲動推進「未配戴 → 正在戴上 → 已配戴」的視覺體驗；避免暈動，強調藍紫＋金光的「調頻」感。 A. 所需素材（檔名僅為示意） 前後景底圖 fpv-before.webp：未配戴視角（色溫略冷、對比低）。 fpv-after.webp：已配戴視角（藍紫基調＋細金色 bokeh，微增清晰/對比）。 鏡框前景 overlay-frame.png：透明 PNG，僅鏡框邊緣。 前導人物圖（延續上一幕） img-dualflame.webp：一男一女置中、背後藍紅雙生火焰，眼鏡邊緣金色微粒。 彩蛋元素（世界豐富度） sticker-alien.webp、sticker-city.webp…（2D 扁平或低多邊形，色彩飽和；每個元素≤80–120KB；WebP/AVIF） 圖片以透明背景輸出，方便分層。 效能提醒：所有動畫只動 transform/opacity；避免觸發 layout/paint 的屬性，才能穩定 60FPS。 web.dev +1 B. 捲動分鏡（以本段自身進度 % 為準） Phase 0｜前導銜接（0–15%） 畫面：承接上一幕 img-dualflame.webp 置中，不位移；背景極淡星點。 動效：僅做淡入。 文案（可選其一，放左下角小字）： 「當你越清晰，世界就越清晰。」 「不是在觀察，而是在對話。」 Phase 1｜未配戴視角（15–33%） 切換到底圖 fpv-before.webp（佔滿畫面）。 配色：略冷、對比略低。 動效：極輕微的透明度呼吸（≤5%）或完全靜態（行動裝置建議靜態）。 Phase 2｜正在戴上（33–66%） overlay-frame.png 從螢幕四周淡入 + 輕微 scale（1.0 → 1.02 → 1.0）。 fpv-after.webp 由 opacity 0% → 70% 疊加在 fpv-before.webp 上；同時整體色溫偏向藍紫、出現細金色粒子（可用前景覆層圖或光點圖層）。 彩蛋元素（外星人、人物、城市剪影等）分批淡入 + 輕移到四周，不遮主體視線（上、下、左右 4 象限各 1–2 個即可）。 節奏：每 10% 進度進一批元素，最多 6–8 個，避免資訊過載。 避免暈動：不要做大幅視差或鏡頭推拉；只允許位移 10–16px 級距（手機更小）。 原生捲動＋黏滯／進度驅動是首選；避免 scrolljacking（改變滾動機制會造成迷失感與暈眩）。 Nielsen Norman Group +1 Phase 3｜已配戴狀態（66–100%） fpv-after.webp 至 opacity 100%；整體對比微增（+3~5% 銳度/清晰）。 鏡框就位，不再位移；所有彩蛋元素停住。 文案（可選其一，中心下方 1 句）： 「看見更多可能，讓專注更穩。」 「金色光粒 × 藍紫高頻，與宇宙同頻共振。」 C. 降級策略（必要） 偏好減少動態（prefers-reduced-motion）： 直接以兩態切換（before → after），無過場動畫；彩蛋元素一次性淡入且不可漂移。 W3C +1 低階裝置： 移除彩蛋的位移，只保留淡入；鏡框不做 scale；減少前景層數避免「層爆」。 Nielsen Norman Group D. 互動與可用性 完全保留原生捲動，不要「一屏一停」。 Nielsen Norman Group 手機上縮短 Phase 2 過渡（例如 33–60% 完成），避免暈眩。 Nielsen Norman Group 文字皆為真文字（非嵌在圖）；加 aria-label 以利讀屏。 圖片 alt 建議： before：「未配戴視角，城市稍顯冷色與朦朧」 after：「配戴後視角，藍紫與金色調，畫面更聚焦」 E. 測試與驗收（交付前必測） 桌機／手機捲動自然、不卡頓；FPS 穩定（只動 transform/opacity）。 web.dev 開啟「減少動態」：過渡是否自動改為兩態切換且無位移/視差。 W3C Phase 3 停格後不再有閃爍；彩蛋不遮擋主要視線與 CTA。 圖片體積符合預算（桌機 1600×900 ≤400KB；手機 1080×1350 ≤350KB；WebP/AVIF）。 低配/舊機檢查：動畫層數是否已自動減量。 F.（給 Cursor 的任務說明口吻示範，非程式碼） 「建立 scene-5 容器，內含 fpv-before、fpv-after、overlay-frame 與彩蛋元素容器。 使用捲動驅動或等價機制建立 4 個 Phase 的進度對映（0–15、15–33、33–66、66–100）。 所有動畫限定 transform/opacity；行動裝置 Phase 2 時長縮短 20–30%。 若偵測 prefers-reduced-motion: reduce，直接切換 before→after，取消位移與視差。 於 Phase 3 完成後，將所有元素狀態定格；不要再觸發任何閃爍。」 參考實作原則：Scroll-linked Animations / ViewTimeline（支援度允許時採用；否則使用 WAAPI 作等效進度），並避免 scrolljacking。 Chrome for Developers +1 為什麼這樣規劃？ 效能：限制在 transform/opacity，可由瀏覽器合成器加速；避免 layout/paint 抖動。 web.dev +1 體驗：保留原生捲動，避免「被接管」的暈眩與失控感。 Nielsen Norman Group 無障礙：尊重「減少動態」偏好；過度視差/滾動動畫可能誘發不適。 W3C +1 需要的話，我也可以把彩蛋元素（外星人、人物、城市）列成「逐批出場清單（名稱、方位、落點、安全區）」幫你控制畫面密度，或幫你挑 2 套場景字幕（靈性版／簡潔版）配合 Phase 0/3 顯示。 你說： 把彩蛋元素（外星人、人物、城市）列成「逐批出場清單（名稱、方位、落點、安全區）」幫你控制畫面密度，或幫你挑 2 套場景字幕（靈性版／簡潔版）配合 Phase 0/3 顯示。 ChatGPT 說： 已思考 1m 7s 太讚了！照你的主架構不動，我把**彩蛋元素的「逐批出場清單」和兩套場景字幕（靈性版／簡潔版）**整理成可直接交給設計與開發（Cursor）的規格。為了確保體驗順暢，我也把「效能與無障礙」原則內嵌在每段（只做 transform/opacity、尊重減少動態、避免 scrolljacking）。這些做法是通用最佳實務。 Nielsen Norman Group +3 web.dev +3 web.dev +3 逐批出場清單（Phase 2：正在戴上，世界變豐富） 可視區安全規則（桌機） 中央視線十字安全區：中間 40% 寬 × 30% 高不擺元素（避免擋視線與鏡片）。 右下角 CTA 安全區：底邊與右邊各 ≥72px 不擺元素。 動畫僅用 opacity / transform（translate/scale）；單一元素位移幅度 ≤16px，避免暈動。 web.dev +1 偵測到偏好減少動態時（prefers-reduced-motion）：只做一次性淡入、不位移。 MDN Web Docs +1 手機調整 中央安全區放大到 50% 寬 × 40% 高；每批元素數量-1；更早「定格」。 避免任何改變捲動機制的作法（不要一屏一停）。 Nielsen Norman Group 出場節點使用「本幕進度 %」（Phase 2：33%→66%）。若用 CSS scroll-driven animations，將時間線綁定滾動，瀏覽器可原生對齊捲動進度；不支援時可退回 WAAPI/IntersectionObserver。 WebKit +3 MDN Web Docs +3 MDN Web Docs +3 Batch 1（33% → 43%）：開場 3 件（總量控制：3） 名稱（Type） 方位/落點（桌機） 安全區檢查 動效（幅度） alt（建議） 外星人·好奇側頭（Alien-01） NE（80vw, 22vh） 不觸中央十字、CTA 6–10px 緩慢平移 + 5% 淡入 「友善外星人從右上探出」 霓虹城市招牌（City-01） E（92vw, 60vh） 留 72px 給 CTA 0→1 淡入（無位移） 「右側霓虹城市招牌」 街頭行人剪影（Person-01） SW（22vw, 78vh） 不遮下緣導視 8–12px 橫向輕移 + 淡入 「左下遠景行人剪影」 手機：只保留 Alien-01、City-01；Person-01 延後到 Batch 2。 Batch 2（43% → 55%）：加深 3 件（總量控制：3） 名稱（Type） 方位/落點（桌機） 安全區檢查 動效（幅度） alt（建議） 飛碟剪影（Alien-02） NW（18vw, 18vh） 不遮標題區 8px 斜向位移 + 低速 「左上天空飛碟剪影」 遠景天際線（City-02） N（50vw, 8vh） 不蓋中央 0→1 淡入（無位移） 「上方遠景城市天際線」 街頭音樂人（Person-02） SE（74vw, 82vh） 避開 CTA 区 6–10px 微移 + 淡入 「右下街頭演奏者」 手機：只保留 Alien-02、City-02。 Batch 3（55% → 62%）：收尾 2 件（總量控制：2） 名稱（Type） 方位/落點（桌機） 安全區檢查 動效（幅度） alt（建議） 外星寵物（Alien-03） S（50vw, 92vh） 預留底部導覽 4–8px 輕移 + 淡入 「底部外星寵物路過」 節慶旗幟（City-03） ENE（70vw, 12vh） 不遮視線 8px 輕擺感（用 translate） 「右上彩旗飄動」 62% → 66%：全部定格（opacity=1、transform 置 0），接入 Phase 3。 偏好減少動態：三個 Batch 全部以「一次淡入」呈現，不做位移。 MDN Web Docs 場景字幕（搭配 Phase 0／Phase 3） 原則：字幕用真文字（可選取/可讀屏），淡入/淡出，避免大幅移動；若偵測減少動態，僅靜態切換。 MDN Web Docs 套組 A｜靈性版（意境、儀式感） Phase 0（導引，可輪播 2–3 句） 向下滑動，注入能量。 不只是眼鏡，是一把靈性鑰匙。 金色光粒 × 藍紫高頻，與宇宙對話。 Phase 3（已配戴，擇 1–2 句） 當你越清晰，世界就越清晰。 看見更多可能，行動更一致。 每日小小儀式，對齊你的方向。 建議淡入範圍：opacity 0.4 → 1，避免 0→1 的突兀；字級在手機不小於 16px。 Josh Collinsworth 套組 B｜簡潔版（聚焦、可行動） Phase 0 向下滑動開始 聚焦 · 調頻 · 啟動 3–5 分鐘，建立儀式 Phase 3 視野更清晰 狀態更穩定
+
+## 📦 附錄 A｜命名與掛點（方便 Cursor 生成）
+
+* 區塊 ID：`scene-0`…`scene-4`。
+* 置中眼鏡節點：`#obj-glasses`（sticky）。
+* 關鍵字容器：`#hashtags`；單顆：`.tag`（共 13–14 顆；提供錨點座標陣列）。
+* CTA：`#cta-fixed`（全頁固定，含 LINE／蝦皮）。
+* 降級偵測：`[data-reduced-motion]` 或媒體查詢 `prefers-reduced-motion: reduce`。([MDN Web Docs][4])
+
+---
+
+## 🧪 附錄 B｜驗收清單（交付前自測）
+
+* 桌機/手機捲動**完全原生**，無一屏一停、無彈跳速度變化。([Nielsen Norman Group][8])
+* 低配機器仍能保持流暢（僅 transform/opacity、層數受控）。([web.dev][6])
+* 關鍵字最終**定格**且可選取（真文字）；CTA 永遠不被遮擋。
+* 開啟「減少動態」後，全部改為靜態/淡入，不含視差或位移。([MDN Web Docs][7])
+
+---
+
+### 需要我把這份規格再「拆成 Cursor 任務序列」嗎？
+
+例如：「Step 1 生成 `scene-0/1` 骨架與素材佔位 → Step 2 串接 scroll-linked 進度 → Step 3 實作降級 → Step 4 壓測與調參」。我可以直接寫成每步輸入提示（Prompt）給 Cursor 用，一步一產出。
+
+[1]: https://web.dev/articles/animations-guide?utm_source=chatgpt.com "How to create high-performance CSS animations | Articles"
+[2]: https://developer.mozilla.org/en-US/docs/Web/CSS/position?utm_source=chatgpt.com "position - CSS | MDN - Mozilla"
+[3]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations?utm_source=chatgpt.com "CSS scroll-driven animations - MDN - Mozilla"
+[4]: https://developer.mozilla.org/en-US/docs/Web/CSS/%40media/prefers-reduced-motion?utm_source=chatgpt.com "prefers-reduced-motion - CSS | MDN - Mozilla"
+[5]: https://web.dev/articles/animations-and-performance?utm_source=chatgpt.com "Animations and performance | Articles"
+[6]: https://web.dev/articles/stick-to-compositor-only-properties-and-manage-layer-count?utm_source=chatgpt.com "Stick to Compositor-Only Properties and Manage Layer ..."
+[7]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries_for_accessibility?utm_source=chatgpt.com "Using media queries for accessibility - CSS - MDN"
+[8]: https://www.nngroup.com/articles/scrolljacking-101/?utm_source=chatgpt.com "Scrolljacking 101 - NN/G"
+

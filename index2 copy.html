@@ -1,0 +1,2795 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan_Zhao Web</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- 添加 GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    .body {
+      margin: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #6B4E71;  /* 添加紫色系背景 */
+      color: #111111;
+      overflow-x: hidden;
+    }
+     .hero-section {
+       min-height: 100vh;
+       background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('images2/直式_宇宙.png');
+       background-size: cover;
+       background-position: center;
+       position: relative;
+       color: #fff;
+       z-index: 1;
+     }
+
+    /* 新增 Particles 层：位于背景与球体之间 */
+    #particlesCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 40vh;
+    }
+
+    .hero-morph-text {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 55px;
+      font-weight: 900;
+      filter: blur(30px);
+      opacity: 0;
+      transition: none;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 0;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-custom .nav-link {
+      color: #ffd700 !important;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-custom .nav-link:hover {
+      color: #ffed4e !important;
+      transform: translateY(-2px);
+    }
+
+    .navbar-scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-scrolled .nav-link {
+      color: #ffd700 !important;
+      font-weight: 700;
+    }
+    
+    .navbar-scrolled .navbar-brand {
+      color: #ffd700 !important;
+    }
+
+    .navbar-scrolled .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(46,16,16)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* 新增样式 */
+    .gradient-text {
+      background: linear-gradient(45deg, #3498db, #2ecc71);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stats-section {
+      background: #1a1a1a;
+      color: white;
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stats-card {
+      text-align: center;
+      padding: 30px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .footer {
+      background: #1a1a1a;
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #3498db;
+    }
+
+    /* 新增视差滚动相关样式 */
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      background-color: #fff;
+      margin-top: 100vh;
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 优化其他区域样式 */
+    #features {
+      background-color: #fff;
+    }
+
+    /* 新增動畫相關樣式 */
+    .parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images/view.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 1;
+      z-index: -1;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-30px);
+      }
+
+      60% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .progress-bar {
+      transition: width 1.5s ease-in-out;
+    }
+
+    .hover-card {
+      transition: all 0.3s ease;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .hover-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .hover-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    .btn-group .btn {
+      margin-right: 0.5rem;
+    }
+
+    /* 確保卡片內容的間距舒適 */
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .card-text {
+      margin-bottom: 1.5rem;
+      color: #6c757d;
+    }
+
+    .content-wrapper {
+      transition: transform 0.5s ease-out;
+    }
+
+    /* 滾動指示器樣式 */
+    .scroll-down {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ffd700;
+      text-align: center;
+      z-index: 2;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .scroll-down i {
+      font-size: 2rem;
+      animation: floating 2s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* 修改視差滾動區域樣式 */
+    .parallax-section {
+      position: relative;
+      min-height: 60vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('#');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* 移除舊的 parallax-bg 相關樣式，因為我們直接在 section 上設置背景 */
+    .parallax-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+      z-index: 1;
+    }
+
+    .parallax-section .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 修改導航欄的品牌部分 */
+    .navbar-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border: 1px solid #ffd700;
+      background-color: transparent;
+      padding: 0;
+      transition: transform 0.3s ease;
+    }
+
+    /* Logo hover 效果 */
+    .navbar-logo:hover {
+      transform: scale(1.1);
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      color: #ffd700 !important;
+    }
+
+    .navbar-brand span {
+      margin-left: 8px;
+    }
+
+    /* 作品卡片樣式 */
+    .work-card {
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .work-card img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .work-info {
+      padding: 0.5rem 0;
+    }
+
+    .work-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      color: #333;
+    }
+
+    .work-category {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .work-card {
+        margin-bottom: 1.5rem;
+      }
+
+      .work-info {
+        padding: 0.5rem;
+      }
+    }
+
+    /* 主圖片容器調整 */
+    .work-image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 3/2;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    /* 縮圖容器調整 */
+    .thumbnail-container {
+      position: absolute;
+      bottom: 0;
+      /* 直接顯示在底部 */
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      transform: translateY(100%);
+      /* 初始隱藏 */
+      transition: transform 0.3s ease;
+    }
+
+    /* 懸停時顯示縮圖 */
+    .work-image-container:hover .thumbnail-container {
+      transform: translateY(0);
+      /* 顯示縮圖 */
+    }
+
+    /* 縮圖樣式調整 */
+    .thumbnail {
+      width: calc(33.333% - 10px);
+      /* 平均分配寬度 */
+      height: 70px;
+      object-fit: contain; /* 確保圖片保持原比例並適應框架 */
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.05);
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .thumbnail {
+        height: 50px;
+      }
+
+      .thumbnail-container {
+        padding: 8px;
+        gap: 6px;
+      }
+    }
+
+    /* 關於我區域樣式 */
+    #about {
+      padding: 80px 0;
+    }
+
+    #about h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #about ul li {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    #about p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    #about .btn-outline-dark {
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    #about .btn-outline-dark:hover {
+      background-color: #333;
+      color: white;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 992px) {
+      #about .col-lg-4 {
+        margin-bottom: 2rem;
+      }
+
+      #about .col-lg-4:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    /* 作品區標題和分隔線樣式 */
+    .works-header {
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .works-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #e0e0e0;
+      margin-top: 1rem;
+    }
+
+    /* 調整作品區背景 */
+    .works-section {
+      background-color: #fff;
+      /* 改為白色背景 */
+    }
+
+    /* 確保作品卡片間距恰當 */
+    .works-section .row {
+      margin-top: 2rem;
+    }
+
+    /* 作品卡片連結樣式 */
+    .work-card {
+      color: inherit;
+      /* 保持原有文字顏色 */
+      transition: transform 0.3s ease;
+    }
+
+    a:hover .work-card {
+      transform: translateY(-5px);
+    }
+
+    /* 確保連結不會影響卡片樣式 */
+    a.text-decoration-none:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 專案技能區 */
+    .skill-category {
+      margin-bottom: 1rem;
+    }
+
+    .skill-category h3 {
+      color: #333;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .skill-category h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: #4f85a6;
+    }
+
+    .skill-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      color: #4f85a6;
+      margin-bottom: 1rem;
+    }
+
+    .progress {
+      height: 6px;
+      background-color: #e9ecef;
+      border-radius: 3px;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar {
+      background-color: #4f85a6;
+      border-radius: 3px;
+    }
+
+    .skill-level {
+      margin-top: 1rem;
+    }
+
+    /* 技能區塊樣式 */
+    .skill-category {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .category-title {
+      font-size: 1.25rem;
+      color: #333;
+      font-weight: 600;
+      border-bottom: 2px solid #4f85a6;
+      padding-bottom: 0.5rem;
+    }
+
+    .skill-item {
+      padding: 0.75rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .skill-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .skill-item i {
+      font-size: 1rem;
+      color: #4f85a6;
+      width: 20px;
+      text-align: center;
+    }
+
+    .skill-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .progress {
+      background-color: #e9ecef;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background-color: #4f85a6;
+      transition: width 1s ease;
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .skill-category {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    /* 添加 Adobe 相關圖標的特殊樣式 */
+    .fab.fa-adobe {
+      color: #4f85a6;
+      /* Adobe 紅色 */
+    }
+
+    /* 可以為不同的 Adobe 產品使用不同的偽元素來區分 */
+    .skill-item:nth-child(2) .fab.fa-adobe::after {
+      content: " Ps";
+      /* Photoshop */
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    .skill-item:nth-child(3) .fab.fa-adobe::after {
+      content: " Ai";
+      /* Illustrator */
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    @media (max-width: 576px) {
+      .loading-container {
+        height: 250px;
+      }
+      .spinner-border {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      .loading-text {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .loading-container {
+        height: 200px;
+      }
+      .spinner-border {
+        width: 2rem;
+        height: 2rem;
+      }
+      .loading-text {
+        font-size: 0.85rem;
+      }
+    }
+
+    .loading-animation {
+      text-align: center;
+    }
+
+    .loading-text {
+      color: #6c757d;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .loading-placeholder {
+      padding: 1rem 0;
+    }
+
+    /* 修改模態框樣式 */
+    .modal {
+      background: none !important;
+      padding-right: 0 !important;
+    }
+
+    .modal-backdrop {
+      display: none !important;
+    }
+
+    .modal-content {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      background: white !important;
+      width: 100%;
+    }
+
+    .modal-dialog {
+      margin: 1rem auto !important;
+    }
+
+    @media (max-width: 1024px) {
+      .modal-dialog {
+        width: 95%;
+        max-width: 95% !important;
+        margin: 0.5rem auto !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-dialog {
+        width: 92%;
+        max-width: 92% !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .modal-dialog {
+        width: 90%;
+        max-width: 90% !important;
+        margin: 0.25rem auto !important;
+      }
+    }
+
+    body.modal-open {
+      padding-right: 0 !important;
+      overflow: auto !important;
+    }
+
+    .resume-container {
+      position: relative;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .resume-image {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* 美化滾動條 */
+    .resume-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .resume-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .resume-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .resume-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* 文字轮替相关样式 */
+    .hero-morph-text {
+      display: inline-block;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 55px;
+      font-weight: 900;
+      filter: blur(30px);
+      opacity: 0;
+      transition: none;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    /* 3D 文字相关样式 */
+    .hero-text-3d {
+      perspective: 1000px;
+      display: inline-block;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    .hero-text-3d span {
+      display: inline-block;
+      transform-style: preserve-3d;
+      transform: rotateY(90deg);
+      opacity: 0;
+      margin: 0 0.25rem;
+      user-select: none;  /* 禁止文字选择 */
+      pointer-events: none;  /* 禁止点击事件 */
+    }
+
+    /* 修改 parallax-section 樣式 */
+    .parallax-section {
+        background: linear-gradient(45deg, rgba(26, 26, 26, 0.3), rgba(42, 42, 42, 0.3)), url('images/view.webp');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;  /* 添加視差效果 */
+        position: relative;
+        padding: 100px 0;  /* 增加上下間距 */
+        margin: 50px 0;    /* 增加與其他區塊的間距 */
+    }
+
+    /* 確保文字在背景上清晰可見 */
+    .parallax-section .text-white {
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  /* 添加文字陰影 */
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+        .parallax-section {
+            padding: 60px 0;
+            margin: 30px 0;
+            background-attachment: scroll;  /* 在移動設備上禁用視差效果 */
+        }
+    }
+
+    .parallax-section {
+      background: linear-gradient(45deg, rgba(26, 26, 26, 0.8), rgba(42, 42, 42, 0.8)), url('images/view.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+    }
+
+    #particleCanvas {
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .parallax-section .container {
+      z-index: 2;
+    }
+
+    /* 移动端提示横幅样式 */
+    .mobile-notice {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 0;
+      text-align: center;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      transform: translateY(-100%);
+      animation: slideDown 0.5s ease forwards 0.5s, slideUp 0.5s ease forwards 3.5s;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+    }
+
+    .mobile-notice p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: rgb(46, 16, 16);
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100%); opacity: 0; }
+    }
+
+    /* 能量眼鏡配色系統 */
+    :root {
+      --primary-blue: #27112d;
+      --primary-purple: #682c77;
+      --accent-gold: #ffd700;
+      --light-gold: #ffed4e;
+      --light-purple: #f0e1f4;
+      --dark-purple: #2b0d1c;
+      --text-light: #ffffff;
+      --text-dark: #333333;
+      --text-muted: #666666;
+    }
+
+    /* 幕 0：導引畫面 */
+    .scene-0 {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a0a1a 0%, #2d0d2d 50%, #1a0a1a 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* 星空背景效果 */
+    .scene-0::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(255, 215, 0, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 60% 70%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.02) 0%, transparent 50%);
+      animation: starBreathing 3s ease-in-out infinite;
+    }
+
+    /* 星光粒子效果 */
+    .scene-0::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.6), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.4), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.5), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 215, 0, 0.3), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 215, 0, 0.4), transparent);
+      background-repeat: repeat;
+      background-size: 200px 100px;
+      animation: sparkle 4s linear infinite;
+    }
+
+    @keyframes starBreathing {
+      0%, 100% { 
+        opacity: 0.9;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* 提示文字 */
+    .hint-text {
+      position: absolute;
+      bottom: 3rem;
+      right: 3rem;
+      font-size: 1.125rem;
+      color: var(--accent-gold);
+      font-weight: 500;
+      opacity: 0;
+      transform: scale(0.98);
+      animation: hintPulse 2s ease-in-out infinite;
+      z-index: 10;
+    }
+
+    @keyframes hintPulse {
+      0%, 100% { 
+        opacity: 0.8;
+        transform: scale(0.98);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* 主標題 */
+    .main-title {
+      font-size: 3rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, var(--accent-gold), var(--light-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: titleFadeIn 2s ease-out 0.5s forwards;
+    }
+
+    @keyframes titleFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 副標題 */
+    .subtitle {
+      font-size: 1.25rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: subtitleFadeIn 2s ease-out 1s forwards;
+    }
+
+    @keyframes subtitleFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 幕 1：宇宙能量匯聚 */
+    .scene-1 {
+      min-height: 1200vh;
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+      overflow: hidden;
+    }
+
+    /* 固定眼鏡容器 - 始終在視窗中央 */
+    .glasses-fixed-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+      pointer-events: none; /* 避免阻擋滾動 */
+      transition: opacity 0.3s ease-in-out; /* 添加平滑透明度過渡 */
+    }
+
+    /* 固定關鍵字容器 - 四散在視窗中 */
+    .keywords-fixed-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 99;
+      transition: opacity 0.3s ease-in-out; /* 添加平滑透明度過渡 */
+    }
+
+    /* 關鍵字標籤樣式 */
+    .keyword-tag {
+      position: absolute;
+      background: linear-gradient(45deg, var(--accent-gold), var(--light-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+      transition: all 0.8s ease-out;
+      animation: keywordGlow 3s ease-in-out infinite alternate;
+    }
+
+    .keyword-tag.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* 關鍵字位置 - 四散在視窗中 */
+    .keyword-tag[data-index="0"] { top: 15%; left: 10%; }
+    .keyword-tag[data-index="1"] { top: 25%; right: 15%; }
+    .keyword-tag[data-index="2"] { top: 40%; left: 20%; }
+    .keyword-tag[data-index="3"] { top: 60%; right: 25%; }
+    .keyword-tag[data-index="4"] { top: 75%; left: 15%; }
+    .keyword-tag[data-index="5"] { bottom: 30%; right: 10%; }
+    .keyword-tag[data-index="6"] { bottom: 15%; left: 50%; transform: translateX(-50%); }
+    .keyword-tag[data-index="7"] { bottom: 25%; left: 25%; }
+    .keyword-tag[data-index="8"] { top: 50%; left: 5%; }
+    .keyword-tag[data-index="9"] { top: 35%; right: 5%; }
+    .keyword-tag[data-index="10"] { top: 10%; right: 30%; }
+    .keyword-tag[data-index="11"] { top: 80%; right: 20%; }
+    .keyword-tag[data-index="12"] { top: 5%; left: 30%; }
+
+    @keyframes keywordGlow {
+      0% {
+        border-color: rgba(255, 215, 0, 0.3);
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+      }
+      100% {
+        border-color: rgba(255, 215, 0, 0.6);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      }
+    }
+
+    /* 星雲背景 */
+    .bg-nebula {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 40%, rgba(104, 44, 119, 0.3) 0%, transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(39, 17, 45, 0.4) 0%, transparent 50%);
+      animation: nebulaParallax 20s ease-in-out infinite;
+    }
+
+    @keyframes nebulaParallax {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-10px) translateX(5px); }
+    }
+
+    /* 粒子系統 */
+    .particles-foreground,
+    .particles-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+    }
+
+    .particles-foreground {
+      background-image: 
+        radial-gradient(3px 3px at 10% 20%, var(--accent-gold), transparent),
+        radial-gradient(2px 2px at 30% 40%, rgba(255, 215, 0, 0.8), transparent),
+        radial-gradient(4px 4px at 50% 60%, var(--accent-gold), transparent),
+        radial-gradient(2px 2px at 70% 30%, rgba(255, 215, 0, 0.6), transparent),
+        radial-gradient(3px 3px at 90% 80%, var(--accent-gold), transparent);
+      background-repeat: repeat;
+      background-size: 300px 200px;
+      animation: particlesConverge 4s ease-in-out infinite;
+    }
+
+    .particles-background {
+      background-image: 
+        radial-gradient(2px 2px at 15% 25%, rgba(255, 215, 0, 0.6), transparent),
+        radial-gradient(1px 1px at 35% 45%, var(--accent-gold), transparent),
+        radial-gradient(3px 3px at 55% 65%, rgba(255, 215, 0, 0.4), transparent),
+        radial-gradient(2px 2px at 75% 35%, var(--accent-gold), transparent),
+        radial-gradient(1px 1px at 95% 85%, rgba(255, 215, 0, 0.8), transparent);
+      background-repeat: repeat;
+      background-size: 400px 300px;
+      animation: particlesConverge 5s ease-in-out infinite;
+    }
+
+    @keyframes particlesConverge {
+      0%, 100% { 
+        transform: translateY(0) translateX(0);
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translateY(-15px) translateX(-10px);
+        opacity: 1;
+      }
+    }
+
+    /* 眼鏡容器 */
+    #obj-glasses {
+      position: sticky;
+      top: 50vh;
+      transform: translateY(-50%);
+      width: 300px;
+      height: 200px;
+      margin: 0 auto;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 圓形透明霧氣背景 */
+    .glasses-mist-bg {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.1) 40%, rgba(255, 215, 0, 0.02) 70%);
+      border-radius: 50%;
+      z-index: 1;
+      transition: all 1s ease-out;
+    }
+
+    /* 霧氣循環擴散效果 */
+    .glasses-mist-bg.expanding {
+      width: 300vw;
+      height: 300vh;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 30%, rgba(255, 215, 0, 0.01) 60%);
+    }
+
+    @keyframes mistBreathing {
+      0%, 100% { 
+        opacity: 0.8;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+
+    @keyframes mistCycleExpansion {
+      0% {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+      12.5% {
+        opacity: 1;
+        transform: scale(2);
+      }
+      25% {
+        opacity: 0.6;
+        transform: scale(4);
+      }
+      37.5% {
+        opacity: 0.3;
+        transform: scale(8);
+      }
+      50% {
+        opacity: 0.3;
+        transform: scale(8);
+      }
+      62.5% {
+        opacity: 0.6;
+        transform: scale(4);
+      }
+      75% {
+        opacity: 1;
+        transform: scale(2);
+      }
+      87.5% {
+        opacity: 0.8;
+        transform: scale(1.2);
+      }
+      100% {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+    }
+
+    /* 眼鏡圖片 */
+    .glasses-image {
+      width: 100%;
+      height: auto;
+      max-width: 280px;
+      filter: drop-shadow(0 20px 40px rgba(255, 215, 0, 0.3));
+      animation: glassesGlow 3s ease-in-out infinite alternate;
+      z-index: 2;
+      position: relative;
+      transition: all 1.5s ease-out;
+      transform-origin: center center;
+      display: block;
+    }
+
+    /* 眼鏡放大效果 - 模擬戴上眼鏡的感覺 */
+    .glasses-image.wearing {
+      max-width: 600px;
+      animation: glassesWearing 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glassesWearing {
+      0% {
+        opacity: 0.9;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes glassesGlow {
+      from { 
+        filter: drop-shadow(0 20px 40px rgba(255, 215, 0, 0.3)) 
+                drop-shadow(0 0 20px rgba(255, 215, 0, 0.2)); 
+      }
+      to { 
+        filter: drop-shadow(0 25px 50px rgba(255, 215, 0, 0.5)) 
+                drop-shadow(0 0 30px rgba(255, 215, 0, 0.4)); 
+      }
+    }
+
+    /* 幕 2：關鍵字浮現 */
+    .scene-2 {
+      min-height: 100vh;
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-blue) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* 關鍵字容器 */
+    #hashtags {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tag {
+      position: absolute;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.5s ease-out;
+    }
+
+    .tag.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* 關鍵字位置 */
+    .tag:nth-child(1) { top: 20%; left: 20%; }
+    .tag:nth-child(2) { top: 15%; right: 25%; }
+    .tag:nth-child(3) { top: 30%; left: 15%; }
+    .tag:nth-child(4) { top: 25%; right: 20%; }
+    .tag:nth-child(5) { top: 40%; left: 10%; }
+    .tag:nth-child(6) { top: 35%; right: 15%; }
+    .tag:nth-child(7) { top: 50%; left: 20%; }
+    .tag:nth-child(8) { top: 45%; right: 25%; }
+    .tag:nth-child(9) { top: 60%; left: 15%; }
+    .tag:nth-child(10) { top: 55%; right: 20%; }
+    .tag:nth-child(11) { top: 70%; left: 10%; }
+    .tag:nth-child(12) { top: 65%; right: 15%; }
+    .tag:nth-child(13) { top: 80%; left: 25%; }
+    .tag:nth-child(14) { top: 75%; right: 10%; }
+
+    /* 固定 CTA 按鈕 */
+    .cta-fixed {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(45deg, var(--accent-gold), var(--light-gold));
+      color: var(--primary-blue);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+      transition: all 0.3s ease-out;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
+      color: var(--primary-blue);
+    }
+
+    /* 幕 3：雙生火焰肖像 */
+    .scene-3 {
+      min-height: 100vh;
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-blue) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .portrait-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 100px;
+    }
+
+    /* 男生肖像容器 */
+    .male-portrait {
+      position: relative;
+      width: 200px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 女生肖像容器 */
+    .female-portrait {
+      position: relative;
+      width: 150px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 男生藍色光暈背景 */
+    .male-glow-bg {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(0, 150, 255, 0.2) 0%, rgba(0, 150, 255, 0.1) 40%, rgba(0, 150, 255, 0.02) 70%);
+      border-radius: 50%;
+      animation: maleGlowBreathing 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    /* 女生紅色光暈背景 */
+    .female-glow-bg {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(255, 100, 150, 0.2) 0%, rgba(255, 100, 150, 0.1) 40%, rgba(255, 100, 150, 0.02) 70%);
+      border-radius: 50%;
+      animation: femaleGlowBreathing 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    /* 肖像圖片 */
+    .portrait-image {
+      width: 100%;
+      height: auto;
+      max-width: 200px;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+      animation: portraitGlow 3s ease-in-out infinite alternate;
+      z-index: 2;
+      position: relative;
+    }
+
+    /* 男生圖片特殊效果 */
+    .male-image {
+      filter: drop-shadow(0 20px 40px rgba(0, 150, 255, 0.3));
+    }
+
+    /* 女生圖片特殊效果 */
+    .female-image {
+      filter: drop-shadow(0 20px 40px rgba(255, 100, 150, 0.3));
+    }
+
+    /* 男生光暈呼吸動畫 */
+    @keyframes maleGlowBreathing {
+      0%, 100% { 
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+
+    /* 女生光暈呼吸動畫 */
+    @keyframes femaleGlowBreathing {
+      0%, 100% { 
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+
+    /* 肖像發光動畫 */
+    @keyframes portraitGlow {
+      from { 
+        filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3)); 
+      }
+      to { 
+        filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.4)); 
+      }
+    }
+
+    .dual-flame-portrait {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary-purple), var(--primary-blue));
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 2s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-gold);
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .dual-flame-portrait::before {
+      content: "👫 雙生火焰";
+    }
+
+    .dual-flame-portrait.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* 雙生火焰背景效果 */
+    .flame-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 0, 100, 0.2) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(0, 100, 255, 0.2) 0%, transparent 60%);
+      animation: flameBreathing 4s ease-in-out infinite;
+    }
+
+    @keyframes flameBreathing {
+      0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.6;
+        transform: scale(1.02);
+      }
+    }
+
+    /* 眼鏡微呼吸效果 */
+    .glasses-breathing {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      border: 2px solid var(--accent-gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: glassesBreathing 4s ease-in-out infinite;
+    }
+
+    @keyframes glassesBreathing {
+      0%, 100% { 
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% { 
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1.02);
+      }
+    }
+
+    /* 幕 4：第一人稱視角 */
+    .scene-4 {
+      min-height: 100vh;
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+      overflow: hidden;
+    }
+
+    .fpv-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fpv-before,
+    .fpv-after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: all 2s ease-out;
+    }
+
+    .fpv-before {
+      background: linear-gradient(45deg, #2c3e50, #34495e);
+      opacity: 1;
+      filter: contrast(0.9) saturate(0.8);
+    }
+
+    .fpv-before::before {
+      content: "未配戴視角";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .fpv-after {
+      background: linear-gradient(45deg, var(--primary-purple), var(--primary-blue));
+      opacity: 0;
+      filter: contrast(1.1) saturate(1.2);
+    }
+
+    .fpv-after::before {
+      content: "配戴後視角";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--accent-gold);
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .fpv-after.visible {
+      opacity: 1;
+    }
+
+    /* 鏡框覆層 */
+    .overlay-frame {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 200px;
+      border: 3px solid var(--accent-gold);
+      border-radius: 20px;
+      opacity: 0;
+      transition: all 2s ease-out;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .overlay-frame.visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.02);
+    }
+
+    /* 彩蛋元素容器 */
+    .easter-eggs {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .easter-egg {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.5s ease-out;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .easter-egg.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* 彩蛋元素位置 */
+    .easter-egg:nth-child(1) { top: 20%; right: 20%; }
+    .easter-egg:nth-child(2) { top: 60%; right: 15%; }
+    .easter-egg:nth-child(3) { top: 80%; left: 20%; }
+    .easter-egg:nth-child(4) { top: 15%; left: 15%; }
+    .easter-egg:nth-child(5) { top: 10%; left: 50%; }
+    .easter-egg:nth-child(6) { top: 70%; right: 25%; }
+    .easter-egg:nth-child(7) { top: 85%; left: 50%; }
+    .easter-egg:nth-child(8) { top: 25%; right: 10%; }
+
+    /* 場景字幕 */
+    .scene-subtitle {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.25rem;
+      color: var(--accent-gold);
+      text-align: center;
+      opacity: 0;
+      transition: all 1s ease-out;
+      z-index: 15;
+    }
+
+    .scene-subtitle.visible {
+      opacity: 1;
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 768px) {
+      .hint-text {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .cta-fixed {
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+      
+      .cta-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+      
+      #obj-glasses {
+        width: 250px;
+        height: 150px;
+      }
+      
+      .glasses-image {
+        max-width: 230px;
+      }
+      
+      .tag {
+        font-size: 1rem;
+      }
+      
+      .portrait-container {
+        height: 400px;
+        margin: 0 1rem;
+        gap: 50px;
+      }
+
+      .male-portrait, .female-portrait {
+        width: 180px;
+        height: 250px;
+      }
+
+      .portrait-image {
+        max-width: 160px;
+      }
+      
+      .overlay-frame {
+        width: 250px;
+        height: 150px;
+      }
+      
+      .easter-egg {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+      
+      .scene-subtitle {
+        font-size: 1.125rem;
+        bottom: 2rem;
+      }
+
+      .main-title {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hint-text {
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 0.875rem;
+      }
+      
+      .cta-fixed {
+        bottom: 1rem;
+        right: 1rem;
+      }
+      
+      #obj-glasses {
+        width: 200px;
+        height: 120px;
+      }
+      
+      .glasses-image {
+        max-width: 180px;
+      }
+      
+      .tag {
+        font-size: 0.875rem;
+      }
+      
+      .portrait-container {
+        height: 300px;
+        margin: 0 0.5rem;
+        gap: 30px;
+        flex-direction: column;
+      }
+
+      .male-portrait, .female-portrait {
+        width: 140px;
+        height: 180px;
+      }
+
+      .portrait-image {
+        max-width: 120px;
+      }
+      
+      .overlay-frame {
+        width: 200px;
+        height: 120px;
+      }
+      
+      .easter-egg {
+        width: 30px;
+        height: 30px;
+        font-size: 1.25rem;
+      }
+      
+      .scene-subtitle {
+        font-size: 1rem;
+        bottom: 1.5rem;
+      }
+
+      .main-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 移动端提示横幅 -->
+  <div class="mobile-notice d-md-none">
+    <div class="container">
+      <p>💻 使用電腦瀏覽可體驗完整互動效果</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="images/logo (2).png" alt="真閒魔法波" class="rounded-circle me-2 navbar-logo">
+        <span>真閒魔法波</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/aboutme.html">About Me</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact Me</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主視覺 -->
+  <section class="hero-section" style="position: relative;">
+    <!-- 背景图片由 hero-section 背景设定 -->
+    <!-- 新增 Particles 层 -->
+    <canvas id="particlesCanvas"></canvas>
+    <div class="container text-center" style="position: relative; z-index: 2; pointer-events: none;">
+      <div class="hero-morph-text"></div>
+    </div>
+    <div class="scroll-down" style="pointer-events: none;">
+      <p class="mb-2">向下滾動</p>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+    <!-- 幕 0：導引畫面 -->
+    <section class="scene-0" id="scene-0">
+        <div class="container">
+            <h1 class="main-title">不只是眼鏡，是一把靈性鑰匙</h1>
+            <p class="subtitle">幫助你看見更多可能，進入更穩定、更專注的狀態。</p>
+        </div>
+        <div class="hint-text">向下滑動，注入能量</div>
+    </section>
+    
+    <!-- 幕 1：宇宙能量匯聚 -->
+    <section class="scene-1" id="scene-1">
+        <div class="bg-nebula"></div>
+        <div class="particles-background"></div>
+        <div class="particles-foreground"></div>
+    </section>
+
+    <!-- 固定眼鏡容器 - 始終在視窗中央 -->
+    <div class="glasses-fixed-container" id="glasses-fixed-container">
+        <div id="obj-glasses">
+            <!-- 圓形透明霧氣背景 -->
+            <div class="glasses-mist-bg"></div>
+            <!-- 眼鏡圖片 -->
+            <img src="images2/完整眼鏡去背.png" alt="能量眼鏡" class="glasses-image">
+        </div>
+    </div>
+
+    <!-- 固定關鍵字容器 - 四散在視窗中 -->
+    <div class="keywords-fixed-container" id="keywords-fixed-container">
+        <div class="keyword-tag" data-index="0">能量眼鏡</div>
+        <div class="keyword-tag" data-index="1">#靈性成長</div>
+        <div class="keyword-tag" data-index="2">覺察</div>
+        <div class="keyword-tag" data-index="3">冥想</div>
+        <div class="keyword-tag" data-index="4">專注力</div>
+        <div class="keyword-tag" data-index="5">儀式感</div>
+        <div class="keyword-tag" data-index="6">高頻</div>
+        <div class="keyword-tag" data-index="7">宇宙連結</div>
+        <div class="keyword-tag" data-index="8">能量共振</div>
+        <div class="keyword-tag" data-index="9">每日啟動</div>
+        <div class="keyword-tag" data-index="10">心流</div>
+        <div class="keyword-tag" data-index="11">內在鍛鍊</div>
+        <div class="keyword-tag" data-index="12">直覺力</div>
+    </div>
+    
+    
+    <!-- 幕 3：雙生火焰肖像 -->
+    <section class="scene-3" id="scene-3">
+        <div class="flame-bg"></div>
+        <div class="portrait-container">
+            <!-- 男生 - 左側 -->
+            <div class="male-portrait">
+                <div class="male-glow-bg"></div>
+                <img src="images2/男.png" alt="男性肖像" class="portrait-image male-image">
+            </div>
+            <!-- 女生 - 右側 -->
+            <div class="female-portrait">
+                <div class="female-glow-bg"></div>
+                <img src="images2/女.png" alt="女性肖像" class="portrait-image female-image">
+            </div>
+        </div>
+        <div class="scene-subtitle">
+            <p>當你越清晰，世界就越清晰</p>
+        </div>
+    </section>
+    
+    <!-- 幕 4：第一人稱視角 -->
+    <section class="scene-4" id="scene-4">
+        <div class="fpv-container">
+            <div class="fpv-before"></div>
+            <div class="fpv-after"></div>
+            <div class="overlay-frame"></div>
+            
+            <!-- 彩蛋元素 -->
+            <div class="easter-eggs">
+                <div class="easter-egg" data-batch="1">👽</div>
+                <div class="easter-egg" data-batch="1">🏪</div>
+                <div class="easter-egg" data-batch="1">🚶</div>
+                <div class="easter-egg" data-batch="2">🛸</div>
+                <div class="easter-egg" data-batch="2">🏙️</div>
+                <div class="easter-egg" data-batch="2">🎵</div>
+                <div class="easter-egg" data-batch="3">🐾</div>
+                <div class="easter-egg" data-batch="3">🏳️</div>
+            </div>
+        </div>
+        <div class="scene-subtitle">
+            <p>看見更多可能，讓專注更穩</p>
+        </div>
+    </section>
+    
+    <!-- 固定 CTA 按鈕 -->
+    <div class="cta-fixed">
+        <a href="https://line.me/ti/p/@magicwave" class="cta-button" target="_blank" rel="noopener">
+            <i class="fab fa-line"></i>
+            LINE 預約
+        </a>
+        <a href="#contact" class="cta-button">
+            <i class="fas fa-shopping-cart"></i>
+            商城網頁
+        </a>
+    </div>
+
+
+    <!-- 創新思維，卓越技術 -->
+    <section class="parallax-section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="text-center text-white">
+          <h2 class="display-4 fw-bold mb-4">創新思維，卓越技術</h2>
+          <p class="lead mb-4">讓我們一起創造下一個精彩的數位體驗</p>
+          <a href="#contact" class="btn btn-outline-light btn-lg">開始合作</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯絡表單區 -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">聯絡我</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="text-center mb-4">
+              <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-github fa-2x text-dark"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="fab fa-linkedin fa-2x text-primary"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                  <i class="far fa-envelope fa-2x text-danger"></i>
+                </a>
+              </div>
+              <button class="btn btn-outline-primary mb-4" data-bs-toggle="modal" data-bs-target="#resumeModal">
+                <i class="fas fa-eye me-2"></i>查看履歷
+              </button>
+            </div>
+            <form class="p-4 border rounded-4 shadow-sm">
+              <div class="mb-3">
+                <label for="name" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">留言內容</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">發送訊息</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 履歷模態框 -->
+    <div class="modal" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" style="max-width: min(595px, 95vw); margin: 1rem auto;">
+        <div class="modal-content bg-white" style="box-shadow: none;">
+          <div class="modal-body p-0">
+            <div class="resume-wrapper" style="position: relative; width: 100%; padding-top: 141.4%;">
+              <div class="resume-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;" data-bs-dismiss="modal">
+                <img src="images/Resume.png" alt="我的履歷" style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <h5 class="mb-3">關於我</h5>
+            <p>致力於提供創新的技術解決方案，專注於網頁開發與使用者體驗設計。</p>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">快速連結</h5>
+            <ul class="list-unstyled">
+              <li><a href="#about" class="text-white text-decoration-none">關於我</a></li>
+              <li><a href="#works" class="text-white text-decoration-none">作品集</a></li>
+              <li><a href="#contact" class="text-white text-decoration-none">聯絡方式</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5 class="mb-3">追蹤我</h5>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center">
+          <p class="mb-0">本網站由 Ivan Zhao 親自設計撰寫並保留所有權利。</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+
+    // 原有的文字动画代码
+    document.addEventListener('DOMContentLoaded', () => {
+      // 文字清單
+      const textSequence = [
+        { text: "量子能量眼鏡", fontSize: "55px" },
+        { text: "療育視覺", fontSize: "64px" },
+        { text: "開啟你宇宙的視界", fontSize: "48px" },
+        { text: "全新能量視界", fontSize: "64px" },
+      ];
+
+      // 取得容器
+      const morphEl = document.querySelector('.hero-morph-text');
+      if (!morphEl) return;
+
+      // 初始化 GSAP 時間軸
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        repeat: -1  // 無限循環
+      });
+
+      function setTextContent(obj) {
+        morphEl.textContent = obj.text;
+        morphEl.style.fontSize = obj.fontSize;
+      }
+
+      textSequence.forEach((item) => {
+        tl.call(() => setTextContent(item));
+
+        // 文字進場 (淡入 + 旋轉)
+        tl.fromTo(morphEl,
+          { 
+            filter: "blur(30px)", 
+            scale: 0.8, 
+            opacity: 0, 
+            rotationY: 90 
+          },
+          { 
+            filter: "blur(0px)", 
+            scale: 1, 
+            opacity: 1, 
+            rotationY: 0, 
+            duration: 1 
+          }
+        );
+
+        // 停留時間
+        tl.to(morphEl, { duration: 1 });
+
+        // 文字退出 (淡出 + 旋轉)
+        tl.to(morphEl,
+          { 
+            filter: "blur(30px)", 
+            scale: 0.8, 
+            opacity: 0, 
+            rotationY: -90, 
+            duration: 1 
+          }
+        );
+      });
+    });
+
+    // 等整个页面加载完成后执行3D文字动画
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.to('.hero-text-3d span', {
+        duration: 1,
+        rotationY: 0,
+        opacity: 1,
+        stagger: 0.2,
+        ease: 'power2.out'
+      });
+    });
+
+    // 初始化 AOS
+    AOS.init({
+      duration: 1000,
+      once: false,
+      mirror: true
+    });
+
+    // 添加滚动监听
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar-custom');
+      const scrolled = window.pageYOffset;
+      const heroHeight = document.querySelector('.hero-section').offsetHeight;
+      
+      // 当滚动超过hero section高度的80%时改变navbar样式
+      if (scrolled > heroHeight * 0.8) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+
+      // 视差效果
+      const hero = document.querySelector('.hero-section');
+      hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // 進度條動畫
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    });
+
+    document.querySelectorAll('.progress-bar').forEach((bar) => {
+      observer.observe(bar);
+    });
+
+    // 視差滾動效果
+    window.addEventListener('scroll', () => {
+      const parallaxBg = document.getElementById('parallaxBg');
+      if (parallaxBg) {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.3;
+        parallaxBg.style.transform = `translate3d(0, ${rate}px, 0)`;
+      }
+    });
+
+    /* ========== 粒子效果程式碼 ========== */
+    (() => {
+      // 建立粒子 canvas
+      const particlesCanvas = document.createElement('canvas');
+      particlesCanvas.id = 'particlesCanvas';
+      document.querySelector('.hero-section').appendChild(particlesCanvas);
+      const pctx = particlesCanvas.getContext('2d');
+
+      // 設定粒子 canvas 樣式
+      particlesCanvas.style.position = 'absolute';
+      particlesCanvas.style.top = '0';
+      particlesCanvas.style.left = '0';
+      particlesCanvas.style.width = '100%';
+      particlesCanvas.style.height = '100%';
+      particlesCanvas.style.zIndex = '0';
+      particlesCanvas.style.pointerEvents = 'none';
+
+      // 取得實際尺寸與設定 dpr
+      const dpr = window.devicePixelRatio || 1;
+      let canvasWidth = particlesCanvas.clientWidth;
+      let canvasHeight = particlesCanvas.clientHeight;
+      particlesCanvas.width = canvasWidth * dpr;
+      particlesCanvas.height = canvasHeight * dpr;
+      pctx.scale(dpr, dpr);
+
+      // 建立粒子陣列與預設數量
+      const particles = [];
+      const particleCount = 100;
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(createParticle());
+      }
+
+      // 設定開始時間與總持續時間（6秒）
+      const startTime = performance.now();
+      const totalDuration = 6000;
+
+      function createParticle() {
+        return {
+          x: Math.random() * canvasWidth,
+          y: Math.random() * canvasHeight,
+          size: Math.random() * 2 + 1,
+          speed: Math.random() * 0.5 + 0.2,
+          alpha: Math.random() * 0.5 + 0.5
+        };
+      }
+
+      function updateParticles() {
+        // 計算已經過的時間，並依據 6 秒線性淡出：
+        // 起始時 densityFactor 為 1；6秒後降至 0.3（即保留 30% 強度）
+        const elapsed = performance.now() - startTime;
+        const densityFactor = 0.6 + 0.7 * Math.max(0, (totalDuration - elapsed) / totalDuration);
+        
+        pctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        particles.forEach(p => {
+          // 粒子向上漂浮
+          p.y -= p.speed;
+          // 每幀逐漸減少透明度
+          p.alpha -= 0.005;
+          // 若粒子超出上邊界或透明度過低則從下方重生
+          if (p.alpha <= 0 || p.y < -p.size) {
+            p.x = Math.random() * canvasWidth;
+            p.y = canvasHeight + p.size;
+            p.alpha = Math.random() * 0.5 + 0.5;
+          }
+          pctx.beginPath();
+          pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          // 將每個粒子的 alpha 乘上 densityFactor，以達到全局強度逐漸下降的效果
+          pctx.fillStyle = `rgba(255,255,255,${p.alpha * densityFactor})`;
+          pctx.fill();
+        });
+        requestAnimationFrame(updateParticles);
+      }
+      updateParticles();
+    })();
+
+    // 能量眼鏡場景動畫系統
+    document.addEventListener('DOMContentLoaded', function() {
+      initScrollAnimations();
+      initKeywordAnimations();
+      initIntersectionObserver();
+      initMistExpansion();
+      
+      // 初始化眼鏡容器為隱藏狀態
+      const glassesContainer = document.getElementById('glasses-fixed-container');
+      if (glassesContainer) {
+        glassesContainer.style.display = 'none';
+      }
+      
+      // 初始化關鍵字容器為隱藏狀態
+      const keywordsContainer = document.getElementById('keywords-fixed-container');
+      if (keywordsContainer) {
+        keywordsContainer.style.display = 'none';
+      }
+    });
+
+    // 捲動動畫初始化
+    function initScrollAnimations() {
+      // 使用 Intersection Observer 觸發動畫
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+      });
+
+      // 觀察所有需要動畫的元素
+      document.querySelectorAll('.tag, .dual-flame-portrait, .scene-subtitle, .easter-egg').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // 關鍵字動畫初始化
+    function initKeywordAnimations() {
+      // 批次動畫
+      const batches = [1, 2, 3, 4];
+      let currentBatch = 0;
+
+      function showNextBatch() {
+        if (currentBatch < batches.length) {
+          const batchTags = document.querySelectorAll(`[data-batch="${batches[currentBatch]}"]`);
+          batchTags.forEach((tag, index) => {
+            setTimeout(() => {
+              tag.classList.add('visible');
+            }, index * 200);
+          });
+          currentBatch++;
+          setTimeout(showNextBatch, 1000);
+        }
+      }
+
+      // 延遲開始動畫
+      setTimeout(showNextBatch, 1000);
+    }
+
+    // Intersection Observer 初始化
+    function initIntersectionObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // 觸發場景特定的動畫
+            const sceneId = entry.target.id;
+            handleSceneEnter(sceneId);
+          }
+        });
+      }, {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      // 觀察所有場景
+      document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+      });
+    }
+
+    // 場景進入處理
+    function handleSceneEnter(sceneId) {
+      switch(sceneId) {
+        case 'scene-0':
+          // 幕 0 動畫已在 CSS 中處理
+          break;
+        case 'scene-1':
+          // 幕 1 粒子匯聚動畫
+          startParticleAnimation();
+          break;
+        case 'scene-2':
+          // 幕 2 關鍵字動畫
+          startKeywordAnimation();
+          break;
+        case 'scene-3':
+          // 幕 3 雙生火焰肖像動畫
+          startPortraitAnimation();
+          break;
+        case 'scene-4':
+          // 幕 4 第一人稱視角動畫
+          startFPVAnimation();
+          break;
+      }
+    }
+
+    // 粒子動畫
+    function startParticleAnimation() {
+      const particles = document.querySelectorAll('.particles-foreground, .particles-background');
+      particles.forEach(particle => {
+        particle.style.animationPlayState = 'running';
+      });
+    }
+
+    // 關鍵字動畫
+    function startKeywordAnimation() {
+      const tags = document.querySelectorAll('.tag');
+      tags.forEach((tag, index) => {
+        setTimeout(() => {
+          tag.classList.add('visible');
+        }, index * 100);
+      });
+    }
+
+    // 肖像動畫
+    function startPortraitAnimation() {
+      // 肖像淡入動畫
+      const portrait = document.querySelector('.dual-flame-portrait');
+      const subtitle = document.querySelector('.scene-3 .scene-subtitle');
+
+      if (portrait) {
+        setTimeout(() => {
+          portrait.classList.add('visible');
+        }, 500);
+      }
+
+      if (subtitle) {
+        setTimeout(() => {
+          subtitle.classList.add('visible');
+        }, 1500);
+      }
+    }
+
+    // 第一人稱視角動畫
+    function startFPVAnimation() {
+      // 三階段動畫
+      const fpvBefore = document.querySelector('.fpv-before');
+      const fpvAfter = document.querySelector('.fpv-after');
+      const overlayFrame = document.querySelector('.overlay-frame');
+      const subtitle = document.querySelector('.scene-4 .scene-subtitle');
+      const easterEggs = document.querySelectorAll('.easter-egg');
+
+      // Phase 1: 未配戴視角 (0-2s)
+      setTimeout(() => {
+        // Phase 2: 正在戴上 (2-4s)
+        if (overlayFrame) {
+          overlayFrame.classList.add('visible');
+        }
+
+        if (fpvAfter) {
+          fpvAfter.style.opacity = '0.7';
+          fpvAfter.classList.add('visible');
+        }
+
+        // 彩蛋元素分批出場
+        startEasterEggAnimation();
+
+      }, 2000);
+
+      // Phase 3: 已配戴狀態 (4s+)
+      setTimeout(() => {
+        if (fpvAfter) {
+          fpvAfter.style.opacity = '1';
+        }
+
+        if (subtitle) {
+          subtitle.classList.add('visible');
+        }
+      }, 4000);
+    }
+
+    // 彩蛋元素動畫
+    function startEasterEggAnimation() {
+      const easterEggs = document.querySelectorAll('.easter-egg');
+      const batches = [1, 2, 3];
+      let currentBatch = 0;
+
+      function showNextBatch() {
+        if (currentBatch < batches.length) {
+          const batchEggs = document.querySelectorAll(`[data-batch="${batches[currentBatch]}"]`);
+          batchEggs.forEach((egg, index) => {
+            setTimeout(() => {
+              egg.classList.add('visible');
+            }, index * 200);
+          });
+          currentBatch++;
+          setTimeout(showNextBatch, 800);
+        }
+      }
+
+      setTimeout(showNextBatch, 500);
+    }
+
+    // 霧氣擴散效果初始化
+    function initMistExpansion() {
+      let isExpanding = false;
+      let expansionTimeout = null;
+      
+      // 監聽滾動事件
+      window.addEventListener('scroll', function() {
+        const scene1 = document.getElementById('scene-1');
+        const glassesContainer = document.getElementById('glasses-fixed-container');
+        const keywordsContainer = document.getElementById('keywords-fixed-container');
+        const scene1Rect = scene1.getBoundingClientRect();
+        const scene1Height = scene1.offsetHeight;
+        const windowHeight = window.innerHeight;
+        
+        // 獲取當前滾動位置
+        const currentScrollY = window.pageYOffset;
+        
+        // 計算在 scene-1 中的滾動進度
+        const scrollProgress = Math.max(0, Math.min(1, (windowHeight - scene1Rect.top) / scene1Height));
+        
+        // 定義文字效果完全消失的滾動距離閾值 - 大幅延長顯示時間
+        const disappearThreshold = scene1Height * 8.0; // 當滾動超過scene-1高度的400%時開始消失
+        const completeDisappearThreshold = scene1Height * 10.0; // 當滾動超過scene-1高度的600%時完全消失
+        
+        // 計算從scene-1頂部開始的滾動距離
+        const scene1Top = scene1.offsetTop;
+        const scrollDistanceFromScene1 = currentScrollY - scene1Top;
+        
+        // 條件1：幕1在視窗中，但底部遠離視窗
+        const isInScene1Area = scene1Rect.top < windowHeight * 0.3 && scene1Rect.bottom > windowHeight * 2.0;
+        
+        // 條件2：滾動距離檢查 - 如果滾動距離超過閾值，文字效果開始消失
+        const shouldStartDisappearing = scrollDistanceFromScene1 > disappearThreshold;
+        const shouldCompletelyDisappear = scrollDistanceFromScene1 > completeDisappearThreshold;
+        
+        if (isInScene1Area && !shouldCompletelyDisappear) {
+          // 顯示眼鏡容器
+          glassesContainer.style.display = 'block';
+          triggerMistExpansion();
+          
+          // 根據滾動距離調整透明度
+          if (shouldStartDisappearing) {
+            // 計算消失進度 (0 到 1)
+            const disappearProgress = Math.min(1, (scrollDistanceFromScene1 - disappearThreshold) / (completeDisappearThreshold - disappearThreshold));
+            const opacity = 1 - disappearProgress;
+            
+            // 應用透明度
+            glassesContainer.style.opacity = opacity;
+            keywordsContainer.style.opacity = opacity;
+            
+            // 如果透明度很低，停止動畫效果
+            if (opacity < 0.3) {
+              stopMistExpansion();
+              stopGlassesWearing();
+            } else {
+              updateGlassesScale(scrollProgress);
+            }
+          } else {
+            // 正常顯示，重置透明度
+            glassesContainer.style.opacity = '1';
+            keywordsContainer.style.opacity = '1';
+            updateGlassesScale(scrollProgress);
+          }
+          
+          // 顯示關鍵字容器（與眼鏡同步）
+          keywordsContainer.style.display = 'block';
+          updateKeywordsDisplay(scrollProgress);
+        } else {
+          // 離開 scene-1 區域或完全消失時隱藏眼鏡和關鍵字並停止效果
+          glassesContainer.style.display = 'none';
+          keywordsContainer.style.display = 'none';
+          stopMistExpansion();
+          stopGlassesWearing();
+          
+          // 重置透明度
+          glassesContainer.style.opacity = '1';
+          keywordsContainer.style.opacity = '1';
+        }
+      });
+    }
+
+    // 觸發霧氣擴散效果
+    function triggerMistExpansion() {
+      const mistBg = document.querySelector('.glasses-mist-bg');
+      if (!mistBg || isExpanding) return;
+      
+      // 標記為正在擴散
+      isExpanding = true;
+      
+      // 添加擴散類別，但不使用動畫
+      mistBg.classList.add('expanding');
+      
+      // 清除之前的計時器
+      if (expansionTimeout) {
+        clearTimeout(expansionTimeout);
+      }
+    }
+
+    // 停止霧氣擴散效果
+    function stopMistExpansion() {
+      const mistBg = document.querySelector('.glasses-mist-bg');
+      if (!mistBg) return;
+      
+      // 移除擴散類別，停止循環動畫
+      mistBg.classList.remove('expanding');
+      isExpanding = false;
+      
+      // 清除計時器
+      if (expansionTimeout) {
+        clearTimeout(expansionTimeout);
+        expansionTimeout = null;
+      }
+    }
+
+    // 根據滾動進度更新眼鏡縮放、霧氣亮度和關鍵字顯示
+    function updateGlassesScale(progress) {
+      const glassesImage = document.querySelector('.glasses-image');
+      const mistBg = document.querySelector('.glasses-mist-bg');
+      const keywordTags = document.querySelectorAll('.keyword-tag');
+      
+      if (!glassesImage) return;
+      
+      // 移除所有現有的類別
+      glassesImage.classList.remove('wearing', 'maximized');
+      
+      // 根據滾動進度持續放大，最大到 2 倍，並在定格狀態下保持最終大小
+      const baseScale = 1.2; // 基礎縮放
+      const maxScale = 2.0; // 最大縮放 2 倍
+      // 調整進度計算，讓眼鏡縮放更慢，跟著滾輪長度拉長
+      // 前 20% 滾動保持基礎大小，後 80% 慢慢放大到最大
+      const adjustedProgress = Math.max(0, (progress - 0.2) / 0.8);
+      // 確保在進度達到 0.8 以上時保持最大縮放（定格狀態）
+      const finalProgress = progress >= 0.8 ? 1.0 : adjustedProgress;
+      const scale = baseScale + (finalProgress * (maxScale - baseScale)); // 1.2 到 2.0
+      
+      // 根據縮放比例調整 Y 軸位移
+      const baseTranslateY = -10;
+      const maxTranslateY = -50;
+      const translateY = baseTranslateY + (finalProgress * (maxTranslateY - baseTranslateY)); // -10 到 -50
+      
+      // 應用縮放和位移
+      glassesImage.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+      
+      // 根據縮放比例調整陰影效果
+      const shadowIntensity = 0.3 + (finalProgress * 0.4); // 0.3 到 0.7
+      const shadowBlur = 40 + (finalProgress * 60); // 40 到 100
+      const shadowSpread = 20 + (finalProgress * 40); // 20 到 60
+      glassesImage.style.filter = `drop-shadow(0 ${shadowSpread}px ${shadowBlur}px rgba(255, 215, 0, ${shadowIntensity}))`;
+      
+      // 根據滾動進度調整霧氣亮度
+      if (mistBg) {
+        const baseOpacity = 0.2; // 基礎透明度
+        const maxOpacity = 0.8; // 最大透明度
+        const mistOpacity = baseOpacity + (finalProgress * (maxOpacity - baseOpacity)); // 0.2 到 0.8
+        
+        const centerIntensity = 0.2 + (finalProgress * 0.6); // 0.2 到 0.8
+        const midIntensity = 0.1 + (finalProgress * 0.4); // 0.1 到 0.5
+        const edgeIntensity = 0.02 + (finalProgress * 0.18); // 0.02 到 0.2
+        
+        mistBg.style.background = `radial-gradient(circle, rgba(255, 215, 0, ${centerIntensity}) 0%, rgba(255, 215, 0, ${midIntensity}) 40%, rgba(255, 215, 0, ${edgeIntensity}) 70%)`;
+        mistBg.style.opacity = mistOpacity;
+      }
+      
+      // 根據滾動進度顯示關鍵字
+      if (keywordTags.length > 0) {
+        const totalKeywords = keywordTags.length;
+        const visibleCount = Math.floor(progress * totalKeywords);
+        
+        keywordTags.forEach((tag, index) => {
+          if (index < visibleCount) {
+            tag.classList.add('visible');
+          } else {
+            tag.classList.remove('visible');
+          }
+        });
+      }
+      
+      // 添加呼吸動畫類別
+      if (progress > 0.1) {
+        glassesImage.classList.add('wearing');
+      }
+    }
+
+    // 觸發眼鏡佩戴效果
+    function triggerGlassesWearing() {
+      const glassesImage = document.querySelector('.glasses-image');
+      if (!glassesImage || glassesImage.classList.contains('wearing')) return;
+      
+      // 添加佩戴類別，開始放大動畫
+      glassesImage.classList.add('wearing');
+    }
+
+    // 停止眼鏡佩戴效果
+    function stopGlassesWearing() {
+      const glassesImage = document.querySelector('.glasses-image');
+      if (!glassesImage) return;
+      
+      // 移除所有類別和自定義樣式，恢復原始狀態
+      glassesImage.classList.remove('wearing', 'maximized');
+      glassesImage.style.transform = '';
+    }
+
+    // 根據滾動進度更新關鍵字顯示
+    function updateKeywordsDisplay(progress) {
+      const keywordTags = document.querySelectorAll('.keyword-tag');
+      
+      if (!keywordTags.length) return;
+      
+      // 大幅調整進度計算，讓關鍵字出現得更慢，跟著滾輪長度拉長
+      // 前 30% 滾動不顯示任何關鍵字，後 70% 慢慢顯示所有關鍵字
+      const adjustedProgress = Math.max(0, (progress - 0.3) / 0.7);
+      
+      // 計算應該顯示的關鍵字數量
+      const totalKeywords = keywordTags.length;
+      const visibleCount = Math.floor(adjustedProgress * totalKeywords);
+      
+      // 確保在進度達到 0.8 以上時顯示所有關鍵字（定格狀態）
+      const finalVisibleCount = progress >= 0.8 ? totalKeywords : visibleCount;
+      
+      // 顯示對應數量的關鍵字
+      keywordTags.forEach((tag, index) => {
+        if (index < finalVisibleCount) {
+          tag.classList.add('visible');
+        } else {
+          tag.classList.remove('visible');
+        }
+      });
+    }
+
+  </script>
+</body>
+
+</html>

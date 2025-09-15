@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>能量眼鏡 - 不只是眼鏡，是一把靈性鑰匙</title>
+    <meta name="description" content="能量眼鏡，金色光粒 × 藍紫高頻的視覺儀式，幫助你看見更多可能，進入更穩定、更專注的狀態。">
+    <meta name="keywords" content="能量眼鏡, 靈性, 專注, 冥想, 身心靈, 覺察, 高頻, 宇宙連結">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="能量眼鏡 - 不只是眼鏡，是一把靈性鑰匙">
+    <meta property="og:description" content="金色光粒 × 藍紫高頻的視覺儀式，幫助你看見更多可能，進入更穩定、更專注的狀態。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/27112d/ffd700?text=能量眼鏡">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="能量眼鏡 - 不只是眼鏡，是一把靈性鑰匙">
+    <meta name="twitter:description" content="金色光粒 × 藍紫高頻的視覺儀式，幫助你看見更多可能，進入更穩定、更專注的狀態。">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ffd700'/><circle cx='50' cy='50' r='20' fill='%2327112d'/></svg>">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* 全域 CSS 變數 */
+        :root {
+            /* 色彩系統 */
+            --primary-blue: #27112d;
+            --primary-purple: #682c77;
+            --accent-gold: #ffd700;
+            --light-gold: #ffed4e;
+            --light-purple: #f0e1f4;
+            --dark-purple: #2b0d1c;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            
+            /* 字體系統 */
+            --font-primary: 'Noto Sans TC', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+            
+            /* 間距系統 */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            --spacing-4xl: 6rem;
+            
+            /* 動畫時長 */
+            --duration-fast: 0.3s;
+            --duration-normal: 0.5s;
+            --duration-slow: 1s;
+            --duration-slower: 2s;
+            --duration-slowest: 3s;
+            
+            /* 緩動函數 */
+            --ease-in: cubic-bezier(0.4, 0, 1, 1);
+            --ease-out: cubic-bezier(0, 0, 0.2, 1);
+            --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* 全域重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--text-light);
+            background-color: var(--primary-blue);
+            overflow-x: hidden;
+        }
+        
+        /* 響應式斷點 */
+        @media (max-width: 768px) {
+            :root {
+                --font-size-5xl: 2.5rem;
+                --font-size-4xl: 2rem;
+                --font-size-3xl: 1.5rem;
+                --spacing-4xl: 4rem;
+                --spacing-3xl: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            :root {
+                --font-size-5xl: 2rem;
+                --font-size-4xl: 1.75rem;
+                --font-size-3xl: 1.25rem;
+                --spacing-4xl: 3rem;
+                --spacing-3xl: 2rem;
+            }
+        }
+        
+        /* 工具類別 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        
+        .hidden { display: none; }
+        .visible { display: block; }
+        
+        /* 動畫基礎類別 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all var(--duration-slow) var(--ease-out);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all var(--duration-slow) var(--ease-out);
+        }
+        
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* 幕 0：導引畫面 */
+        .scene-0 {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* 星空背景效果 */
+        .scene-0::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 60% 70%, rgba(255, 215, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.04) 0%, transparent 50%);
+            animation: starBreathing var(--duration-slowest) ease-in-out infinite;
+        }
+        
+        /* 星光粒子效果 */
+        .scene-0::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, var(--accent-gold), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, var(--accent-gold), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 215, 0, 0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, var(--accent-gold), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 4s linear infinite;
+        }
+        
+        @keyframes starBreathing {
+            0%, 100% { 
+                opacity: 0.9;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.02);
+            }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* 提示文字 */
+        .hint-text {
+            position: absolute;
+            bottom: var(--spacing-2xl);
+            right: var(--spacing-2xl);
+            font-size: var(--font-size-lg);
+            color: var(--accent-gold);
+            font-weight: 500;
+            opacity: 0;
+            transform: scale(0.98);
+            animation: hintPulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+        
+        @keyframes hintPulse {
+            0%, 100% { 
+                opacity: 0.8;
+                transform: scale(0.98);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* 主標題 */
+        .main-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            background: linear-gradient(45deg, var(--accent-gold), var(--light-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: titleFadeIn 2s ease-out 0.5s forwards;
+        }
+        
+        @keyframes titleFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 副標題 */
+        .subtitle {
+            font-size: var(--font-size-xl);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: subtitleFadeIn 2s ease-out 1s forwards;
+        }
+        
+        @keyframes subtitleFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 幕 1：宇宙能量匯聚 */
+        .scene-1 {
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+            overflow: hidden;
+        }
+        
+        /* 星雲背景 */
+        .bg-nebula {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(104, 44, 119, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(39, 17, 45, 0.4) 0%, transparent 50%);
+            animation: nebulaParallax 20s ease-in-out infinite;
+        }
+        
+        @keyframes nebulaParallax {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-10px) translateX(5px); }
+        }
+        
+        /* 粒子系統 */
+        .particles-foreground,
+        .particles-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .particles-foreground {
+            background-image: 
+                radial-gradient(3px 3px at 10% 20%, var(--accent-gold), transparent),
+                radial-gradient(2px 2px at 30% 40%, rgba(255, 215, 0, 0.8), transparent),
+                radial-gradient(4px 4px at 50% 60%, var(--accent-gold), transparent),
+                radial-gradient(2px 2px at 70% 30%, rgba(255, 215, 0, 0.6), transparent),
+                radial-gradient(3px 3px at 90% 80%, var(--accent-gold), transparent);
+            background-repeat: repeat;
+            background-size: 300px 200px;
+            animation: particlesConverge 4s ease-in-out infinite;
+        }
+        
+        .particles-background {
+            background-image: 
+                radial-gradient(2px 2px at 15% 25%, rgba(255, 215, 0, 0.6), transparent),
+                radial-gradient(1px 1px at 35% 45%, var(--accent-gold), transparent),
+                radial-gradient(3px 3px at 55% 65%, rgba(255, 215, 0, 0.4), transparent),
+                radial-gradient(2px 2px at 75% 35%, var(--accent-gold), transparent),
+                radial-gradient(1px 1px at 95% 85%, rgba(255, 215, 0, 0.8), transparent);
+            background-repeat: repeat;
+            background-size: 400px 300px;
+            animation: particlesConverge 5s ease-in-out infinite;
+        }
+        
+        @keyframes particlesConverge {
+            0%, 100% { 
+                transform: translateY(0) translateX(0);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translateY(-15px) translateX(-10px);
+                opacity: 1;
+            }
+        }
+        
+        /* 眼鏡容器 */
+        #obj-glasses {
+            position: sticky;
+            top: 50vh;
+            transform: translateY(-50%);
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .glasses-image {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(255, 215, 0, 0.3));
+            animation: glassesGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glassesGlow {
+            from { 
+                filter: drop-shadow(0 20px 40px rgba(255, 215, 0, 0.3)) 
+                        drop-shadow(0 0 20px rgba(255, 215, 0, 0.2)); 
+            }
+            to { 
+                filter: drop-shadow(0 25px 50px rgba(255, 215, 0, 0.5)) 
+                        drop-shadow(0 0 30px rgba(255, 215, 0, 0.4)); 
+            }
+        }
+        
+        /* 幕 2：關鍵字浮現 */
+        .scene-2 {
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* 關鍵字容器 */
+        #hashtags {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tag {
+            position: absolute;
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+        
+        .tag.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* 關鍵字位置 */
+        .tag:nth-child(1) { top: 20%; left: 20%; }
+        .tag:nth-child(2) { top: 15%; right: 25%; }
+        .tag:nth-child(3) { top: 30%; left: 15%; }
+        .tag:nth-child(4) { top: 25%; right: 20%; }
+        .tag:nth-child(5) { top: 40%; left: 10%; }
+        .tag:nth-child(6) { top: 35%; right: 15%; }
+        .tag:nth-child(7) { top: 50%; left: 20%; }
+        .tag:nth-child(8) { top: 45%; right: 25%; }
+        .tag:nth-child(9) { top: 60%; left: 15%; }
+        .tag:nth-child(10) { top: 55%; right: 20%; }
+        .tag:nth-child(11) { top: 70%; left: 10%; }
+        .tag:nth-child(12) { top: 65%; right: 15%; }
+        .tag:nth-child(13) { top: 80%; left: 25%; }
+        .tag:nth-child(14) { top: 75%; right: 10%; }
+        
+        /* 固定 CTA 按鈕 */
+        .cta-fixed {
+            position: fixed;
+            bottom: var(--spacing-xl);
+            right: var(--spacing-xl);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: linear-gradient(45deg, var(--accent-gold), var(--light-gold));
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+            transition: all var(--duration-fast) var(--ease-out);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
+            color: var(--primary-blue);
+        }
+        
+        /* 幕 3：雙生火焰肖像 */
+        .scene-3 {
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .portrait-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dual-flame-portrait {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all var(--duration-slower) var(--ease-out);
+        }
+        
+        .dual-flame-portrait.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* 雙生火焰背景效果 */
+        .flame-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 100, 0.2) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(0, 100, 255, 0.2) 0%, transparent 60%);
+            animation: flameBreathing 4s ease-in-out infinite;
+        }
+        
+        @keyframes flameBreathing {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.6;
+                transform: scale(1.02);
+            }
+        }
+        
+        /* 眼鏡微呼吸效果 */
+        .glasses-breathing {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: glassesBreathing 4s ease-in-out infinite;
+        }
+        
+        @keyframes glassesBreathing {
+            0%, 100% { 
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1.02);
+            }
+        }
+        
+        /* 幕 4：第一人稱視角 */
+        .scene-4 {
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+            overflow: hidden;
+        }
+        
+        .fpv-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fpv-before,
+        .fpv-after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all var(--duration-slower) var(--ease-out);
+        }
+        
+        .fpv-before {
+            opacity: 1;
+            filter: contrast(0.9) saturate(0.8);
+        }
+        
+        .fpv-after {
+            opacity: 0;
+            filter: contrast(1.1) saturate(1.2);
+        }
+        
+        .fpv-after.visible {
+            opacity: 1;
+        }
+        
+        /* 鏡框覆層 */
+        .overlay-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 200px;
+            border: 3px solid var(--accent-gold);
+            border-radius: 20px;
+            opacity: 0;
+            transition: all var(--duration-slower) var(--ease-out);
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .overlay-frame.visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.02);
+        }
+        
+        /* 彩蛋元素容器 */
+        .easter-eggs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .easter-egg {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+        
+        .easter-egg.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* 彩蛋元素位置 */
+        .easter-egg:nth-child(1) { top: 20%; right: 20%; } /* 外星人 */
+        .easter-egg:nth-child(2) { top: 60%; right: 15%; } /* 霓虹招牌 */
+        .easter-egg:nth-child(3) { top: 80%; left: 20%; } /* 行人剪影 */
+        .easter-egg:nth-child(4) { top: 15%; left: 15%; } /* 飛碟 */
+        .easter-egg:nth-child(5) { top: 10%; left: 50%; } /* 天際線 */
+        .easter-egg:nth-child(6) { top: 70%; right: 25%; } /* 街頭演奏者 */
+        .easter-egg:nth-child(7) { top: 85%; left: 50%; } /* 外星寵物 */
+        .easter-egg:nth-child(8) { top: 25%; right: 10%; } /* 節慶旗幟 */
+        
+        /* 場景字幕 */
+        .scene-subtitle {
+            position: absolute;
+            bottom: var(--spacing-2xl);
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: var(--font-size-xl);
+            color: var(--accent-gold);
+            text-align: center;
+            opacity: 0;
+            transition: all var(--duration-slow) var(--ease-out);
+            z-index: 15;
+        }
+        
+        .scene-subtitle.visible {
+            opacity: 1;
+        }
+        
+        /* 載入狀態 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity var(--duration-slow) var(--ease-out);
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            border-top: 3px solid var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 錯誤處理 */
+        .error-message {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            font-size: var(--font-size-sm);
+            z-index: 10000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+        
+        .error-message.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .hint-text {
+                bottom: var(--spacing-lg);
+                right: var(--spacing-lg);
+                font-size: var(--font-size-base);
+            }
+            
+            .cta-fixed {
+                bottom: var(--spacing-lg);
+                right: var(--spacing-lg);
+            }
+            
+            .cta-button {
+                padding: var(--spacing-sm) var(--spacing-md);
+                font-size: var(--font-size-xs);
+            }
+            
+            #obj-glasses {
+                width: 250px;
+                height: 150px;
+            }
+            
+            .tag {
+                font-size: var(--font-size-base);
+            }
+            
+            .portrait-container {
+                height: 400px;
+                margin: 0 var(--spacing-md);
+            }
+            
+            .overlay-frame {
+                width: 250px;
+                height: 150px;
+            }
+            
+            .easter-egg {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .scene-subtitle {
+                font-size: var(--font-size-lg);
+                bottom: var(--spacing-xl);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hint-text {
+                bottom: var(--spacing-md);
+                right: var(--spacing-md);
+                font-size: var(--font-size-sm);
+            }
+            
+            .cta-fixed {
+                bottom: var(--spacing-md);
+                right: var(--spacing-md);
+            }
+            
+            #obj-glasses {
+                width: 200px;
+                height: 120px;
+            }
+            
+            .tag {
+                font-size: var(--font-size-sm);
+            }
+            
+            .portrait-container {
+                height: 300px;
+                margin: 0 var(--spacing-sm);
+            }
+            
+            .overlay-frame {
+                width: 200px;
+                height: 120px;
+            }
+            
+            .easter-egg {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .scene-subtitle {
+                font-size: var(--font-size-base);
+                bottom: var(--spacing-lg);
+            }
+        }
+        
+        /* 支援 prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .scene-0::before,
+            .scene-0::after,
+            .bg-nebula,
+            .particles-foreground,
+            .particles-background {
+                animation: none;
+            }
+            
+            .hint-text {
+                animation: none;
+                opacity: 1;
+                transform: scale(1);
+            }
+            
+            .main-title,
+            .subtitle {
+                animation: none;
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 幕 0：導引畫面 -->
+    <section class="scene-0" id="scene-0">
+        <div class="container">
+            <h1 class="main-title">不只是眼鏡，是一把靈性鑰匙</h1>
+            <p class="subtitle">金色光粒 × 藍紫高頻的視覺儀式，幫助你看見更多可能，進入更穩定、更專注的狀態。</p>
+        </div>
+        <div class="hint-text">向下滑動，注入能量</div>
+    </section>
+    
+    <!-- 幕 1：宇宙能量匯聚 -->
+    <section class="scene-1" id="scene-1">
+        <div class="bg-nebula"></div>
+        <div class="particles-background"></div>
+        <div class="particles-foreground"></div>
+        <div id="obj-glasses">
+            <img src="https://via.placeholder.com/300x200/682c77/ffd700?text=能量眼鏡" alt="能量眼鏡" class="glasses-image">
+        </div>
+    </section>
+    
+    <!-- 幕 2：關鍵字浮現 -->
+    <section class="scene-2" id="scene-2">
+        <div id="hashtags">
+            <div class="tag" data-batch="1">#能量眼鏡</div>
+            <div class="tag" data-batch="1">#靈性成長</div>
+            <div class="tag" data-batch="1">#覺察</div>
+            <div class="tag" data-batch="2">#冥想</div>
+            <div class="tag" data-batch="2">#專注力</div>
+            <div class="tag" data-batch="2">#儀式感</div>
+            <div class="tag" data-batch="3">#高頻</div>
+            <div class="tag" data-batch="3">#宇宙連結</div>
+            <div class="tag" data-batch="3">#能量共振</div>
+            <div class="tag" data-batch="4">#每日啟動</div>
+            <div class="tag" data-batch="4">#心流</div>
+            <div class="tag" data-batch="4">#內在鍛鍊</div>
+            <div class="tag" data-batch="4">#直覺力</div>
+        </div>
+    </section>
+    
+    <!-- 幕 3：雙生火焰肖像 -->
+    <section class="scene-3" id="scene-3">
+        <div class="flame-bg"></div>
+        <div class="portrait-container">
+            <img src="https://via.placeholder.com/800x600/682c77/ffd700?text=雙生火焰肖像" 
+                 alt="一男一女佩戴能量眼鏡，背後藍紅雙生火焰" 
+                 class="dual-flame-portrait">
+            <div class="glasses-breathing"></div>
+        </div>
+        <div class="scene-subtitle">
+            <p>當你越清晰，世界就越清晰</p>
+        </div>
+    </section>
+    
+    <!-- 幕 4：第一人稱視角 -->
+    <section class="scene-4" id="scene-4">
+        <div class="fpv-container">
+            <img src="https://via.placeholder.com/1600x900/2c3e50/ecf0f1?text=未配戴視角" 
+                 alt="未配戴視角，城市稍顯冷色與朦朧" 
+                 class="fpv-before">
+            <img src="https://via.placeholder.com/1600x900/682c77/ffd700?text=配戴後視角" 
+                 alt="配戴後視角，藍紫與金色調，畫面更聚焦" 
+                 class="fpv-after">
+            <div class="overlay-frame"></div>
+            
+            <!-- 彩蛋元素 -->
+            <div class="easter-eggs">
+                <img src="https://via.placeholder.com/60x60/ff6b6b/ffffff?text=👽" 
+                     alt="友善外星人從右上探出" 
+                     class="easter-egg" 
+                     data-batch="1">
+                <img src="https://via.placeholder.com/60x60/ff9ff3/ffffff?text=🏪" 
+                     alt="右側霓虹城市招牌" 
+                     class="easter-egg" 
+                     data-batch="1">
+                <img src="https://via.placeholder.com/60x60/54a0ff/ffffff?text=🚶" 
+                     alt="左下遠景行人剪影" 
+                     class="easter-egg" 
+                     data-batch="1">
+                <img src="https://via.placeholder.com/60x60/5f27cd/ffffff?text=🛸" 
+                     alt="左上天空飛碟剪影" 
+                     class="easter-egg" 
+                     data-batch="2">
+                <img src="https://via.placeholder.com/60x60/00d2d3/ffffff?text=🏙️" 
+                     alt="上方遠景城市天際線" 
+                     class="easter-egg" 
+                     data-batch="2">
+                <img src="https://via.placeholder.com/60x60/ff9f43/ffffff?text=🎵" 
+                     alt="右下街頭演奏者" 
+                     class="easter-egg" 
+                     data-batch="2">
+                <img src="https://via.placeholder.com/60x60/10ac84/ffffff?text=🐾" 
+                     alt="底部外星寵物路過" 
+                     class="easter-egg" 
+                     data-batch="3">
+                <img src="https://via.placeholder.com/60x60/ee5a24/ffffff?text=🏳️" 
+                     alt="右上彩旗飄動" 
+                     class="easter-egg" 
+                     data-batch="3">
+            </div>
+        </div>
+        <div class="scene-subtitle">
+            <p>看見更多可能，讓專注更穩</p>
+        </div>
+    </section>
+    
+    <!-- 固定 CTA 按鈕 -->
+    <div class="cta-fixed">
+        <a href="https://line.me/ti/p/@magicwave" class="cta-button" target="_blank" rel="noopener">
+            <i class="fab fa-line"></i>
+            LINE 預約體驗
+        </a>
+        <a href="https://shopee.tw" class="cta-button" target="_blank" rel="noopener">
+            <i class="fas fa-shopping-cart"></i>
+            前往蝦皮下單
+        </a>
+    </div>
+    
+    <script>
+        // 全域設定
+        const SCENE_HEIGHT = window.innerHeight;
+        let isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let scrollProgress = 0;
+        let isScrolling = false;
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollAnimations();
+            initKeywordAnimations();
+            initIntersectionObserver();
+            initLoadingState();
+            initErrorHandling();
+            initScrollDrivenAnimations();
+        });
+        
+        // 捲動動畫初始化
+        function initScrollAnimations() {
+            if (isReducedMotion) return;
+            
+            // 使用 Intersection Observer 觸發動畫
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            });
+            
+            // 觀察所有需要動畫的元素
+            document.querySelectorAll('.fade-in, .scale-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // 關鍵字動畫初始化
+        function initKeywordAnimations() {
+            if (isReducedMotion) {
+                // 減少動態時，直接顯示所有關鍵字
+                document.querySelectorAll('.tag').forEach(tag => {
+                    tag.classList.add('visible');
+                });
+                return;
+            }
+            
+            // 批次動畫
+            const batches = [1, 2, 3, 4];
+            let currentBatch = 0;
+            
+            function showNextBatch() {
+                if (currentBatch < batches.length) {
+                    const batchTags = document.querySelectorAll(`[data-batch="${batches[currentBatch]}"]`);
+                    batchTags.forEach((tag, index) => {
+                        setTimeout(() => {
+                            tag.classList.add('visible');
+                        }, index * 200);
+                    });
+                    currentBatch++;
+                    setTimeout(showNextBatch, 1000);
+                }
+            }
+            
+            // 延遲開始動畫
+            setTimeout(showNextBatch, 1000);
+        }
+        
+        // Intersection Observer 初始化
+        function initIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // 觸發場景特定的動畫
+                        const sceneId = entry.target.id;
+                        handleSceneEnter(sceneId);
+                    }
+                });
+            }, {
+                threshold: 0.5,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            // 觀察所有場景
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 場景進入處理
+        function handleSceneEnter(sceneId) {
+            switch(sceneId) {
+                case 'scene-0':
+                    // 幕 0 動畫已在 CSS 中處理
+                    break;
+                case 'scene-1':
+                    // 幕 1 粒子匯聚動畫
+                    startParticleAnimation();
+                    break;
+                case 'scene-2':
+                    // 幕 2 關鍵字動畫
+                    startKeywordAnimation();
+                    break;
+                case 'scene-3':
+                    // 幕 3 雙生火焰肖像動畫
+                    startPortraitAnimation();
+                    break;
+                case 'scene-4':
+                    // 幕 4 第一人稱視角動畫
+                    startFPVAnimation();
+                    break;
+            }
+        }
+        
+        // 粒子動畫
+        function startParticleAnimation() {
+            if (isReducedMotion) return;
+            
+            const particles = document.querySelectorAll('.particles-foreground, .particles-background');
+            particles.forEach(particle => {
+                particle.style.animationPlayState = 'running';
+            });
+        }
+        
+        // 關鍵字動畫
+        function startKeywordAnimation() {
+            if (isReducedMotion) return;
+            
+            const tags = document.querySelectorAll('.tag');
+            tags.forEach((tag, index) => {
+                setTimeout(() => {
+                    tag.classList.add('visible');
+                }, index * 100);
+            });
+        }
+        
+        // 肖像動畫
+        function startPortraitAnimation() {
+            if (isReducedMotion) {
+                // 減少動態時，直接顯示肖像
+                const portrait = document.querySelector('.dual-flame-portrait');
+                const subtitle = document.querySelector('.scene-3 .scene-subtitle');
+                if (portrait) portrait.classList.add('visible');
+                if (subtitle) subtitle.classList.add('visible');
+                return;
+            }
+            
+            // 肖像淡入動畫
+            const portrait = document.querySelector('.dual-flame-portrait');
+            const subtitle = document.querySelector('.scene-3 .scene-subtitle');
+            
+            if (portrait) {
+                setTimeout(() => {
+                    portrait.classList.add('visible');
+                }, 500);
+            }
+            
+            if (subtitle) {
+                setTimeout(() => {
+                    subtitle.classList.add('visible');
+                }, 1500);
+            }
+        }
+        
+        // 第一人稱視角動畫
+        function startFPVAnimation() {
+            if (isReducedMotion) {
+                // 減少動態時，直接切換到配戴後視角
+                const fpvAfter = document.querySelector('.fpv-after');
+                const overlayFrame = document.querySelector('.overlay-frame');
+                const subtitle = document.querySelector('.scene-4 .scene-subtitle');
+                const easterEggs = document.querySelectorAll('.easter-egg');
+                
+                if (fpvAfter) fpvAfter.classList.add('visible');
+                if (overlayFrame) overlayFrame.classList.add('visible');
+                if (subtitle) subtitle.classList.add('visible');
+                easterEggs.forEach(egg => egg.classList.add('visible'));
+                return;
+            }
+            
+            // 三階段動畫
+            const fpvBefore = document.querySelector('.fpv-before');
+            const fpvAfter = document.querySelector('.fpv-after');
+            const overlayFrame = document.querySelector('.overlay-frame');
+            const subtitle = document.querySelector('.scene-4 .scene-subtitle');
+            const easterEggs = document.querySelectorAll('.easter-egg');
+            
+            // Phase 1: 未配戴視角 (0-2s)
+            setTimeout(() => {
+                // Phase 2: 正在戴上 (2-4s)
+                if (overlayFrame) {
+                    overlayFrame.classList.add('visible');
+                }
+                
+                if (fpvAfter) {
+                    fpvAfter.style.opacity = '0.7';
+                    fpvAfter.classList.add('visible');
+                }
+                
+                // 彩蛋元素分批出場
+                startEasterEggAnimation();
+                
+            }, 2000);
+            
+            // Phase 3: 已配戴狀態 (4s+)
+            setTimeout(() => {
+                if (fpvAfter) {
+                    fpvAfter.style.opacity = '1';
+                }
+                
+                if (subtitle) {
+                    subtitle.classList.add('visible');
+                }
+            }, 4000);
+        }
+        
+        // 彩蛋元素動畫
+        function startEasterEggAnimation() {
+            const easterEggs = document.querySelectorAll('.easter-egg');
+            const batches = [1, 2, 3];
+            let currentBatch = 0;
+            
+            function showNextBatch() {
+                if (currentBatch < batches.length) {
+                    const batchEggs = document.querySelectorAll(`[data-batch="${batches[currentBatch]}"]`);
+                    batchEggs.forEach((egg, index) => {
+                        setTimeout(() => {
+                            egg.classList.add('visible');
+                        }, index * 200);
+                    });
+                    currentBatch++;
+                    setTimeout(showNextBatch, 800);
+                }
+            }
+            
+            setTimeout(showNextBatch, 500);
+        }
+        
+        // 平滑捲動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // 性能監控
+        function monitorPerformance() {
+            if ('performance' in window) {
+                window.addEventListener('load', () => {
+                    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                    console.log(`頁面載入時間: ${loadTime}ms`);
+                });
+            }
+        }
+        
+        monitorPerformance();
+        
+        // 載入狀態初始化
+        function initLoadingState() {
+            // 創建載入覆層
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+            document.body.appendChild(loadingOverlay);
+            
+            // 監聽所有圖片載入完成
+            const images = document.querySelectorAll('img');
+            let loadedImages = 0;
+            const totalImages = images.length;
+            
+            if (totalImages === 0) {
+                hideLoading();
+                return;
+            }
+            
+            images.forEach(img => {
+                if (img.complete) {
+                    loadedImages++;
+                } else {
+                    img.addEventListener('load', () => {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            hideLoading();
+                        }
+                    });
+                    
+                    img.addEventListener('error', () => {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            hideLoading();
+                        }
+                    });
+                }
+            });
+            
+            // 超時保護
+            setTimeout(() => {
+                hideLoading();
+            }, 5000);
+        }
+        
+        // 隱藏載入狀態
+        function hideLoading() {
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.remove();
+                }, 500);
+            }
+        }
+        
+        // 錯誤處理初始化
+        function initErrorHandling() {
+            // 創建錯誤訊息容器
+            const errorContainer = document.createElement('div');
+            errorContainer.className = 'error-message';
+            errorContainer.style.display = 'none';
+            document.body.appendChild(errorContainer);
+            
+            // 全域錯誤處理
+            window.addEventListener('error', function(e) {
+                console.error('頁面錯誤:', e.error);
+                showError('頁面載入出現問題，請重新整理頁面');
+            });
+            
+            // 未處理的 Promise 拒絕
+            window.addEventListener('unhandledrejection', function(e) {
+                console.error('未處理的 Promise 拒絕:', e.reason);
+                showError('系統出現問題，請重新整理頁面');
+            });
+        }
+        
+        // 顯示錯誤訊息
+        function showError(message) {
+            const errorContainer = document.querySelector('.error-message');
+            if (errorContainer) {
+                errorContainer.textContent = message;
+                errorContainer.style.display = 'block';
+                errorContainer.classList.add('visible');
+                
+                // 3秒後自動隱藏
+                setTimeout(() => {
+                    errorContainer.classList.remove('visible');
+                    setTimeout(() => {
+                        errorContainer.style.display = 'none';
+                    }, 300);
+                }, 3000);
+            }
+        }
+        
+        // 響應式處理
+        function handleResize() {
+            const newHeight = window.innerHeight;
+            if (Math.abs(newHeight - SCENE_HEIGHT) > 100) {
+                // 重新計算動畫參數
+                location.reload();
+            }
+        }
+        
+        window.addEventListener('resize', handleResize);
+        
+        // 性能監控
+        function initPerformanceMonitoring() {
+            if ('performance' in window) {
+                // 監控 FPS
+                let lastTime = performance.now();
+                let frameCount = 0;
+                
+                function measureFPS() {
+                    frameCount++;
+                    const currentTime = performance.now();
+                    
+                    if (currentTime - lastTime >= 1000) {
+                        const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                        
+                        if (fps < 30) {
+                            console.warn(`FPS 過低: ${fps}`);
+                        }
+                        
+                        frameCount = 0;
+                        lastTime = currentTime;
+                    }
+                    
+                    requestAnimationFrame(measureFPS);
+                }
+                
+                requestAnimationFrame(measureFPS);
+            }
+        }
+        
+        // 初始化性能監控
+        initPerformanceMonitoring();
+        
+        // 捲動驅動動畫系統
+        function initScrollDrivenAnimations() {
+            if (isReducedMotion) return;
+            
+            // 監聽捲動事件
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // 初始化各場景的捲動動畫
+            initScene0ScrollAnimations();
+            initScene1ScrollAnimations();
+            initScene2ScrollAnimations();
+            initScene3ScrollAnimations();
+            initScene4ScrollAnimations();
+        }
+        
+        // 捲動處理函數
+        function handleScroll() {
+            if (isScrolling) return;
+            
+            isScrolling = true;
+            requestAnimationFrame(() => {
+                updateScrollProgress();
+                updateSceneAnimations();
+                isScrolling = false;
+            });
+        }
+        
+        // 更新捲動進度
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgress = Math.min(scrollTop / documentHeight, 1);
+        }
+        
+        // 更新場景動畫
+        function updateSceneAnimations() {
+            const scenes = document.querySelectorAll('section');
+            scenes.forEach((scene, index) => {
+                const rect = scene.getBoundingClientRect();
+                const sceneProgress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight));
+                
+                // 根據場景進度觸發動畫
+                switch(scene.id) {
+                    case 'scene-0':
+                        updateScene0Animations(sceneProgress);
+                        break;
+                    case 'scene-1':
+                        updateScene1Animations(sceneProgress);
+                        break;
+                    case 'scene-2':
+                        updateScene2Animations(sceneProgress);
+                        break;
+                    case 'scene-3':
+                        updateScene3Animations(sceneProgress);
+                        break;
+                    case 'scene-4':
+                        updateScene4Animations(sceneProgress);
+                        break;
+                }
+            });
+        }
+        
+        // 幕 0 捲動動畫
+        function initScene0ScrollAnimations() {
+            const hintText = document.querySelector('.hint-text');
+            const mainTitle = document.querySelector('.main-title');
+            const subtitle = document.querySelector('.subtitle');
+            
+            if (hintText) {
+                hintText.style.animationPlayState = 'paused';
+            }
+        }
+        
+        function updateScene0Animations(progress) {
+            const hintText = document.querySelector('.hint-text');
+            const mainTitle = document.querySelector('.main-title');
+            const subtitle = document.querySelector('.subtitle');
+            
+            // 提示文字脈動強度隨捲動變化
+            if (hintText) {
+                const pulseIntensity = 0.8 + (progress * 0.2);
+                hintText.style.opacity = pulseIntensity;
+                hintText.style.transform = `scale(${0.98 + (progress * 0.02)})`;
+            }
+            
+            // 標題和副標題的透明度變化
+            if (mainTitle) {
+                mainTitle.style.opacity = Math.max(0, 1 - (progress * 2));
+            }
+            
+            if (subtitle) {
+                subtitle.style.opacity = Math.max(0, 1 - (progress * 2));
+            }
+        }
+        
+        // 幕 1 捲動動畫
+        function initScene1ScrollAnimations() {
+            const particles = document.querySelectorAll('.particles-foreground, .particles-background');
+            const glasses = document.querySelector('#obj-glasses');
+            
+            particles.forEach(particle => {
+                particle.style.animationPlayState = 'paused';
+            });
+        }
+        
+        function updateScene1Animations(progress) {
+            const particles = document.querySelectorAll('.particles-foreground, .particles-background');
+            const glasses = document.querySelector('#obj-glasses');
+            
+            // 粒子匯聚效果
+            particles.forEach((particle, index) => {
+                const intensity = Math.min(1, progress * 2);
+                const offset = index === 0 ? 0 : 0.2; // 前景粒子延遲
+                const adjustedProgress = Math.max(0, progress - offset);
+                
+                // 粒子朝中心匯聚
+                const convergeX = adjustedProgress * 20;
+                const convergeY = adjustedProgress * 15;
+                particle.style.transform = `translate(${-convergeX}px, ${-convergeY}px)`;
+                particle.style.opacity = 0.6 + (adjustedProgress * 0.4);
+            });
+            
+            // 眼鏡發光強度
+            if (glasses) {
+                const glowIntensity = 0.3 + (progress * 0.7);
+                glasses.style.filter = `drop-shadow(0 20px 40px rgba(255, 215, 0, ${glowIntensity})) drop-shadow(0 0 20px rgba(255, 215, 0, ${glowIntensity * 0.8}))`;
+            }
+        }
+        
+        // 幕 2 捲動動畫
+        function initScene2ScrollAnimations() {
+            const tags = document.querySelectorAll('.tag');
+            tags.forEach(tag => {
+                tag.style.transition = 'none';
+            });
+        }
+        
+        function updateScene2Animations(progress) {
+            const tags = document.querySelectorAll('.tag');
+            
+            // 關鍵字分批出現
+            const batchSize = 1 / 4; // 4 個批次
+            tags.forEach((tag, index) => {
+                const batch = Math.floor(index / 3) + 1; // 每批 3 個
+                const batchProgress = Math.max(0, (progress - (batch - 1) * batchSize) / batchSize);
+                const tagProgress = Math.max(0, (batchProgress - (index % 3) * 0.1) / 0.1);
+                
+                if (tagProgress > 0) {
+                    tag.style.opacity = Math.min(1, tagProgress * 2);
+                    tag.style.transform = `scale(${0.8 + (tagProgress * 0.2)})`;
+                    tag.classList.add('visible');
+                } else {
+                    tag.style.opacity = '0';
+                    tag.style.transform = 'scale(0.8)';
+                    tag.classList.remove('visible');
+                }
+            });
+        }
+        
+        // 幕 3 捲動動畫
+        function initScene3ScrollAnimations() {
+            const portrait = document.querySelector('.dual-flame-portrait');
+            const flameBg = document.querySelector('.flame-bg');
+            const subtitle = document.querySelector('.scene-3 .scene-subtitle');
+            
+            if (portrait) {
+                portrait.style.transition = 'none';
+            }
+        }
+        
+        function updateScene3Animations(progress) {
+            const portrait = document.querySelector('.dual-flame-portrait');
+            const flameBg = document.querySelector('.flame-bg');
+            const subtitle = document.querySelector('.scene-3 .scene-subtitle');
+            
+            // 肖像淡入
+            if (portrait) {
+                const portraitProgress = Math.max(0, (progress - 0.2) / 0.6);
+                portrait.style.opacity = Math.min(1, portraitProgress);
+                portrait.style.transform = `scale(${0.9 + (portraitProgress * 0.1)})`;
+                
+                if (portraitProgress > 0) {
+                    portrait.classList.add('visible');
+                }
+            }
+            
+            // 字幕延遲出現
+            if (subtitle) {
+                const subtitleProgress = Math.max(0, (progress - 0.6) / 0.4);
+                subtitle.style.opacity = Math.min(1, subtitleProgress);
+                
+                if (subtitleProgress > 0) {
+                    subtitle.classList.add('visible');
+                }
+            }
+        }
+        
+        // 幕 4 捲動動畫
+        function initScene4ScrollAnimations() {
+            const fpvBefore = document.querySelector('.fpv-before');
+            const fpvAfter = document.querySelector('.fpv-after');
+            const overlayFrame = document.querySelector('.overlay-frame');
+            const easterEggs = document.querySelectorAll('.easter-egg');
+            const subtitle = document.querySelector('.scene-4 .scene-subtitle');
+            
+            // 初始化所有元素為隱藏狀態
+            if (fpvAfter) fpvAfter.style.opacity = '0';
+            if (overlayFrame) overlayFrame.style.opacity = '0';
+            easterEggs.forEach(egg => {
+                egg.style.opacity = '0';
+                egg.style.transform = 'scale(0.8)';
+            });
+            if (subtitle) subtitle.style.opacity = '0';
+        }
+        
+        function updateScene4Animations(progress) {
+            const fpvBefore = document.querySelector('.fpv-before');
+            const fpvAfter = document.querySelector('.fpv-after');
+            const overlayFrame = document.querySelector('.overlay-frame');
+            const easterEggs = document.querySelectorAll('.easter-egg');
+            const subtitle = document.querySelector('.scene-4 .scene-subtitle');
+            
+            // Phase 1: 未配戴視角 (0-33%)
+            if (progress < 0.33) {
+                if (fpvBefore) {
+                    fpvBefore.style.opacity = '1';
+                }
+                if (fpvAfter) {
+                    fpvAfter.style.opacity = '0';
+                }
+            }
+            // Phase 2: 正在戴上 (33-66%)
+            else if (progress < 0.66) {
+                const phase2Progress = (progress - 0.33) / 0.33;
+                
+                // 鏡框淡入
+                if (overlayFrame) {
+                    overlayFrame.style.opacity = Math.min(1, phase2Progress * 2);
+                    overlayFrame.style.transform = `translate(-50%, -50%) scale(${1 + (phase2Progress * 0.02)})`;
+                }
+                
+                // 配戴後視角疊加
+                if (fpvAfter) {
+                    fpvAfter.style.opacity = Math.min(0.7, phase2Progress * 1.4);
+                }
+                
+                // 彩蛋元素分批出現
+                easterEggs.forEach((egg, index) => {
+                    const batch = Math.floor(index / 3) + 1;
+                    const batchProgress = Math.max(0, (phase2Progress - (batch - 1) * 0.3) / 0.3);
+                    const eggProgress = Math.max(0, (batchProgress - (index % 3) * 0.1) / 0.1);
+                    
+                    if (eggProgress > 0) {
+                        egg.style.opacity = Math.min(1, eggProgress);
+                        egg.style.transform = `scale(${0.8 + (eggProgress * 0.2)})`;
+                        egg.classList.add('visible');
+                    }
+                });
+            }
+            // Phase 3: 已配戴狀態 (66-100%)
+            else {
+                const phase3Progress = (progress - 0.66) / 0.34;
+                
+                // 完全切換到配戴後視角
+                if (fpvAfter) {
+                    fpvAfter.style.opacity = Math.min(1, 0.7 + (phase3Progress * 0.3));
+                }
+                
+                // 字幕出現
+                if (subtitle) {
+                    subtitle.style.opacity = Math.min(1, phase3Progress * 2);
+                    if (phase3Progress > 0) {
+                        subtitle.classList.add('visible');
+                    }
+                }
+                
+                // 所有彩蛋元素完全顯示
+                easterEggs.forEach(egg => {
+                    egg.style.opacity = '1';
+                    egg.style.transform = 'scale(1)';
+                    egg.classList.add('visible');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
